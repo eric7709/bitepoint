@@ -2,7 +2,8 @@ import { formatPrice } from "@/shared/utils/formatPrice";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 
 export default function ActiveRevenue() {
-  const {counts, totals} = useOrderDataStore()
+  const {counts, totals, orders} = useOrderDataStore()
+  console.log(orders)
   return (
     <div className="flex items-center gap-3 text-sm font-medium">
       <p>

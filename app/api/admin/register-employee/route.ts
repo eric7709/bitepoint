@@ -1,4 +1,3 @@
-
 import { supabaseAdmin } from "@/shared/lib/supabaseAdmin";
 import { NextResponse } from "next/server";
 import { generateRandomPassword } from "@/shared/utils/getRandomPassword";

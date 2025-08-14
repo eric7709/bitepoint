@@ -21,10 +21,11 @@ export default function CreateCustomerModal() {
     <ModalOverlay isOpen={isOpen} onClose={closeModal}>
       <form
         onSubmit={handleSubmit}
-        className="w-[380px] space-y-4 p-5 bg-white shadow-md rounded-xl"
+        className="w-96 space-y-4 p-6 bg-white shadow-xl rounded-lg"
       >
-        <h2 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
-          Customer Details
+        {/* Simple header */}
+        <h2 className="text-xl font-semibold text-gray-800 text-center pb-4">
+          Add Customer
         </h2>
 
         {/* Title */}
@@ -45,53 +46,53 @@ export default function CreateCustomerModal() {
 
         {/* Name */}
         <Input
-          label="Full Name"
+          label="Name"
           value={customer.name}
           onChange={(e) => setField("name", e.target.value)}
           placeholder="Enter full name"
           error={errors.name}
           inputClassName="text-sm"
-          labelClassName="text-sm"
+          labelClassName="text-sm font-medium"
         />
 
         {/* Email */}
         <Input
-          label="Email Address"
+          label="Email"
           type="email"
           value={customer.email}
           onChange={(e) => setField("email", e.target.value)}
           placeholder="Enter email"
           error={errors.email}
           inputClassName="text-sm"
-          labelClassName="text-sm"
+          labelClassName="text-sm font-medium"
         />
 
         {/* Phone */}
         <Input
-          label="Phone Number"
+          label="Phone"
           type="tel"
           value={customer.phoneNumber}
           onChange={(e) => setField("phoneNumber", e.target.value)}
-          placeholder="Enter phone number"
+          placeholder="Enter phone"
           error={errors.phoneNumber}
           inputClassName="text-sm"
-          labelClassName="text-sm"
+          labelClassName="text-sm font-medium"
         />
 
         {/* Actions */}
-        <div className="flex justify-end gap-3 pt-3 border-t border-gray-200">
+        <div className="flex gap-3 pt-4">
           <button
             type="button"
             onClick={closeModal}
             disabled={isPending}
-            className="px-6 cursor-pointer py-2.5 rounded-md bg-gray-100 text-gray-700 hover:bg-red-500 active:scale-95 transition hover:text-white duration-300 disabled:opacity-50 text-sm"
+            className="flex-1 py-2.5 px-4 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm font-medium"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isPending}
-            className="px-6 cursor-pointer py-2.5 duration-300 rounded-md bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition disabled:opacity-50 text-sm"
+            className="flex-1 py-2.5 px-4 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-medium disabled:opacity-50"
           >
             {isPending ? "Saving..." : "Save"}
           </button>

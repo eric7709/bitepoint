@@ -18,7 +18,7 @@ export default function TotalAndBookButton() {
     
     <div
       className={`${
-        items.length > 0 ? "h-12 opacity-100" : "h-0 opacity-0"
+        items.length > 0 ? " opacity-100" : "h-0 opacity-0"
       } overflow-hidden duration-500 flex justify-between items-center`}
     >
       <p className="font-semibold text-lg">Total: {getTotal().toLocaleString()}</p>
