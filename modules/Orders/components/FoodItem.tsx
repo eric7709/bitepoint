@@ -5,6 +5,7 @@ import { isSelected } from "../../MenuItems/utils/isSelected";
 import { getSelectedItem } from "../../MenuItems/utils/getSelectedItem";
 import { MenuItem } from "@/modules/MenuItems/types/menuItems";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
+import Image from "next/image";
 
 type Props = {
   menuItem: MenuItem;
@@ -47,12 +48,14 @@ export default function FoodItem({ menuItem }: Props) {
     >
       {/* Image */}
       <div className="h-24 shrink-0 overflow-hidden rounded-lg w-24 border relative border-gray-200">
-        <img
-          src={menuItem?.imageUrl || "/"}
-          alt={menuItem?.name}
-          className="rounded-lg object-cover absolute inset-0"
-        />
-
+         <Image
+    src={menuItem?.imageUrl || "/placeholder.jpg"}
+    alt={menuItem?.name || "Menu item"}
+    fill
+    className="rounded-lg object-cover"
+    sizes="96px" // Helps Next.js optimize image for small size
+    priority
+  />
         {/* Not Available Overlay */}
         {isUnavailable && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50">
@@ -83,14 +86,18 @@ export default function FoodItem({ menuItem }: Props) {
 
       {/* Details */}
       <div className="flex flex-col w-full overflow-hidden justify-between">
-        <p className="text-sm font-semibold capitalize truncate">{menuItem?.name}</p>
+        <p className="text-sm font-semibold capitalize truncate">
+          {menuItem?.name}
+        </p>
         <p className="text-xs text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">
           {menuItem?.description}
         </p>
 
         {/* Price + Controls */}
         <div className="flex items-center justify-between mt-2">
-          <p className="text-base font-semibold">₦{menuItem?.price.toLocaleString()}</p>
+          <p className="text-base font-semibold">
+            ₦{menuItem?.price.toLocaleString()}
+          </p>
 
           {!isUnavailable && selected ? (
             <div

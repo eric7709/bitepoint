@@ -2,6 +2,7 @@
 import { FaTimes } from "react-icons/fa";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
 import ModalOverlay from "@/shared/components/ModalOverlay";
+import Image from "next/image";
 
 export default function MenuDetailsModal() {
   const {
@@ -16,14 +17,17 @@ export default function MenuDetailsModal() {
         onClick={(e: any) => e.stopPropagation()}
         className="bg-white rounded-2xl shadow-xl max-h-[90%] overflow-y-auto max-w-md mx-4 w-full p-6 relative text-gray-800"
       >
-
         {/* Image */}
         {item?.imageUrl && (
-          <img
-            src={item.imageUrl}
-            alt={item.name}
-            className="w-full h-56 object-cover rounded-xl mb-4"
-          />
+          <div className="relative w-full h-56 mb-4">
+            <Image
+              src={item.imageUrl || "/placeholder.jpg"}
+              alt={item.name}
+              fill
+              className="object-cover rounded-xl"
+              priority
+            />
+          </div>
         )}
 
         {/* Name and Price */}
@@ -47,7 +51,9 @@ export default function MenuDetailsModal() {
             <h3 className="font-semibold text-sm mb-1">Ingredients:</h3>
             <ul className="list-disc list-inside text-gray-700 space-y-1">
               {item.ingredients.map((ingredient, index) => (
-                <li className="capitalize" key={index}>{ingredient}</li>
+                <li className="capitalize" key={index}>
+                  {ingredient}
+                </li>
               ))}
             </ul>
           </div>
