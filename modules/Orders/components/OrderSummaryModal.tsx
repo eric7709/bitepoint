@@ -59,9 +59,13 @@ export default function OrderSummaryModal() {
                 }`}
               >
                 <div className="flex-1">
-                  <p className="font-semibold text-sm capitalize">{item.name}</p>
+                  <p className="font-semibold text-sm capitalize">
+                    {item.name}
+                  </p>
                   {item.quantity && (
-                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                    <p className="text-xs text-gray-500">
+                      Qty: {item.quantity}
+                    </p>
                   )}
                   {isUnavailable && (
                     <p className="mt-1 text-xs font-semibold text-red-700">
@@ -71,7 +75,14 @@ export default function OrderSummaryModal() {
                 </div>
 
                 <div className="mx-3 font-semibold text-gray-800 text-sm">
-                  ₦{(item.quantity ? item.quantity * item.price : item.price).toFixed(2)}
+                  ₦
+                  {(item.quantity
+                    ? item.quantity * item.price
+                    : item.price
+                  ).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{" "}
                 </div>
 
                 {!success && (
@@ -92,9 +103,15 @@ export default function OrderSummaryModal() {
         {/* Footer */}
         <footer className="border-t border-gray-200 p-4 bg-white rounded-b-2xl">
           <div className="flex justify-between items-center mb-4">
-            <span className="text-base font-semibold text-gray-800">Total:</span>
+            <span className="text-base font-semibold text-gray-800">
+              Total:
+            </span>
             <span className="text-lg font-extrabold text-gray-900">
-              ₦{total.toFixed(2)}
+              ₦
+              {total.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </div>
 
