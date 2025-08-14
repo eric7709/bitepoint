@@ -11,7 +11,6 @@ export default function MenuItemList() {
   const { setModal } = useMenuItemSelectionStore();
   const menuItems = filteredMenuItems();
   if (isLoading) return <Loader />;
-  if (menuItems.length === 0) return <NoResultFound />;
   return (
     <div className="grid p-5 z-0 relative grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
       <div
