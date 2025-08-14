@@ -8,7 +8,7 @@ export default function SearchMenu() {
   return (
     <div>
       <p className="text-lg font-semibold mb-2 text-center">
-        Above Restaurant Menu 
+        Restaurant Menu 
       </p>
       <div className="w-full relative py-2">
         <BsSearch className="absolute top-1/2 left-2 -translate-y-1/2" />

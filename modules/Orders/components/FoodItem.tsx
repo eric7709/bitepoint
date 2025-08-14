@@ -34,6 +34,9 @@ export default function FoodItem({ menuItem }: Props) {
     }
   };
 
+  console.log(menuItem)
+  
+
   return (
     <div
       onClick={() => {
@@ -48,14 +51,14 @@ export default function FoodItem({ menuItem }: Props) {
     >
       {/* Image */}
       <div className="h-24 shrink-0 overflow-hidden rounded-lg w-24 border relative border-gray-200">
-         <Image
-    src={menuItem?.imageUrl || "/placeholder.jpg"}
-    alt={menuItem?.name || "Menu item"}
-    fill
-    className="rounded-lg object-cover"
-    sizes="96px" // Helps Next.js optimize image for small size
-    priority
-  />
+        <Image
+          src={menuItem?.imageUrl || "/placeholder.jpg"}
+          alt={menuItem?.name || "Menu item"}
+          fill
+          className="rounded-lg object-cover"
+          sizes="96px" // Helps Next.js optimize image for small size
+          priority
+        />
         {/* Not Available Overlay */}
         {isUnavailable && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/50">
