@@ -248,7 +248,7 @@ export default function AdminOrderCard({ order }: AdminOrderCardProps) {
               </span>
             </div>
             <span className="text-xs font-semibold text-slate-900 ml-2">
-              ${item.price.toFixed(2)}
+              ₦{item.price.toFixed(2)}
             </span>
           </div>
         ))}
@@ -264,7 +264,7 @@ export default function AdminOrderCard({ order }: AdminOrderCardProps) {
             Total
           </span>
           <span className="text-sm font-bold text-emerald-700">
-            ${order.total.toFixed(2)}
+            ₦{order.total.toFixed(2)}
           </span>
         </div>
       </div>

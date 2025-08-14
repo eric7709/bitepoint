@@ -67,14 +67,14 @@ const Invoice = forwardRef<HTMLDivElement, Props>(({ order, waiterName, currentD
               <span>
                 {item.quantity} × {item.name}
               </span>
-              <span>${(item.quantity! * item.price).toFixed(2)}</span>
+              <span>₦{(item.quantity! * item.price).toFixed(2)}</span>
             </div>
           ))}
         </div>
 
         {/* Total */}
         <div className="text-right text-sm font-semibold">
-          Total: ${order.total?.toFixed(2)}
+          Total: ₦{order.total?.toFixed(2)}
         </div>
 
         {/* Footer */}

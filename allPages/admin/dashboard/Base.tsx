@@ -11,7 +11,7 @@ export default function Dashboard() {
     { title: "Total Employees", value: 0, icon: "👥" },
     { title: "Total Menu Items", value: 0, icon: "📦" },
     { title: "Total Categories", value: 0, icon: "🗂" },
-    { title: "Today's Revenue", value: "$0", icon: "💰" },
+    { title: "Today's Revenue", value: "₦0", icon: "💰" },
     { title: "Orders Today", value: 0, icon: "🛎" },
     { title: "Pending Orders", value: 0, icon: "⏳" },
     { title: "Active Waiters", value: 0, icon: "🧑‍🍳" },
@@ -80,7 +80,7 @@ export default function Dashboard() {
         { title: "Orders Today", value: ordersToday, icon: "🛎" },
         {
           title: "Today's Revenue",
-          value: `$${todaysRevenue.toLocaleString()}`,
+          value: `₦${todaysRevenue.toLocaleString()}`,
           icon: "💰",
         },
         { title: "Total Menu Items", value: totalMenuItems || 0, icon: "📦" },

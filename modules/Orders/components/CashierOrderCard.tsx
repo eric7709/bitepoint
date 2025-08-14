@@ -178,7 +178,7 @@ export default function CashierOrderCard({ order }: Props) {
                 </p>
               </div>
               <p className="font-semibold text-gray-800 text-[13px]">
-                ${item.price.toFixed(2)}
+                ₦{item.price.toFixed(2)}
               </p>
             </div>
           ))}
@@ -193,7 +193,7 @@ export default function CashierOrderCard({ order }: Props) {
               {order.paymentMethod}
             </p>
           )}
-          <p>${order.total.toLocaleString()}</p>
+          <p>₦{order.total.toLocaleString()}</p>
         </section>
 
         {order.status === "completed" && (

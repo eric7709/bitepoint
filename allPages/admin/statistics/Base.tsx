@@ -342,7 +342,7 @@ export default function AnalyticsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 w-full">
           <StatCard
             title="Total Revenue"
-            value={`$${analytics.totalRevenue.toLocaleString()}`}
+            value={`₦${analytics.totalRevenue.toLocaleString()}`}
             icon={DollarSign}
             color="text-green-600"
             description="Total sales revenue"
@@ -356,7 +356,7 @@ export default function AnalyticsPage() {
           />
           <StatCard
             title="Average Order Value"
-            value={`$${analytics.averageOrderValue}`}
+            value={`₦${analytics.averageOrderValue}`}
             icon={TrendingUp}
             color="text-purple-600"
             description="Per order average"
@@ -405,10 +405,10 @@ export default function AnalyticsPage() {
                       {method.totalOrders.toLocaleString()}
                     </td>
                     <td className="px-2 py-3 whitespace-nowrap text-xs text-gray-900 font-semibold min-w-0">
-                      ${method.totalRevenue.toLocaleString()}
+                      ₦{method.totalRevenue.toLocaleString()}
                     </td>
                     <td className="px-2 py-3 whitespace-nowrap text-xs text-gray-900 min-w-0">
-                      ${method.averageOrderValue}
+                      ₦{method.averageOrderValue}
                     </td>
                     <td className="px-2 py-3 whitespace-nowrap min-w-0">
                       <div className="flex items-center">
@@ -459,8 +459,8 @@ export default function AnalyticsPage() {
                       </div>
                     </td>
                     <td className="px-2 py-3 text-xs text-gray-900 min-w-0">{customer.totalOrders}</td>
-                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">${customer.totalSpent}</td>
-                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">${customer.averageOrderValue}</td>
+                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">₦{customer.totalSpent}</td>
+                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">₦{customer.averageOrderValue}</td>
                   </tr>
                 ))}
               </tbody>
@@ -497,8 +497,8 @@ export default function AnalyticsPage() {
                       </div>
                     </td>
                     <td className="px-2 py-3 text-xs text-gray-900 min-w-0">{table.totalOrders}</td>
-                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">${table.totalRevenue}</td>
-                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">${table.averageOrderValue}</td>
+                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">₦{table.totalRevenue}</td>
+                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">₦{table.averageOrderValue}</td>
                   </tr>
                 ))}
               </tbody>
@@ -534,8 +534,8 @@ export default function AnalyticsPage() {
                       </div>
                     </td>
                     <td className="px-2 py-3 text-xs text-gray-900 min-w-0">{waiter.totalOrders}</td>
-                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">${waiter.totalRevenue}</td>
-                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">${waiter.averageOrderValue}</td>
+                    <td className="px-2 py-3 text-xs font-semibold text-green-600 min-w-0">₦{waiter.totalRevenue}</td>
+                    <td className="px-2 py-3 text-xs text-gray-900 min-w-0">₦{waiter.averageOrderValue}</td>
                   </tr>
                 ))}
               </tbody>
@@ -638,7 +638,7 @@ export default function AnalyticsPage() {
                       <div className="text-xs font-semibold text-blue-600">{category.totalQuantity.toLocaleString()}</div>
                     </td>
                     <td className="px-2 py-3 whitespace-nowrap min-w-0">
-                      <div className="text-xs font-semibold text-green-600">${category.totalRevenue.toLocaleString()}</div>
+                      <div className="text-xs font-semibold text-green-600">₦{category.totalRevenue.toLocaleString()}</div>
                     </td>
                     <td className="px-2 py-3 whitespace-nowrap min-w-0">
                       <div className="text-xs text-gray-900">{category.orderCount}</div>

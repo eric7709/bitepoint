@@ -71,7 +71,7 @@ export default function OrderSummaryModal() {
                 </div>
 
                 <div className="mx-3 font-semibold text-gray-800 text-sm">
-                  ${(item.quantity ? item.quantity * item.price : item.price).toFixed(2)}
+                  ₦{(item.quantity ? item.quantity * item.price : item.price).toFixed(2)}
                 </div>
 
                 {!success && (
@@ -94,7 +94,7 @@ export default function OrderSummaryModal() {
           <div className="flex justify-between items-center mb-4">
             <span className="text-base font-semibold text-gray-800">Total:</span>
             <span className="text-lg font-extrabold text-gray-900">
-              ${total.toFixed(2)}
+              ₦{total.toFixed(2)}
             </span>
           </div>
 

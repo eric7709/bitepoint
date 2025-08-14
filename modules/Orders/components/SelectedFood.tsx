@@ -5,7 +5,7 @@ export default function SelectedFood() {
         <div className="flex items-center justify-between p-3">
           <p className="text-xl font-semibold mb-2">Foods Added</p>
           <p>
-            Total: <b>$500</b>
+            Total: <b>₦500</b>
           </p>
         </div>
         <div className="flex-1 px-3 bg-purple-500">

@@ -90,7 +90,7 @@ export default function FoodItem({ menuItem }: Props) {
 
         {/* Price + Controls */}
         <div className="flex items-center justify-between mt-2">
-          <p className="text-base font-semibold">${menuItem?.price}</p>
+          <p className="text-base font-semibold">₦{menuItem?.price}</p>
 
           {!isUnavailable && selected ? (
             <div
