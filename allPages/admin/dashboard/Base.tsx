@@ -127,24 +127,28 @@ export default function Dashboard() {
           />
         </button>
         <AdminTitle title="Dashboard" />
-        <Search
-          className="text-black"
-          size={18}
-        />
+        <Search className="text-black" size={18} />
       </header>
 
-      {/* Main dashboard grid */}
-      <main className="grid flex-1 overflow-y-auto p-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-        {dashboardData.map((item, idx) => (
-          <section
-            key={idx}
-            className={`shadow rounded-lg py-12 p-4 ${backgrounds[idx]} flex flex-col items-center justify-center text-center transition-colors gap-3 md:gap-0`}
-          >
-            <span className="text-3xl">{item.icon}</span>
-            <h3 className="text-lg font-semibold">{item.title}</h3>
-            <p className="text-xl font-bold">{item.value}</p>
-          </section>
-        ))}
+      <main className="grid flex-1 overflow-y-auto p-2  grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+        {dashboardData.map((item, idx) => {
+          return (
+            <section
+              key={idx}
+              className={`${backgrounds[idx]} shadow-lg rounded-xl p-6 flex items-center justify-between text-white hover:shadow-xl transition-all duration-300 hover:scale-[1.01]`}
+            >
+              <div className="flex flex-col">
+                <h3 className="text-sm font-medium opacity-90 mb-1">
+                  {item.title}
+                </h3>
+                <p className="text-3xl font-bold">{item.value}</p>
+              </div>
+              <div className={`${backgrounds[idx]} bg-opacity-20 border-4 border-white h-20 w-20 grid place-content-center shrink-0 rounded-full`}>
+                <span className="text-4xl">{item.icon}</span>
+              </div>
+            </section>
+          );
+        })}
       </main>
     </div>
   );
