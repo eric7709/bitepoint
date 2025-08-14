@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { Table } from "@/modules/Tables/types/table";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { Order } from "../types/orders";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 type Props = {
   order: Order;
@@ -67,14 +68,15 @@ const Invoice = forwardRef<HTMLDivElement, Props>(({ order, waiterName, currentD
               <span>
                 {item.quantity} × {item.name}
               </span>
-              <span>₦{(item.quantity! * item.price).toFixed(2)}</span>
+              <span>{formatPrice(item.quantity * item.price)}</span>
             </div>
           ))}
         </div>
 
         {/* Total */}
         <div className="text-right text-sm font-semibold">
-          Total: ₦{order.total?.toFixed(2)}
+          Total: {formatPrice(order.total)}
+
         </div>
 
         {/* Footer */}

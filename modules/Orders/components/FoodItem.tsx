@@ -6,6 +6,7 @@ import { getSelectedItem } from "../../MenuItems/utils/getSelectedItem";
 import { MenuItem } from "@/modules/MenuItems/types/menuItems";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
 import Image from "next/image";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 type Props = {
   menuItem: MenuItem;
@@ -99,7 +100,7 @@ export default function FoodItem({ menuItem }: Props) {
         {/* Price + Controls */}
         <div className="flex items-center justify-between mt-2">
           <p className="text-base font-semibold">
-            ₦{menuItem?.price.toLocaleString()}
+            {formatPrice(menuItem.price)}
           </p>
 
           {!isUnavailable && selected ? (

@@ -3,6 +3,7 @@ import BitePointLogo from "@/shared/components/Logo";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 type Props = {
   type: "kitchen" | "cahsier" | "admin"
@@ -28,7 +29,7 @@ export default function TitleHeader(props: Props) {
         <p className="text-[13px] font-medium">
           Total:{" "}
           <span className="text-sm ml-1 text-blue-600">
-            ₦{total.toLocaleString()}
+            {formatPrice(total)}
           </span>
         </p>
         <NotificationDropdown />

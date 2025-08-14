@@ -3,6 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
 import ModalOverlay from "@/shared/components/ModalOverlay";
 import Image from "next/image";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 export default function MenuDetailsModal() {
   const {
@@ -34,7 +35,7 @@ export default function MenuDetailsModal() {
         <div className="mb-2 flex justify-between items-center">
           <h2 className="text-base font-bold md:text-lg">{item?.name}</h2>
           <span className="text-base md:text-xl font-bold text-green-600">
-            ₦{item?.price.toLocaleString()}
+            {formatPrice(item?.price)}
           </span>
         </div>
 

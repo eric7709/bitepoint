@@ -1,3 +1,4 @@
+import { formatPrice } from "@/shared/utils/formatPrice";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 
 export default function ActiveRevenue() {
@@ -8,7 +9,7 @@ export default function ActiveRevenue() {
         Active Orders: <span className="text-amber-600">{counts.completed + counts.pending}</span>
       </p>
       <p>
-        Revenue: <span className="text-green-500">₦{totals.paid.toLocaleString()}</span>
+        Revenue: <span className="text-green-500">{formatPrice(totals.paid)}</span>
       </p>
     </div>
   );

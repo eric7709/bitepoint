@@ -3,6 +3,7 @@ import ModalBackdrop from "@/shared/components/ModalOverlay";
 import { FaTrashAlt } from "react-icons/fa";
 import { useOrderSummary } from "../hooks/useOrderSummary";
 import { useEffect } from "react";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 export default function OrderSummaryModal() {
   const {
@@ -75,14 +76,9 @@ export default function OrderSummaryModal() {
                 </div>
 
                 <div className="mx-3 font-semibold text-gray-800 text-sm">
-                  ₦
-                  {(item.quantity
-                    ? item.quantity * item.price
-                    : item.price
-                  ).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}{" "}
+                  {formatPrice(
+                    item.quantity ? item.quantity * item.price : item.price
+                  )}
                 </div>
 
                 {!success && (
@@ -107,11 +103,7 @@ export default function OrderSummaryModal() {
               Total:
             </span>
             <span className="text-lg font-extrabold text-gray-900">
-              ₦
-              {total.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              {formatPrice(total)}
             </span>
           </div>
 

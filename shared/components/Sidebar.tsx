@@ -10,6 +10,7 @@ import { useLogout } from "@/modules/Employees/hooks/useEmployeesServices";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/modules/Employees/hooks/useAuth";
 import { useUIStore } from "@/store/useUIStore";
+import { TbBrandGoogleAnalytics } from "react-icons/tb";
 
 const menuConfig = [
   { icon: <Home size={14} />, label: "Dashboard", link: "/admin/dashboard" },
@@ -18,7 +19,7 @@ const menuConfig = [
   { icon: <Utensils size={14} />, label: "Menu Management", link: "/admin/menus" },
   { icon: <Tags size={14} />, label: "Category Management", link: "/admin/categories" },
   { icon: <ClipboardList size={14} />, label: "Order Management", link: "/admin/orders" },
-  { icon: <Clock size={14} />, label: "Ananlytics", link: "/admin/analytics" },
+  { icon: <TbBrandGoogleAnalytics size={14} />, label: "Ananlytics", link: "/admin/analytics" },
   { icon: <Settings size={14} />, label: "Settings", link: "/admin/settings" },
 ];
 

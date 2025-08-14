@@ -7,6 +7,7 @@ import { useToggleMenuItemAvailability } from "../hook/useMenuItemsServices";
 import { useMenuItemDataStore } from "../store/useMenuItemsDataStore";
 import { useEffect } from "react";
 import { ImSpinner2 } from "react-icons/im"; // spinner icon
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 type Props = {
   menuItem: MenuItem;
@@ -71,7 +72,7 @@ export default function MenuItemCard({ menuItem, index }: Props) {
         </p>
       </div>
       <p className="absolute bottom-3 left-1/2 font-semibold -translate-x-1/2">
-        ₦{menuItem.price.toLocaleString()}
+        {formatPrice(menuItem.price)}
       </p>
     </div>
   );

@@ -2,9 +2,7 @@
 import { Order, OrderStatus } from "@/modules/Orders/types/orders";
 import { FaPrint, FaClock, FaUser } from "react-icons/fa";
 import { getStyle } from "../../Kitchen/utils/getStyle";
-import {
-  useUpdateOrder,
-} from "@/modules/Orders/hooks/useOrderServices";
+import { useUpdateOrder } from "@/modules/Orders/hooks/useOrderServices";
 import { useQueryClient } from "@tanstack/react-query";
 import { convertTo12HourFormat } from "@/shared/utils/convertTo12HourFormat";
 import { useEffect, useState, useRef } from "react";
@@ -15,6 +13,7 @@ import { useReactToPrint } from "react-to-print";
 import Invoice from "@/modules/Orders/components/Invoice";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 import PaymentMethod from "./PaymentMethod";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 type Props = {
   order: Order;
@@ -178,7 +177,7 @@ export default function CashierOrderCard({ order }: Props) {
                 </p>
               </div>
               <p className="font-semibold text-gray-800 text-[13px]">
-                ₦{item.price.toFixed(2)}
+                {formatPrice(item.price)}
               </p>
             </div>
           ))}
@@ -193,7 +192,7 @@ export default function CashierOrderCard({ order }: Props) {
               {order.paymentMethod}
             </p>
           )}
-          <p>₦{order.total.toLocaleString()}</p>
+          <p>{formatPrice(order.total)}</p>
         </section>
 
         {order.status === "completed" && (

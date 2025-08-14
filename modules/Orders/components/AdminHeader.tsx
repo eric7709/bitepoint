@@ -12,6 +12,7 @@ import NotificationDropdown from "@/modules/Kitchen/components/NotificationDropd
 import ProfileDropdown from "@/modules/Kitchen/components/ProfileDropdown";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 import SearchText from "@/modules/Kitchen/components/SearchText";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 export default function AdminHeader() {
   const { orders } = useOrderDataStore();
@@ -37,7 +38,7 @@ export default function AdminHeader() {
             <p className="text-[13px] font-medium">
               Total:{" "}
               <span className="text-sm ml-1 text-blue-600">
-                ₦{total.toLocaleString()}
+                {formatPrice(total)}
               </span>
             </p>
             <NotificationDropdown />

@@ -5,6 +5,7 @@ import AdminTitle from "@/shared/components/AdminTitle";
 import { supabase } from "@/shared/lib/supabase";
 import { useUIStore } from "@/store/useUIStore";
 import { Divide as Hamburger } from "hamburger-react";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState([
@@ -80,7 +81,7 @@ export default function Dashboard() {
         { title: "Orders Today", value: ordersToday, icon: "🛎" },
         {
           title: "Today's Revenue",
-          value: `₦${todaysRevenue.toLocaleString()}`,
+          value: formatPrice(todaysRevenue),
           icon: "💰",
         },
         { title: "Total Menu Items", value: totalMenuItems || 0, icon: "📦" },

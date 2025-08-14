@@ -19,6 +19,7 @@ import { useUpdateOrderStatus } from "../hooks/useOrderServices";
 import { convertTo12HourFormat } from "@/shared/utils/convertTo12HourFormat";
 import { statusBadgeColors } from "../constants/statusBadgeColors";
 import ModalOverlay from "@/shared/components/ModalOverlay";
+import { formatPrice } from "@/shared/utils/formatPrice";
 
 interface AdminOrderCardProps {
   order: Order;
@@ -139,9 +140,7 @@ export default function AdminOrderCard({ order }: AdminOrderCardProps) {
         <h3 className="text-xs font-semibold text-slate-800 mb-2 uppercase tracking-wider">
           Order Items
         </h3>
-        <div className="flex-1">
-          {renderOrderItems()}
-        </div>
+        <div className="flex-1">{renderOrderItems()}</div>
         {/* Total Section - Pushed to bottom */}
         {renderTotalSection()}
       </div>
@@ -248,7 +247,7 @@ export default function AdminOrderCard({ order }: AdminOrderCardProps) {
               </span>
             </div>
             <span className="text-xs font-semibold text-slate-900 ml-2">
-              ₦{item.price.toFixed(2)}
+              {formatPrice(item.price)}
             </span>
           </div>
         ))}
@@ -264,12 +263,13 @@ export default function AdminOrderCard({ order }: AdminOrderCardProps) {
             Total
           </span>
           <span className="text-sm font-bold text-emerald-700">
-            ₦{order.total.toFixed(2)}
+            {formatPrice(order.total)}
           </span>
         </div>
       </div>
     );
   }
+
 
   function renderCancelModal() {
     if (!showCancelModal) return null;
