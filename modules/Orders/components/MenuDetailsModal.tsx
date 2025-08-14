@@ -30,7 +30,7 @@ export default function MenuDetailsModal() {
         <div className="mb-2 flex justify-between items-center">
           <h2 className="text-base font-bold md:text-lg">{item?.name}</h2>
           <span className="text-base md:text-xl font-bold text-green-600">
-            ₦{item?.price.toFixed(2)}
+            ₦{item?.price.toLocaleString()}
           </span>
         </div>
 
