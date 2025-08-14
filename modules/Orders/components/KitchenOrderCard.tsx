@@ -4,6 +4,7 @@ import { getRandomColor } from "@/shared/utils/getRandomColor";
 import { Order } from "@/modules/Orders/types/orders";
 import { Table } from "@/modules/Tables/types/table";
 import { useEffect, useState } from "react";
+import { getStyle } from "../helper/getStyles";
 
 type Props = {
   order: Order;
@@ -29,10 +30,7 @@ export default function KitchenOrderCard({ order }: Props) {
         {/* Optionally show table number here */}
         {table && (
           <div
-            className={`p-2.5 rounded-md font-semibold text-white`}
-            style={{
-              backgroundColor: getRandomColor(),
-            }}
+            className={`p-2.5 ${getStyle(order.status).bg} rounded-md font-semibold text-white`}
           >
             #{table.tableNumber}
           </div>
@@ -46,7 +44,7 @@ export default function KitchenOrderCard({ order }: Props) {
             key={item.id}
           >
             <div className="flex items-center gap-4">
-              <div className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg select-none">
+              <div className="w-7 h-7 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-[17px] select-none">
                 {item.quantity}
               </div>
               <p className="text-gray-800 font-medium text-base capitalize">

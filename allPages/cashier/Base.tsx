@@ -9,7 +9,6 @@ export default function Base() {
   usePendingOrderAlarm();
   useSyncTableDataStore();
   useOrderDataSyncAndSubscribe();
-
   return (
     <div className="flex flex-col h-screen">
       <CashierOrderHeader />
