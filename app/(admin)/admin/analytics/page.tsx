@@ -1,4 +1,4 @@
-import Base from "@/allPages/admin/statistics/Base";
+import Base from "@/allPages/admin/analytics/Base";
 
 export default function page() {
 return <Base />;
