@@ -39,7 +39,6 @@ export default function Base({ table }: Props) {
       setIsPageLoading(false);
     }
   }, [loadingCategories, loadingMenuItems, loadingTables]);
-
   return (
     <div className="h-screen p-4 flex flex-col ">
       <FullPageLoader {...{ isPageLoading }} />

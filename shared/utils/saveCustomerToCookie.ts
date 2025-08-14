@@ -8,8 +8,12 @@ export function saveCustomerToCookie(customer: Customer) {
     const encrypted = CryptoJS.AES.encrypt(serialized, SECRET_KEY).toString();
     const encoded = encodeURIComponent(encrypted);
     setCookie("customer", encoded, {
-      path: "/",                
-    });
+  path: "/",
+  maxAge: 60 * 60 * 24 * 365, // 1 year
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production"
+});
+
   } catch (error) {
     console.error("Failed to encrypt and save customer:", error);
   }

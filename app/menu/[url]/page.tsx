@@ -16,6 +16,5 @@ export default async function Page({
   const resolvedParams = await params;
   const url = resolvedParams.url;
   const table = await TableService.getTableByUrl(url);
-  
   return <Base table={table} />;
 }
