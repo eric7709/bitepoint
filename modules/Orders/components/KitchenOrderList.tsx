@@ -7,7 +7,7 @@ export default function KitchenOrderList() {
   return (
       <div className="flex-1 flex flex-col overflow-y-auto ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-5">
-          {orders.map((order) => (
+          {orders.filter(el => el.status == "pending").map((order) => (
             <KitchenOrderCard key={order.id} {...{ order }} />
           ))}
         </div>

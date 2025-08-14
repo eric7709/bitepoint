@@ -7,6 +7,7 @@ import { supabase } from "@/shared/lib/supabase";
 import { useUIStore } from "@/store/useUIStore";
 import { Divide as Hamburger } from "hamburger-react";
 import { formatPrice } from "@/shared/utils/formatPrice";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState([
@@ -35,7 +36,6 @@ export default function Dashboard() {
     "bg-red-950",
   ];
 
-  // Fetch dashboard stats
   const fetchDashboardData = async () => {
     setLoading(true);
 
@@ -106,11 +106,10 @@ export default function Dashboard() {
     setLoading(false);
   };
 
-  // Poll every 5 seconds
   useEffect(() => {
-    fetchDashboardData(); // initial load
+    fetchDashboardData();
     const intervalId = setInterval(fetchDashboardData, 5000);
-    return () => clearInterval(intervalId); // cleanup
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -137,14 +136,25 @@ export default function Dashboard() {
       <main className="grid flex-1 overflow-y-auto p-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
         {dashboardData.map((item, idx) => (
           <section
-            key={idx}
+            key={item.title}
             className={`${backgrounds[idx]} shadow-lg rounded-xl p-6 flex items-center justify-between text-white hover:shadow-xl transition-all duration-300 hover:scale-[1.01]`}
           >
             <div className="flex flex-col">
               <h3 className="text-sm font-medium opacity-90 mb-1">
                 {item.title}
               </h3>
-              <p className="text-3xl font-bold">{item.value}</p>
+              <AnimatePresence mode="popLayout">
+                <motion.p
+                  key={item.value}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-3xl font-bold"
+                >
+                  {item.value}
+                </motion.p>
+              </AnimatePresence>
             </div>
             <div
               className={`${backgrounds[idx]} bg-opacity-20 border-4 border-white h-20 w-20 grid place-content-center shrink-0 rounded-full`}

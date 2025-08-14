@@ -19,6 +19,7 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
   counts: { pending: 0, completed: 0, cancelled: 0, paid: 0, all: 0 },
   totals: { pending: 0, completed: 0, cancelled: 0, paid: 0, all: 0 },
   isLoading: false,
+
   setPage: (page) => {
     set({ page });
     get().fetchOrders();
@@ -50,8 +51,17 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
 
   fetchOrders: async () => {
     set({ isLoading: true });
-    const { page, limit, search, sortBy, sortOrder, status, dateFrom, dateTo, paymentMethod } =
-      get();
+    const {
+      page,
+      limit,
+      search,
+      sortBy,
+      sortOrder,
+      status,
+      dateFrom,
+      dateTo,
+      paymentMethod,
+    } = get();
     try {
       const { orders, total, totalPages, counts, totals } =
         await OrderService.getAllOrders({
@@ -63,7 +73,7 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
           status,
           dateFrom,
           dateTo,
-          paymentMethod: paymentMethod!
+          paymentMethod: paymentMethod!,
         });
       set({ orders, total, totalPages, counts, totals, isLoading: false });
     } catch (error) {
@@ -72,7 +82,7 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
     }
   },
 
-  addOrder: (order) => {
+  addOrder: async (order) => {
     set((state) => {
       const exists = state.orders.some((o) => o.id === order.id);
       if (!exists) {
@@ -88,14 +98,15 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
       }
       return state;
     });
+
+    await get().fetchOrders(); // ✅ refresh from server
   },
 
-  updateOrder: (id, updates) => {
+  updateOrder: async (id, updates) => {
     set((state) => {
       let newCounts = { ...state.counts };
       const updatedOrders = state.orders.map((o) => {
         if (o.id === id) {
-          // if status changes, adjust counts
           if (updates.status && updates.status !== o.status) {
             const oldStatusKey = o.status as keyof typeof newCounts;
             const newStatusKey = updates.status as keyof typeof newCounts;
@@ -108,9 +119,11 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
       });
       return { orders: updatedOrders, counts: newCounts };
     });
+
+    await get().fetchOrders(); // ✅ refresh from server
   },
 
-  removeOrder: (id) =>
+  removeOrder: async (id) => {
     set((state) => {
       const orderToRemove = state.orders.find((o) => o.id === id);
       if (!orderToRemove) return state;
@@ -123,5 +136,8 @@ export const useOrderDataStore = create<OrderDataStore>((set, get) => ({
           all: Math.max(0, state.counts.all - 1),
         },
       };
-    }),
+    });
+
+    await get().fetchOrders(); // ✅ refresh from server
+  },
 }));

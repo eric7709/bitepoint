@@ -9,11 +9,14 @@ type Handlers<T extends { id: string | number }> = {
 
 export function createRealtimeSubscription<T extends { id: string | number }>(
   table: string,
-  handlers: Handlers<T>,
+  handlers: Handlers<T>
 ) {
   const { onInsert, onUpdate, onDelete } = handlers;
-  let channel: ReturnType<typeof supabase.channel>;
+  let channel: ReturnType<typeof supabase.channel> | null = null;
+
   const subscribe = () => {
+    if (channel) supabase.removeChannel(channel);
+
     channel = supabase
       .channel(`${table}-changes`)
       .on(
@@ -28,27 +31,47 @@ export function createRealtimeSubscription<T extends { id: string | number }>(
           } else if (eventType === "DELETE" && old?.id) {
             onDelete?.(old.id);
           }
-        },
+        }
       )
       .subscribe((status) => {
-        if (status === "CLOSED" || status === "CHANNEL_ERROR") {
-          console.warn(`⚠️ ${table} channel disconnected. Reconnecting...`);
+        if (status === "SUBSCRIBED") {
+          console.log(`✅ Subscribed to ${table} changes`);
+        } else if (status === "CLOSED" || status === "CHANNEL_ERROR") {
+          console.warn(`⚠️ ${table} channel closed. Retrying in 2s...`);
           setTimeout(subscribe, 2000);
         }
       });
   };
+
+  // initial subscribe
   subscribe();
-  // Heartbeat to keep WebSocket alive
+
+  // monitor network status
+  const handleOnline = () => {
+    console.log("🌐 Network reconnected — resubscribing...");
+    subscribe();
+  };
+
+  const handleOffline = () => {
+    console.warn("📴 Network offline — waiting to reconnect...");
+  };
+
+  window.addEventListener("online", handleOnline);
+  window.addEventListener("offline", handleOffline);
+
+  // heartbeat check
   const heartbeat = setInterval(() => {
     if (!channel || channel.state !== "joined") {
-      console.warn(`💔 ${table} heartbeat: channel lost. Reconnecting...`);
-      supabase.removeChannel(channel);
+      console.warn(`💔 ${table} heartbeat: lost channel. Reconnecting...`);
       subscribe();
     }
-  }, 20000); // Adjusted to 25s for balanced pinging
-  // Cleanup
+  }, 15000);
+
+  // cleanup
   return () => {
     clearInterval(heartbeat);
-    supabase.removeChannel(channel);
+    if (channel) supabase.removeChannel(channel);
+    window.removeEventListener("online", handleOnline);
+    window.removeEventListener("offline", handleOffline);
   };
 }
