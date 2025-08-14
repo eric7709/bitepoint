@@ -18,7 +18,7 @@ const menuConfig = [
   { icon: <Utensils size={14} />, label: "Menu Management", link: "/admin/menus" },
   { icon: <Tags size={14} />, label: "Category Management", link: "/admin/categories" },
   { icon: <ClipboardList size={14} />, label: "Order Management", link: "/admin/orders" },
-  { icon: <Clock size={14} />, label: "Sales Reports", link: "/admin/statistics" },
+  { icon: <Clock size={14} />, label: "Ananlytics", link: "/admin/analytics" },
   { icon: <Settings size={14} />, label: "Settings", link: "/admin/settings" },
 ];
 
