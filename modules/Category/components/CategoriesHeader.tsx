@@ -26,7 +26,7 @@ export default function CategoriesHeader() {
           </button>
 
           {/* Title */}
-          <AdminTitle title="Categories" />
+          <AdminTitle title="Category Management" />
 
           {/* Desktop Search */}
           <div className="lg:flex hidden items-center gap-4">

@@ -20,7 +20,7 @@ export default function MenuItemHeader() {
         <button className=" lg:hidden">
           <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
         </button>
-        <AdminTitle title="Menu Items" />
+        <AdminTitle title="Menu Management" />
         <div className="hidden lg:flex items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="relative w-48">

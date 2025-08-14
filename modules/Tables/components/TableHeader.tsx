@@ -22,7 +22,7 @@ export default function TableHeader() {
           <button className=" lg:hidden">
             <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
           </button>
-          <AdminTitle title="Tables" />
+          <AdminTitle title="Tables & Allocation" />
           <div className="lg:flex hidden items-center gap-4">
             <AllocationFilterDropdown />
             <div className="relative w-[300px]">

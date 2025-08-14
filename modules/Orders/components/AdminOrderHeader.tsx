@@ -41,7 +41,7 @@ export default function AdminOrderHeader() {
       <div className="lg:hidden">
         <div className="flex h-16 items-center pr-3 justify-between">
           <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
-          <AdminTitle title="Orders" />
+          <AdminTitle title="Order Management" />
           <Filter onClick={() => setOpen(!isOpened)} />
         </div>
         <div

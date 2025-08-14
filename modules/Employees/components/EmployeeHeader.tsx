@@ -27,7 +27,7 @@ export default function EmployeeHeader() {
           <button className="lg:hidden">
             <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
           </button>
-          <AdminTitle title="Employees" />
+          <AdminTitle title="Staff Management" />
           <div className="lg:flex hidden items-center gap-4">
             <div className="relative w-[300px]">
               <Search
