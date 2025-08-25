@@ -1,111 +1,75 @@
 "use client";
 import React from "react";
-import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { MetricValue } from "../types/analytics";
 import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   metric: MetricValue;
+  idx: number;
 };
 
-export default function MetricCard({ metric }: Props) {
+// 🎨 Solid top strip colors
+const TOP_COLORS = [
+  "bg-indigo-500",
+  "bg-emerald-500",
+  "bg-amber-500",
+  "bg-rose-500",
+  "bg-sky-500",
+];
+
+export default function MetricCard({ metric, idx }: Props) {
   const { total, percentageChange, title } = metric;
+  const strip = TOP_COLORS[idx % TOP_COLORS.length];
 
-  const formatTotal = () => {
-    if (title.includes("revenue") || title.includes("value")) {
-      return formatPrice(total);
-    }
-    if (title.includes("orders")) {
-      return total.toLocaleString();
-    }
-    if (title.includes("rate")) {
-      return `${total.toFixed(2)}`;
-    }
-    return total.toLocaleString();
-  };
+  // total formatting
+  let formattedTotal: string;
+  if (title.toLowerCase().includes("revenue") || title.toLowerCase().includes("value")) {
+    formattedTotal = formatPrice(total);
+  } else if (title.toLowerCase().includes("rate")) {
+    formattedTotal = `${total.toFixed(1)}%`;
+  } else {
+    formattedTotal = total.toLocaleString();
+  }
 
-  const getSubtitle = () => {
-    switch (title.toLowerCase()) {
-      case "total revenue":
-        return "Total earnings";
-      case "total orders":
-        return "Orders served";
-      case "average order value":
-        return "Per order";
-      case "table turnover rate":
-        return "Tables per day";
-      default:
-        return "This period";
-    }
-  };
-
-  const formatPercentageChange = () => {
-    if (percentageChange === 0) return "0.0";
-    const formatted = Math.abs(percentageChange).toFixed(1);
-    return percentageChange > 0 ? `+${formatted}` : `-${formatted}`;
-  };
-
-  const getTrendDisplay = () => {
-    if (percentageChange > 0) {
-      return {
-        icon: <ArrowUpRight className="w-3 h-3 text-emerald-500" />,
-        badge: "bg-emerald-100",
-      };
-    } else if (percentageChange < 0) {
-      return {
-        icon: <ArrowDownRight className="w-3 h-3 text-red-500" />,
-        badge: "bg-red-100",
-      };
-    }
-    return {
-      icon: <Minus className="w-3 h-3 text-gray-500" />,
-      badge: "bg-gray-100",
-    };
-  };
-
-  const trendDisplay = getTrendDisplay();
+  const formattedPercentage = `${percentageChange > 0 ? "+" : ""}${percentageChange.toFixed(1)}%`;
 
   return (
-    <div className="relative rounded-lg p-4 bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
-      <div className="relative z-10 space-y-3">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 capitalize">
-              {title}
-            </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{getSubtitle()}</p>
-          </div>
-          <div className={`flex items-center gap-1 px-2 py-1 rounded-md ${trendDisplay.badge}`}>
-            {trendDisplay.icon}
-            <span className={`text-xs font-semibold ${percentageChange > 0 ? 'text-emerald-600' : percentageChange < 0 ? 'text-red-600' : 'text-gray-600'}`}>
-              {formatPercentageChange()}%
-            </span>
-          </div>
-        </div>
+    <motion.div
+      key={title}
+      whileHover={{ y: -3, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 200, damping: 18 }}
+      className="relative flex flex-col p-6 rounded-lg shadow-md bg-white text-gray-900 border border-gray-200 transition-all duration-300 hover:shadow-lg"
+    >
+      {/* Colored top strip */}
+      <div className={`absolute inset-x-0 top-0 h-1 rounded-t-lg ${strip}`} />
 
-        {/* Value */}
-        <div className="text-2xl font-semibold text-gray-900 dark:text-gray-100 tracking-tight">
-          {formatTotal()}
-        </div>
+      {/* Content */}
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-sm font-medium capitalize text-gray-500">{title}</h3>
+      </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500 dark:text-gray-400">vs Last Period</span>
-          <div className="w-12 h-1 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
-            <div
-              className={`h-full rounded-full transition-all duration-500 ${
-                percentageChange > 0
-                  ? "bg-emerald-500"
-                  : percentageChange < 0
-                  ? "bg-red-500"
-                  : "bg-gray-400"
-              }`}
-              style={{ width: `${Math.min(Math.abs(percentageChange), 100)}%` }}
-            />
-          </div>
+      <div className="flex-grow">
+        <AnimatePresence mode="popLayout">
+          <motion.p
+            key={formattedTotal}
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="text-2xl font-bold"
+          >
+            {formattedTotal}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      <div className="flex justify-between items-center mt-4 pt-4">
+        <span className="text-xs text-gray-400">vs Last Period</span>
+        <div className="flex items-center gap-1">
+          <span className="text-sm font-medium text-gray-600">{formattedPercentage}</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

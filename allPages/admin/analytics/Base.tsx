@@ -15,7 +15,6 @@ import PageLoader from "@/components/PageLoader";
 export default function Base() {
   const { isLoading, fetchAnalytics, analytics, error } =
     useAnalyticsDataStore();
-  // Extract analytics data
   const mostSellingDays = analytics?.mostSellingDaysOfWeek;
   const mostSellingTimesOfDay = analytics?.mostSellingTimesOfDay;
   const mostUsedPaymentMethods = analytics?.mostUsedPaymentMethods;

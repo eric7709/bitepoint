@@ -5,7 +5,7 @@ import { AnalyticsData, AnalyticsDataStore } from "../types/analytics";
 export const useAnalyticsDataStore = create<AnalyticsDataStore>()(
   (set, get) => ({
     analytics: null,
-    isLoading: false,
+    isLoading: true,
     error: null,
     startDate: (() => {
       const date = new Date();
@@ -18,7 +18,6 @@ export const useAnalyticsDataStore = create<AnalyticsDataStore>()(
       set({ startDate: start, endDate: end, label });
       await get().fetchAnalytics();
     },
-
     fetchAnalytics: async () => {
       console.log("🔄 Starting analytics fetch...");
       set({ isLoading: true, error: null });

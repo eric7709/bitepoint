@@ -21,13 +21,13 @@ import { useUser } from "@/modules/Employees/hooks/useUser";
 import { useUIStore } from "@/store/useUIStore";
 
 const menuConfig = [
-  { icon: <Home size={18} />, label: "Dashboard", link: "/admin/dashboard" },
-  { icon: <Users size={18} />, label: "Staff Management", link: "/admin/employees" },
-  { icon: <Table size={18} />, label: "Table Management", link: "/admin/tables" },
-  { icon: <Utensils size={18} />, label: "Menu Management", link: "/admin/menu" },
-  { icon: <Tags size={18} />, label: "Category Management", link: "/admin/categories" },
-  { icon: <ClipboardList size={18} />, label: "Orders", link: "/admin/orders" },
-  { icon: <TbBrandGoogleAnalytics size={18} />, label: "Analytics", link: "/admin/analytics" },
+  { icon: <Home size={18} />, label: "Dashboard", link: "/admin/dashboard" },
+  { icon: <Users size={18} />, label: "Staff Management", link: "/admin/employees" },
+  { icon: <Table size={18} />, label: "Table Management", link: "/admin/tables" },
+  { icon: <Utensils size={18} />, label: "Menu Management", link: "/admin/menu" },
+  { icon: <Tags size={18} />, label: "Category Management", link: "/admin/categories" },
+  { icon: <ClipboardList size={18} />, label: "Orders", link: "/admin/orders" },
+  { icon: <TbBrandGoogleAnalytics size={18} />, label: "Analytics", link: "/admin/analytics" },
 ];
 
 export default function Sidebar() {
@@ -42,22 +42,23 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Overlay for mobile */}
       {drawerOpened && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
           onClick={closeDrawer}
         />
       )}
+
       <div
-        className={`fixed lg:relative w-72 lg:w-64 flex flex-col
+        className={`fixed lg:relative w-full lg:w-64 flex flex-col
           ${drawerOpened ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           ${mounted ? "transition-transform duration-300 ease-out" : ""} 
           top-0 z-50 lg:z-10
-          h-screen bg-white/70 backdrop-blur-xl border-r border-slate-200/50 shadow-xl lg:shadow-none`}
+          h-screen bg-white border-r border-slate-200 shadow-xl lg:shadow-none`}
       >
         {/* Top: Logo + close button */}
-        <div className="flex items-center justify-between px-6 h-16 border-b border-slate-200/40 bg-white/50 backdrop-blur-md">
+        <div className="flex items-center justify-between px-6 h-16 border-b border-slate-200 bg-white">
           <BitePointLogo />
           <button
             className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
@@ -71,7 +72,7 @@ export default function Sidebar() {
         </div>
 
         {/* Menu */}
-        <div className="flex-1 px-4 py-6 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300/50">
+        <div className="flex-1 px-4 py-6 overflow-y-auto">
           <div className="flex flex-col gap-0.5">
             {menuConfig.map((item, i) => (
               <NavItem key={`${item.label}-${i}`} {...item} />
@@ -92,7 +93,7 @@ export default function Sidebar() {
         </div>
 
         {/* Profile */}
-        <div className="p-4 border-t border-slate-200/40 bg-white/40 backdrop-blur-md">
+        <div className="p-4 border-t border-slate-200 bg-white">
           <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all cursor-pointer shadow-sm">
             <div className="relative">
               <img

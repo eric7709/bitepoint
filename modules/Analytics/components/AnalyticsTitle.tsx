@@ -19,24 +19,27 @@ export default function AnalyticsTitle({
   icon: Icon,
   title,
   subtitle,
-  bgColor = "bg-blue-100",
+  bgColor = "bg-white", // default card background
   iconBg = "bg-blue-100",
   iconColor = "text-blue-600",
   iconSize = "w-6 h-6",
   iconWrapperSize = "w-12 h-12",
-  iconWrapperRadius = "rounded-lg",
+  iconWrapperRadius = "rounded-xl",
 }: AnalyticsTitleProps) {
   return (
     <div
-      className={`flex items-center mb-2 gap-4 rounded-xl border border-gray-200 px-4 py-3 shadow-sm hover:shadow-md transition bg-blue-900`}
+      className={`flex items-center gap-4 rounded-xl border border-gray-200/70 px-4 py-3 shadow-sm hover:shadow-md transition duration-300 ${bgColor} mb-3`}
     >
+      {/* Icon wrapper */}
       <div
-        className={`${iconWrapperSize} flex items-center justify-center shadow-md border border-white/30 ${iconWrapperRadius} bg-blue-400/30 backdrop-blur-2xl `}
+        className={`${iconWrapperSize} flex items-center justify-center shadow-sm border border-gray-200/50 ${iconWrapperRadius} ${iconBg}`}
       >
-        <Icon className={`${iconSize}  text-white`} />
+        <Icon className={`${iconSize} ${iconColor}`} />
       </div>
-      <div className="flex flex-col ">
-        <p className="text-base font-semibold text-white">{title}</p>
+
+      {/* Text */}
+      <div className="flex flex-col">
+        <p className="text-base font-semibold text-gray-900">{title}</p>
         {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
       </div>
     </div>

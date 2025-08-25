@@ -22,7 +22,7 @@ export default function Dashboard() {
         <AdminTitle title="Dashboard" />
         <Search className="text-black" size={18} />
       </header>
-      <main className="grid flex-1 overflow-y-auto p-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+      <main className="grid flex-1 overflow-y-auto p-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-2">
         {dashboardData.map((item, idx) => (
           <DashboardCard key={item.title} {...{ item, idx }} />
         ))}

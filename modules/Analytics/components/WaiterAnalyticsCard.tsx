@@ -11,15 +11,14 @@ export default function WaiterAnalyticsCard(props: WaiterAnalytics) {
     totalOrders,
     totalRevenue,
     waiterId,
-    waiterName, 
+    waiterName,
   } = props;
 
-  // Get waiter initials for avatar
   const getWaiterInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -27,7 +26,8 @@ export default function WaiterAnalyticsCard(props: WaiterAnalytics) {
   return (
     <div className="w-full rounded-xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition min-h-[180px] flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3">
+        {/* Waiter Info */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-blue-500 text-white font-semibold shadow text-sm">
             {getWaiterInitials(waiterName)}
@@ -37,7 +37,9 @@ export default function WaiterAnalyticsCard(props: WaiterAnalytics) {
             <p className="text-xs text-gray-500">ID: {waiterId.slice(-8)}</p>
           </div>
         </div>
-        <div className="text-right">
+
+        {/* Revenue */}
+        <div className="text-left sm:text-right">
           <p className="text-lg font-bold text-green-600">
             {formatPrice(totalRevenue)}
           </p>
@@ -52,7 +54,9 @@ export default function WaiterAnalyticsCard(props: WaiterAnalytics) {
           <p className="text-xs text-gray-600">Total Orders</p>
         </div>
         <div className="text-center p-2 bg-gray-50 rounded-lg">
-          <p className="text-lg font-bold text-gray-900">{averageOrdersPerDay.toFixed(1)}</p>
+          <p className="text-lg font-bold text-gray-900">
+            {averageOrdersPerDay.toFixed(1)}
+          </p>
           <p className="text-xs text-gray-600">Orders per Day</p>
         </div>
       </div>
@@ -65,7 +69,7 @@ export default function WaiterAnalyticsCard(props: WaiterAnalytics) {
             {formatPrice(averageRevenuePerOrder)}
           </span>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600">Avg Revenue per Day</span>
           <span className="text-sm font-semibold text-gray-800">

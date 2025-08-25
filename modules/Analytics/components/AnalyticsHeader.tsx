@@ -49,8 +49,8 @@ export default function AnalyticsHeader() {
   const [overlayOpen, setOverlayOpen] = useState(false);
 
   return (
-    <div className="lg:h-16 flex flex-col lg:flex-row relative z-50 justify-between lg:items-center lg:px-4 border-gray-300 border-b">
-      <div className="flex items-center">
+    <div className="h-16 bg-white flex flex-col lg:flex-row relative z-50 justify-between lg:items-center lg:px-4 border-gray-300 border-b">
+      <div className="flex items-center h-full">
         <button className=" lg:hidden">
           <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
         </button>
