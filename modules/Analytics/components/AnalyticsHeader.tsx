@@ -5,7 +5,7 @@ import { Divide as Hamburger } from "hamburger-react";
 import DateRangePicker from "./DateRangePicker";
 import { Filter } from "lucide-react";
 import { useAnalyticsDataStore } from "../store/useAnalyticsDataStore";
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
 
 
 

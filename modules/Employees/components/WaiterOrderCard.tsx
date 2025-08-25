@@ -1,5 +1,6 @@
 import { Order } from "@/modules/Orders/types/orders";
-import { TableService, useTableDataStore } from "@/modules/Tables";
+import { TableService } from "@/modules/Tables/services/tableServices";
+import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { FaClock, FaTimes } from "react-icons/fa";
 
 export default function WaiterOrderCard(order: Order) {

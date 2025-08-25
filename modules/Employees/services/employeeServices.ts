@@ -1,9 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import {
-  CreateEmployee,
-  Employee,
-  UpdateEmployee,
-} from "@/modules/Employees";
+import { CreateEmployee, Employee, UpdateEmployee } from "../types/employee";
+
 
 export class EmployeeService {
   static transformEmployee(employee: any): Employee {

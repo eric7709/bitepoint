@@ -1,6 +1,6 @@
 // CategoryAnalyticsCard.tsx
 "use client";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 import { CategoryAnalytics } from "../types/analytics";
 
 export default function CategoryAnalyticsCard(props: CategoryAnalytics) {

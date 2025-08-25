@@ -1,6 +1,6 @@
 "use client";
 
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 import { MenuItemAnalytics } from "../types/analytics";
 
 export default function MenuItemAnalyticsCard(props: MenuItemAnalytics) {

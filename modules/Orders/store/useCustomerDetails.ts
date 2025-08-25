@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useOrderSelectionStore } from "./useOrderSelectionStore";
 import { useGetOrCreateCustomer } from "@/modules/Customers/hooks/useCustomerSerivces";
-import { saveCustomerToCookie } from "@/utils";
+import { saveCustomerToCookie } from "@/utils/saveCustomerToCookie";
 
 export type CustomerErrors = Partial<Record<keyof CustomerForm, string>>;
 

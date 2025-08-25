@@ -1,8 +1,8 @@
 "use client";
 import Sidebar from "@/components/Sidebar";
-import { Children } from "@/types";
 import PageLoader from "./PageLoader";
 import { usePageLoading } from "@/hooks/usePageLoading";
+import { Children } from "@/types/shared";
 export default function Layout({ children }: Children) {
   usePageLoading();
   return (

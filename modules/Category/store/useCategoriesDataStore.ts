@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CategoryDataStore } from "@/modules/Category";
+import { CategoryDataStore } from "../types/category";
 
 export const useCategoryDataStore = create<CategoryDataStore>(
   (set, get) => ({

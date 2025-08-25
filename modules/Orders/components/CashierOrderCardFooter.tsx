@@ -1,5 +1,5 @@
 "use client";
-import { Order, OrderStatus } from "@/modules/Orders/types/orders";
+import { Order } from "@/modules/Orders/types/orders";
 import { useUpdateOrder } from "@/modules/Orders/hooks/useOrderServices";
 import { useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -7,8 +7,8 @@ import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { Table } from "@/modules/Tables/types/table";
 import { toast } from "react-toastify";
 import { useOrderDataStore } from "../store/useOrderDataStore";
-import { TableService } from "@/modules/Tables";
-import { OrderService } from "../services";
+import { TableService } from "@/modules/Tables/services/tableServices";
+import { OrderService } from "../services/orderServices";
 
 type Props = {
   order: Order;

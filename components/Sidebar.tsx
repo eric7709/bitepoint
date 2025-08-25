@@ -18,7 +18,7 @@ import BitePointLogo from "./Logo";
 import { useLogout } from "@/modules/Employees/hooks/useEmployeesServices";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/modules/Employees/hooks/useUser";
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
 
 const menuConfig = [
   { icon: <Home size={18} />, label: "Dashboard", link: "/admin/dashboard" },

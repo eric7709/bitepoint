@@ -5,7 +5,7 @@ import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import AllocationFilterDropdown from "./AllocationFilterDropdown";
 import { useTableDataStore } from "../store/useTableDataStore";
 import { Divide as Hamburger } from "hamburger-react";
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
 
 export default function TableHeader() {
   const { searchTerm, setSearchTerm } = useTableDataStore();

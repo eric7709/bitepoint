@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
-import { generateRandomPassword, sendEmail } from "@/utils";
+import { generateRandomPassword } from "@/utils/getRandomPassword";
+import { sendEmail } from "@/utils/sendMail";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

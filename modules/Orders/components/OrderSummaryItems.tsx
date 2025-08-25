@@ -2,7 +2,7 @@
 
 import { FaTrashAlt } from "react-icons/fa";
 import { OrderMenutItem } from "../types/orders";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   items: OrderMenutItem[];

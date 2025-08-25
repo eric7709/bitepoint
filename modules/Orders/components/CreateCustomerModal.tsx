@@ -4,7 +4,7 @@ import { Input } from "@/components/Input";
 import { Select } from "@/components/Select";
 import ModalOverlay from "@/components/ModalOverlay";
 import { useCustomerDetails } from "../store/useCustomerDetails";
-import { TITLES } from "@/modules/Customers";
+import { TITLES } from "@/modules/Customers/constants/title";
 
 export default function CreateCustomerModal() {
   const {

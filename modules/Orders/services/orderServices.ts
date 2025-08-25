@@ -7,7 +7,7 @@ import {
   UpdateOrder,
 } from "../types/orders";
 import { generateInvoiceId } from "../utils/generateInvoiceId";
-import { Employee } from "@/modules/Employees";
+import { Employee } from "@/modules/Employees/types/employee";
 
 type GetAllOrdersParams = {
   page: number;

@@ -1,7 +1,8 @@
 "use client";
-import { Loader, NoResultFound } from "@/components";
-import { CashierOrderCard, useOrderDataStore } from "@/modules/Orders";
 import { useEffect, useState } from "react";
+import { useOrderDataStore } from "../store/useOrderDataStore";
+import NoResultFound from "@/components/NoResultFound";
+import CashierOrderCard from "./CashierOrderCard";
 
 export default function CashierOrderList() {
   const { orders, isLoading } = useOrderDataStore();

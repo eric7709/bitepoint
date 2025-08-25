@@ -1,8 +1,8 @@
 "use client";
+import ModalOverlay from "@/components/ModalOverlay";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
-import { ModalOverlay } from "@/components";
 import Image from "next/image";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function MenuDetailsModal() {
   const {

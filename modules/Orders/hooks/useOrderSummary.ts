@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
-import { useCreateOrder } from "../hooks/useOrderServices";
+import { useCreateOrder } from "./useOrderServices";
 import { Customer } from "@/modules/Customers/types/customer";
 import { supabase } from "@/lib/supabase";
 import { useMenuItemDataStore } from "@/modules/MenuItems/store/useMenuItemsDataStore";
@@ -13,7 +13,7 @@ import {
 } from "@/modules/Customers/hooks/useCustomerSerivces";
 import { orderPayloadCreator } from "../utils/payloadCreator";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
-import { getCustomerFromCookie } from "@/utils";
+import { getCustomerFromCookie } from "@/utils/getCustomerFromCookie";
 
 export function useOrderSummary() {
   const {

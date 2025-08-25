@@ -1,5 +1,0 @@
-export{getSelectedItem} from './getSelectedItem'
-export {isSelected} from './isSelected'
-export {filterMenuItems} from './newMenuItems'
-export { normalizeMenuItem} from './normalizeMenuItems'
-export {transformMenuItem, transformMenuItems} from './transformMenuItems'

@@ -1,7 +1,7 @@
 import { normalizeOrder } from "../utils/normalizeOrder";
 import { useOrderDataStore } from "../store/useOrderDataStore";
-import { createRealtimeSubscription } from "@/utils";
-import { Order } from "@/modules/Orders";
+import { Order } from "../types/orders";
+import { createRealtimeSubscription } from "@/utils/createRealTimeSubscription";
 
 export const subscribeToOrders = () => {
   const { addOrder, updateOrder, removeOrder } = useOrderDataStore.getState();

@@ -6,16 +6,12 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import {
-  Login,
-  UpdateEmployee,
-  Employee,
-  CreateEmployee,
-  EmployeeService,
-} from "@/modules/Employees";
-import { supabase } from "@/lib/supabase";
 
-type Variables = { id: string; updates: UpdateEmployee };
+import { supabase } from "@/lib/supabase";
+import { CreateEmployee, Employee, Login, UpdateEmployee } from "../types/employee";
+import { EmployeeService } from "../services/employeeServices";
+
+type Variables = { id: string; updates: UpdateEmployee};
 export const useGetEmployees = () => {
   return useQuery({
     queryKey: ["employees"],

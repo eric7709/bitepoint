@@ -10,7 +10,7 @@ import { useAnalyticsDataStore } from "@/modules/Analytics/store/useAnalyticsDat
 import { useEffect } from "react";
 import MostAnalytics from "@/modules/Analytics/components/MostAnalytics";
 import { Calendar, Clock, CreditCard } from "lucide-react";
-import { PageLoader } from "@/components";
+import PageLoader from "@/components/PageLoader";
 
 export default function Base() {
   const { isLoading, fetchAnalytics, analytics, error } =
@@ -19,7 +19,6 @@ export default function Base() {
   const mostSellingDays = analytics?.mostSellingDaysOfWeek;
   const mostSellingTimesOfDay = analytics?.mostSellingTimesOfDay;
   const mostUsedPaymentMethods = analytics?.mostUsedPaymentMethods;
-
   useEffect(() => {
     fetchAnalytics();
   }, []); // Remove dependencies to prevent infinite loop

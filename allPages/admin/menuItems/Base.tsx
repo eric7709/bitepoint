@@ -6,7 +6,7 @@ import { useSyncMenuItemsDataStore } from "@/modules/MenuItems/hooks/useSyncMenu
 import { useSyncCategoryDataStore } from "@/modules/Category/hooks/useSyncCategoryDataStore";
 import { useSyncEmployeesDataStore } from "@/modules/Employees/hooks/useSyncEmployeesDataStore";
 import CreateMenuItemModal from "@/modules/MenuItems/components/CreateMenuItemModal";
-import { UpdateMenuItemModal } from "@/modules/MenuItems";
+import UpdateMenuItemModal from "@/modules/MenuItems/components/UpdateMenuItemModal";
 
 export default function Base() {
   useSyncMenuItemsDataStore();

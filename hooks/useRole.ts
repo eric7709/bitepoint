@@ -1,6 +1,6 @@
 "use client";
 
-import { Role } from "@/modules/Employees";
+import { Role } from "@/modules/Employees/types/employee";
 import { useUser } from "../modules/Employees/hooks/useUser";
 
 

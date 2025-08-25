@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useOrderDataStore } from '@/modules/Orders/store/useOrderDataStore';
 import { supabase } from '@/lib/supabase';
 import { Order } from '../types/orders';
-import { playCustomBeep } from '@/utils';
+import { playCustomBeep } from '@/utils/playCustomBeep';
 
 export function usePendingOrderAlarm() {
   const { counts, fetchOrders, addOrder, updateOrder, removeOrder } =

@@ -1,12 +1,7 @@
 import { supabase } from "@/lib/supabase";
-import {
-  Table,
-  TableFormData,
-  TableFormError,
-  TableFormInput,
-  TableResult,
-} from "@/modules/Tables";
-import { Employee, EmployeeService } from "@/modules/Employees";
+import { Table, TableFormData, TableFormError, TableFormInput, TableResult } from "../types/table";
+import { Employee } from "@/modules/Employees/types/employee";
+import { EmployeeService } from "@/modules/Employees/services/employeeServices";
 
 export class TableService {
   static containerClass(isActive: boolean) {

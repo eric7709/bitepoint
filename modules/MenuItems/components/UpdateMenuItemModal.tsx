@@ -1,5 +1,11 @@
-import { IsAvailable, MenuItemImage, useMenuItemsUpdate } from '@/modules/MenuItems'
-import { Input, ModalOverlay, Select, Textarea,  } from '@/components';
+import ModalOverlay from "@/components/ModalOverlay";
+import { useMenuItemsUpdate } from "../hooks/useMenuItemsUpdate";
+import MenuItemImage from "./MenuItemImage";
+import { Input } from "@/components/Input";
+import { Textarea } from "@/components/Textarea";
+import { Select } from "@/components/Select";
+import IsAvailable from "./IsAvailable";
+
 export default function UpdateMenuItemModal() {
   const {
     toggleAvailability,

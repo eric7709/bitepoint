@@ -1,6 +1,8 @@
 import { Minus, Plus } from "lucide-react";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
-import { isSelected, getSelectedItem, MenuItem} from "@/modules/MenuItems";
+import { getSelectedItem } from "@/modules/MenuItems/utils/getSelectedItem";
+import { MenuItem } from "@/modules/MenuItems/types/menuItems";
+import { isSelected } from "@/modules/MenuItems/utils/isSelected";
 
 
 export default function MenuItemCardQuantityTakeHome(menuItem: MenuItem) {

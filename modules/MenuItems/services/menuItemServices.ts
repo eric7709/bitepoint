@@ -1,14 +1,9 @@
 import { supabase } from "@/lib/supabase";
-import {
-  CreateMenuItem,
-  Image,
-  MenuItem,
-  transformMenuItem,
-  transformMenuItems,
-  UpdateMenuItem,
-  uploadImageToSupabase,
-} from "@/modules/MenuItems";
-import { PromiseString } from "@/types";
+
+import { PromiseString } from "@/types/shared";
+import { CreateMenuItem, Image, MenuItem, UpdateMenuItem } from "../types/menuItems";
+import { transformMenuItem, transformMenuItems } from "../utils/transformMenuItems";
+import { uploadImageToSupabase } from "./uploadImageToSupabase";
 
 export class MenuItemService {
   static async getAllMenuItems(): Promise<MenuItem[]> {

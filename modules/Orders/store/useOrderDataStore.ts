@@ -6,7 +6,7 @@ import {
   PaymentMethod,
 } from "../types/orders"; 
 import { OrderService } from "../services/orderServices";
-import { createRealtimeSubscription } from "@/utils";
+import { createRealtimeSubscription } from "@/utils/createRealTimeSubscription";
 
 export const useOrderDataStore = create<OrderDataStore>((set, get) => {
   let unsubscribe: () => void;

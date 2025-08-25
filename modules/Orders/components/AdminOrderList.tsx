@@ -1,7 +1,8 @@
 "use client";
 import AdminOrderCard from "./AdminOrderCard";
 import { useOrderDataStore } from "../store/useOrderDataStore";
-import { Loader, NoResultFound } from "@/components";
+import NoResultFound from "@/components/NoResultFound";
+import Loader from "@/components/Loader";
 
 export default function AdminOrderList() {
   const { orders, isLoading } = useOrderDataStore();

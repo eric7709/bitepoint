@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import {
-  Order,
-  Invoice,
-  CashierOrderCardHeader,
-  CashierOrderCardFooter,
-  CashierOrderCardItems,
-  CashierOrderCardPaymentMethod,
-  CashierOrderCardTotal,
-  OrderService,
-} from "@/modules/Orders";
+import { OrderService } from "../services/orderServices";
+import { Order } from "../types/orders";
+import CashierOrderCardHeader from "./CashierOrderCardHeader";
+import CashierOrderCardItems from "./CashierOrderCardItems";
+import CashierOrderCardPaymentMethod from "./CashierOrderCardPaymentMethod";
+import CashierOrderCardTotal from "./CashierOrderCardTotal";
+import CashierOrderCardFooter from "./CashierOrderCardFooter";
+import Invoice from "./Invoice";
+
 export default function CashierOrderCard(order: Order) {
   const { waiterName } = order;
   const [paymentMethod, setPaymentMethod] = useState<string>("");

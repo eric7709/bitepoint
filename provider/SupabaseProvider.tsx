@@ -1,6 +1,6 @@
 'use client';
 import { supabase } from '@/lib/supabase';
-import { Children } from '@/types';
+import { Children } from '@/types/shared';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 

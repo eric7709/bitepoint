@@ -1,5 +1,5 @@
 "use client";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 import { CustomerAnalytics } from "../types/analytics";
 
 export default function CustomerAnalyticsCard(props: CustomerAnalytics) {

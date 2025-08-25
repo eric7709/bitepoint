@@ -7,12 +7,8 @@ import { Login } from "../types/employee";
 import BitePointLogo from "@/components/Logo";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import {
-  ADMIN_REDIRECT_LINK,
-  CASHIER_REDIRECT_LINK,
-  KITCHEN_REDIRECT_LINK,
-  WAITER_REDIRECT_LINK,
-} from "@/constants";
+import { ADMIN_REDIRECT_LINK, CASHIER_REDIRECT_LINK, KITCHEN_REDIRECT_LINK, WAITER_REDIRECT_LINK } from "@/constants/redirectUrls";
+
 
 export default function LoginForm() {
   const {

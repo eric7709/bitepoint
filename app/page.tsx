@@ -1,13 +1,5 @@
 "use client";
-import {
-  ADMIN_REDIRECT_LINK,
-  CASHIER_REDIRECT_LINK,
-  KITCHEN_REDIRECT_LINK,
-  WAITER_REDIRECT_LINK,
-} from "@/constants";
 
-const LOGIN_LINK = "/auth/login";
-import { useUser } from "@/modules/Employees";
 import Link from "next/link";
 import { useEffect } from "react";
 import {
@@ -16,6 +8,8 @@ import {
   Utensils,
   CreditCard,
 } from "lucide-react";
+import { useUser } from "@/modules/Employees/hooks/useUser";
+import { ADMIN_REDIRECT_LINK, CASHIER_REDIRECT_LINK, KITCHEN_REDIRECT_LINK, LOGIN_LINK, WAITER_REDIRECT_LINK } from "@/constants/redirectUrls";
 
 export default function HomePage() {
   const { loading, user } = useUser();

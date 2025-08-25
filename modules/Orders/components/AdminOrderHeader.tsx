@@ -1,18 +1,18 @@
 "use client";
-import { AdminTitle, ActiveRevenue } from "@/modules/Orders";
 import { Divide as Hamburger } from "hamburger-react";
 import { Filter } from "lucide-react";
 import { useState } from "react";
-import {
-  PaymentMethodDropdown,
-  SearchText,
-  StatusDropdown,
-  DateDropdown,
-  NotificationDropdown,
-  SortDropdown,
-  ScalingCircle,
-} from "@/modules/Kitchen";
-import { useUIStore } from "@/store";
+
+import { useUIStore } from "@/store/useUIStore";
+import AdminTitle from "./AdminTitle";
+import ActiveRevenue from "./ActiveRevenue";
+import NotificationDropdown from "@/modules/Kitchen/components/NotificationDropdown";
+import SearchText from "@/modules/Kitchen/components/SearchText";
+import StatusDropdown from "@/modules/Kitchen/components/StatusDropdown";
+import DateDropdown from "@/modules/Kitchen/components/DateDropdown";
+import SortDropdown from "@/modules/Kitchen/components/SortDropdown";
+import PaymentMethodDropdown from "@/modules/Kitchen/components/PaymentMethodDropdown";
+import ScalingCircle from "@/modules/Kitchen/components/ScalingCircle";
 
 export default function AdminOrderHeader() {
   const { toggleDrawer, drawerOpened } = useUIStore();

@@ -1,17 +1,17 @@
 "use client";
+import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useTableDataStore, Table, TableService } from "@/modules/Tables";
-import {
-  useOrderDataStore,
-  Order,
-  useUpdateOrderStatus,
-  CARD_STYLES,
-  AdminOrderCardHeader,
-  AdminOrderCardMetaData,
-  AdminOrderCardRenderItemsAndTotal,
-  AdminOrderCardCancelModal,
-} from "@/modules/Orders";
+import { useOrderDataStore } from "../store/useOrderDataStore";
+import { Order } from "../types/orders";
+import { useUpdateOrderStatus } from "../hooks/useOrderServices";
+import { Table } from "@/modules/Tables/types/table";
+import { TableService } from "@/modules/Tables/services/tableServices";
+import { CARD_STYLES } from "../constants/cardStyles";
+import AdminOrderCardHeader from "./AdminOrderCardHeader";
+import AdminOrderCardMetaData from "./AdminOrderCardMetaData";
+import AdminOrderCardCancelModal from "./AdminOrderCardCancelModal";
+import AdminOrderCardRenderItemsAndTotal from "./AdminOrderCardRenderItemsAndTotal";
 
 
 export default function AdminOrderCard(order : Order) {

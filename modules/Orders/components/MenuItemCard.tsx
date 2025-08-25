@@ -1,9 +1,8 @@
-import { MenuItem, isSelected } from "@/modules/MenuItems";
-import {
-  useOrderSelectionStore,
-  MenuItemCardQuantityTakeHome,
-  MenuItemCardNameDescriptionPrice,
-} from "@/modules/Orders";
+import { MenuItem } from "@/modules/MenuItems/types/menuItems";
+import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
+import { isSelected } from "@/modules/MenuItems/utils/isSelected";
+import MenuItemCardNameDescriptionPrice from "./MenuItemCardNameDescriptionPrice";
+import MenuItemCardQuantityTakeHome from "./MenuItemCardQuantityTakeHome";
 
 type Props = {
   menuItem: MenuItem;

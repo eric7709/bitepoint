@@ -1,6 +1,6 @@
 "use client";
-import { useUser } from "@/modules/Employees";
 import WaiterOrdersList from "@/modules/Employees/components/WaiterOrderList";
+import { useUser } from "@/modules/Employees/hooks/useUser";
 import { useOrderDataSyncAndSubscribe } from "@/modules/Orders/hooks/useOrderDataSyncAndSubscribe";
 import Header from "@/modules/Tables/components/Header";
 import WaiterTables from "@/modules/Tables/components/WaiterTables";

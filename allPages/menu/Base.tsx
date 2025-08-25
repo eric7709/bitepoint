@@ -1,26 +1,20 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  CreateOrderButton,
-  MenuPageHeader,
-  MenuItemList,
-  MenuPageSearch,
-  MenuPageCategories,
-  MenuCartPage,
-  OrderSummaryModal,
-  MenuDetailsModal,
-  CreateCustomerModal,
-  useOrderSelectionStore,
-} from "@/modules/Orders";
-import {
-  useSyncCategoryDataStore,
-} from "@/modules/Category";
-import {
-  useSyncTableDataStore,
-  Table,
-} from "@/modules/Tables";
-import { useMenuItemsDataSyncAndSubscribe } from "@/modules/MenuItems";
+import { useOrderSelectionStore } from "@/modules/Orders/store/useOrderSelectionStore";
+import { useSyncCategoryDataStore } from "@/modules/Category/hooks/useSyncCategoryDataStore";
+import { useSyncTableDataStore } from "@/modules/Tables/hooks/useSyncTableDataStore";
+import { useMenuItemsDataSyncAndSubscribe } from "@/modules/MenuItems/hooks/useMenuItemsDataSyncAndSubscribe";
+import OrderSummaryModal from "@/modules/Orders/components/OrderSummaryModal";
+import MenuPageHeader from "@/modules/Orders/components/MenuPageHeader";
+import MenuPageSearch from "@/modules/Orders/components/MenuPageSearch";
+import MenuDetailsModal from "@/modules/Orders/components/MenuDetailsModal";
+import MenuPageCategories from "@/modules/Orders/components/MenuPageCategories";
+import MenuItemList from "@/modules/Orders/components/MenuItemList";
+import CreateOrderButton from "@/modules/Orders/components/CreateOrderButton";
+import CreateCustomerModal from "@/modules/Orders/components/CreateCustomerModal";
+import MenuCartPage from "@/modules/Orders/components/MenuCartPage";
+import { Table } from "@/modules/Tables/types/table";
 
 type Props = {
   table: Table | null;

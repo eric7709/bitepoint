@@ -3,7 +3,7 @@ import { useState } from "react";
 import { getStyle } from "../utils/getStyle";
 import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
-import { STATUSES } from "../constants";
+import { STATUSES } from "../constants/statuses";
 
 
 type Props = {

@@ -3,7 +3,7 @@ import BitePointLogo from "@/components/Logo";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   type: "kitchen" | "cahsier" | "admin"

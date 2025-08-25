@@ -1,4 +1,4 @@
-import { BACKGROUNDS } from "@/modules/Analytics";
+import { BACKGROUNDS } from "@/modules/Analytics/constants/backgrounds";
 import { AnimatePresence, motion } from "framer-motion";
 
 

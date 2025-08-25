@@ -1,6 +1,7 @@
 "use client";
 
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
+
 
 export default function FullPageLoader() {
   const { isPageLoading } = useUIStore();

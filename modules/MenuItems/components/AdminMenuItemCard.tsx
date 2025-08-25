@@ -6,7 +6,7 @@ import { useToggleMenuItemAvailability } from "../hooks/useMenuItemsServices";
 import { useMenuItemDataStore } from "../store/useMenuItemsDataStore";
 import { useEffect } from "react";
 import { ImSpinner2 } from "react-icons/im"; 
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   menuItem: MenuItem;

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { supabase } from "@/lib/supabase";
 import { transformEmployee } from "../utils/transformEmployees";
-import { AuthStore } from "../types";
+import { AuthStore } from "../types/employee";
 
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,

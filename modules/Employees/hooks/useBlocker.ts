@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "./useUser";
-import { Role } from "../types";
+import { Role } from "../types/employee";
 
 interface UseRoleBlockerOptions {
   allowedRoles: Role | Role[];

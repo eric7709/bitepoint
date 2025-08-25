@@ -1,13 +1,13 @@
 "use client";
-import {
-  useTableSelectionStore,
-  useAllocateWaiter,
-  useTableDataStore,
-} from "@/modules/Tables";
-import { ModalOverlay } from "@/components";
+
+import { useEmployeeDataStore } from "@/modules/Employees/store/useEmployeeDataStore";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useGetEmployees, useEmployeeDataStore } from "@/modules/Employees";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { useAllocateWaiter } from "../hooks/useTableServices";
+import { useGetEmployees } from "@/modules/Employees/hooks/useEmployeesServices";
+import ModalOverlay from "@/components/ModalOverlay";
 
 export default function AllocateModal() {
   const [waiterId, setWaiterId] = useState("");

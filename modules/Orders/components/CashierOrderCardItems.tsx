@@ -1,4 +1,4 @@
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 import { Order } from "../types/orders";
 import { House } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CategorySelectionStore } from "@/modules/Category";
+import { CategorySelectionStore } from "../types/category";
 
 export const useCategorySelectionStore = create<CategorySelectionStore>(
   (set) => ({

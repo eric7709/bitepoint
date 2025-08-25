@@ -2,7 +2,7 @@
 import React from "react";
 import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
 import { MetricValue } from "../types/analytics";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   metric: MetricValue;

@@ -1,6 +1,7 @@
 "use client";
-import { formatPrice, getCustomerFromCookie } from "@/utils";
+import { getCustomerFromCookie } from "@/utils/getCustomerFromCookie";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function CreateOrderButton() {
   const { getTotal, items, setModal } = useOrderSelectionStore();

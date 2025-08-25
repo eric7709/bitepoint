@@ -1,7 +1,9 @@
 "use client";
 import { X } from "lucide-react";
 import { useCreateUpdateStaff } from "../hooks/useCreateUpdateStaff";
-import { Input, ModalOverlay, Select } from "@/components";
+import ModalOverlay from "@/components/ModalOverlay";
+import { Input } from "@/components/Input";
+import { Select } from "@/components/Select";
 
 export default function CreateUpdateEmployeeModal() {
   const {

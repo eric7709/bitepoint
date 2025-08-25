@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { Table } from "@/modules/Tables/types/table";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { Order } from "../types/orders";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   order: Order;

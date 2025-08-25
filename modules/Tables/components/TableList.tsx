@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import NoResultFound from "@/components/NoResultFound";
 import TableCard from "./TableCard";
 import { Plus } from "lucide-react";
-import { useTableDataStore, useTableSelectionStore } from "../store";
-import { PageLoader } from "@/components";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import PageLoader from "@/components/PageLoader";
 
 export default function TableList() {
   const { filteredTables, isLoading } = useTableDataStore();

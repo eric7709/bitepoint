@@ -2,15 +2,13 @@
 import { MdOutlineEdit } from "react-icons/md";
 import { FaRegTrashAlt, FaTimes } from "react-icons/fa";
 import { BsQrCode } from "react-icons/bs";
-import {
-  useTableSelectionStore,
-  Table,
-  TableModalType,
-  ACTIONS,
-  TableService,
-} from "@/modules/Tables";
+
 import { BsPersonCheck } from "react-icons/bs";
 import { BsPersonDash } from "react-icons/bs";
+import { Table, TableModalType } from "../types/table";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { ACTIONS } from "../constants/tables";
+import { TableService } from "../services/tableServices";
 
 type Props = {
   table: Table;

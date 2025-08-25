@@ -1,12 +1,10 @@
 "use client";
 import { X as MultiplyIcon } from "lucide-react";
-import {
-  getCancelButtonStyles,
-  Order,
-  OrderStatus,
-  CARD_STYLES,
-  STATUS_BADGE_COLORS,
-} from "@/modules/Orders";
+import { Order, OrderStatus } from "../types/orders";
+import { getCancelButtonStyles } from "../constants/cancelButtonStyle";
+import { CARD_STYLES } from "../constants/cardStyles";
+import { STATUS_BADGE_COLORS } from "../constants/statusBadgeColors";
+
 
 type Props = {
   order: Order;

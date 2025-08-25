@@ -6,7 +6,7 @@ import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import { useMenuItemDataStore } from "../store/useMenuItemsDataStore";
 import CategoryDropdown from "@/modules/Category/components/CategoriesDropdown";
 import AvailabilityDropdown from "@/modules/Category/components/AvailableDropdown";
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
 
 export default function MenuItemHeader() {
   const { searchTerm, setSearchTerm } = useMenuItemDataStore();
@@ -47,7 +47,6 @@ export default function MenuItemHeader() {
           <Search size={20} />
         </button>
       </div>
-
       <div
         className={`fixed inset-0 z-50 bg-white p-4 flex flex-col gap-3 transition-opacity duration-300 ${
           overlayOpen ? "opacity-100 visible" : "opacity-0 invisible"

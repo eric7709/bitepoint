@@ -1,8 +1,8 @@
 import { ClientWrapper } from "@/provider/ClientWrapper";
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
-import { Children } from "@/types";
 import "./globals.css";
+import { Children } from "@/types/shared";
 
 const poppins = Poppins({
   subsets: ["latin"],

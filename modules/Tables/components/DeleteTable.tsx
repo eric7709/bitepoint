@@ -1,11 +1,9 @@
 "use client";
-import { ConfirmDeleteModal } from "@/components";
-import {
-  useDeleteTable,
-  useTableSelectionStore,
-  useTableDataStore,
-} from "@/modules/Tables";
 import { toast } from "react-toastify";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { useDeleteTable } from "../hooks/useTableServices";
+import { useTableDataStore } from "../store/useTableDataStore";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 
 export default function DeleteTable() {
   const { activeModal, closeModal, activeTable, clearActiveTable } =

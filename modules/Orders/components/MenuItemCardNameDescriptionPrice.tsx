@@ -1,5 +1,5 @@
-import { MenuItem } from "@/modules/MenuItems";
-import { formatPrice } from "@/utils";
+import { MenuItem } from "@/modules/MenuItems/types/menuItems";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function MenuItemCardNameDescriptionPrice(menuItem: MenuItem) {
   return (

@@ -2,7 +2,7 @@ import { Table } from "@/modules/Tables/types/table";
 import { Order } from "../types/orders";
 import { Clock, CreditCard, ShoppingBag, User, Utensils } from "lucide-react";
 import Image from "next/image";
-import { convertTo12HourFormat } from "@/utils";
+import { convertTo12HourFormat } from "@/utils/convertTo12HourFormat";
 
 type Props = {
   currentTable: Table | null;

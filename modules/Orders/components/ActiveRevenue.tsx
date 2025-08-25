@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 
 export default function ActiveRevenue() {

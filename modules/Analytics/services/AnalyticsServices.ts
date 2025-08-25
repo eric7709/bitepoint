@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import { PromiseNumber } from "@/types";
-import { formatPrice } from "@/utils";
+import { PromiseNumber } from "@/types/shared";
+import { formatPrice } from "@/utils/formatPrice";
 
 export class AnalyticsServices {
   // ===== ORDERS =====

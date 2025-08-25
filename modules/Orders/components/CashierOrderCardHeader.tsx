@@ -5,9 +5,9 @@ import { getStyle } from "../../Kitchen/utils/getStyle";
 import { useRef } from "react";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { useReactToPrint } from "react-to-print";
-import { convertTo12HourFormat } from "@/utils";
-import { TableService } from "@/modules/Tables";
 import { Clock } from "lucide-react";
+import { TableService } from "@/modules/Tables/services/tableServices";
+import { convertTo12HourFormat } from "@/utils/convertTo12HourFormat";
 
 type Props = {
   order: Order;

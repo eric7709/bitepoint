@@ -16,7 +16,7 @@ import {
   menuItemUpdateInitialErrors,
 } from "../constants/menuItemsForm";
 import { useCategoryDataStore } from "@/modules/Category/store/useCategoriesDataStore";
-import { PromiseVoid } from "@/types";
+import { PromiseVoid } from "@/types/shared";
 
 export function useMenuItemsUpdate() {
   const { setModal, activeModal, closeModal, selectedMenuItem } =

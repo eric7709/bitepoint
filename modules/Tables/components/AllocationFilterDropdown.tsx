@@ -1,8 +1,9 @@
 "use client";
-import { useClickOutside } from "@/hooks";
+import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useState } from "react";
-import { useTableDataStore, FILTER_TABLE_DATA } from "@/modules/Tables"; // update this path if needed
 import { TiArrowSortedDown } from "react-icons/ti";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { FILTER_TABLE_DATA } from "../constants/tables";
 
 export default function AllocationFilterDropdown() {
   const { setAllocationFilter } = useTableDataStore();

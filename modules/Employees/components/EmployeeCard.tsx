@@ -1,7 +1,8 @@
 "use client";
 import { FaUserCircle } from "react-icons/fa";
-import { Employee, useEmployeeSelectionStore } from "@/modules/Employees";
 import { Trash2 } from "lucide-react";
+import { useEmployeeSelectionStore } from "../store/useEmployeeSelectionStore";
+import { Employee } from "../types/employee";
 
 export default function EmployeeCard(employee: Employee) {
   const { selectEmployee, setModal } = useEmployeeSelectionStore();

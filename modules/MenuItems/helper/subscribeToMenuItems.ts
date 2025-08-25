@@ -1,4 +1,4 @@
-import { createRealtimeSubscription } from "@/utils";
+import { createRealtimeSubscription } from "@/utils/createRealTimeSubscription";
 import { useMenuItemDataStore } from "../store/useMenuItemsDataStore";
 import { normalizeMenuItem } from "../utils/normalizeMenuItems";
 export const subscribeToMenuItems = () => {

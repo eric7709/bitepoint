@@ -1,13 +1,11 @@
 "use client";
 import { useEffect } from "react";
-import {
-  OrderSummaryHeader,
-  OrderSummaryItems,
-  OrderSummaryFooter,
-  useOrderSelectionStore,
-  useOrderSummary
-} from "@/modules/Orders";
-import { ModalOverlay } from "@/components";
+import { useOrderSummary } from "../hooks/useOrderSummary";
+import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
+import ModalOverlay from "@/components/ModalOverlay";
+import OrderSummaryHeader from "./OrderSummaryHeader";
+import OrderSummaryItems from "./OrderSummaryItems";
+import OrderSummaryFooter from "./OrderSummaryFooter";
 
 export default function OrderSummaryModal() {
   const {

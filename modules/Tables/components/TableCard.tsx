@@ -1,6 +1,8 @@
 "use client";
 import { FaUtensils } from "react-icons/fa";
-import { useTableSelectionStore, Table, TableOptions } from "@/modules/Tables";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { Table } from "../types/table";
+import TableOptions from "./TableOptions";
 
 export default function TableCard(table: Table) {
   const { setActiveTable } = useTableSelectionStore();

@@ -1,6 +1,4 @@
-"use server"
 import { transporter } from "./transporter";
-
 export async function sendEmail(to: string,name: string, password: string, userId: string) {
   try {
     await transporter.sendMail({

@@ -1,6 +1,7 @@
-import { formatPrice, getCustomerFromCookie } from "@/utils";
+import { getCustomerFromCookie } from "@/utils/getCustomerFromCookie";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
 import { FaTrash, FaShoppingCart } from "react-icons/fa";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function MenuCardFooter() {
   const { items, getTotal, setModal, resetItems } = useOrderSelectionStore();

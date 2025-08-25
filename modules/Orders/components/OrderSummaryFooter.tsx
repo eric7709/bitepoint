@@ -1,6 +1,6 @@
 "use client";
 
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 
 type Props = {

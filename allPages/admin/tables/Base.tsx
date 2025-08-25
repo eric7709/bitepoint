@@ -8,9 +8,9 @@ import AllocateModal from "@/modules/Tables/components/AllocateModal";
 import DeleteTable from "@/modules/Tables/components/DeleteTable";
 import { useSyncTableDataStore } from "@/modules/Tables/hooks/useSyncTableDataStore";
 import { useSyncEmployeesDataStore } from "@/modules/Employees/hooks/useSyncEmployeesDataStore";
-import { NoResultFound, PageLoader } from "@/components";
-import { useEffect, useState } from "react";
-import { useTableDataStore } from "@/modules/Tables";
+import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
+import PageLoader from "@/components/PageLoader";
+import NoResultFound from "@/components/NoResultFound";
 
 export default function Base() {
   useSyncEmployeesDataStore();

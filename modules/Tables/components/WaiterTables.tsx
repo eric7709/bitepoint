@@ -1,7 +1,8 @@
 "use client";
-import { useTableDataStore, TableService } from "@/modules/Tables";
-import { Employee } from "@/modules/Employees";
+import { Employee } from "@/modules/Employees/types/employee";
 import { TableColumnsSplit } from "lucide-react";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { TableService } from "../services/tableServices";
 
 type Props = {
   loading: boolean;

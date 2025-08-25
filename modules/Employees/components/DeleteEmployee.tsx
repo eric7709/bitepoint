@@ -1,11 +1,9 @@
 "use client";
 import { toast } from "react-toastify";
-import {
-  useEmployeeDataStore,
-  useDeleteEmployee,
-  useEmployeeSelectionStore,
-} from "@/modules/Employees";
-import { ConfirmDeleteModal } from "@/components";
+import { useEmployeeSelectionStore } from "../store/useEmployeeSelectionStore";
+import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
+import { useDeleteEmployee } from "../hooks/useEmployeesServices";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 
 export default function DeleteEmployee() {
   const { activeModal, selectedEmployee, closeModal, clearEmployee } =

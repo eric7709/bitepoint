@@ -1,6 +1,6 @@
 'use client';
 import { ADMIN_REDIRECT_LINK, CASHIER_REDIRECT_LINK, KITCHEN_REDIRECT_LINK, WAITER_REDIRECT_LINK} from '@/constants/redirectUrls';
-import { useRole } from '@/hooks';
+import { useRole } from '@/hooks/useRole';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 

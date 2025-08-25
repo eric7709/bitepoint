@@ -1,17 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  useEmployeeRegister,
-  useUpdateEmployee,
-  CreateEmployee,
-  Employee,
-  UpdateEmployee,
-  useEmployeeSelectionStore,
-  useEmployeeDataStore,
-  useUser,
-} from "@/modules/Employees";
+
 import { toast } from "react-toastify";
 import { useGetAllTables } from "@/modules/Tables/hooks/useTableServices";
+import { useEmployeeSelectionStore } from "../store/useEmployeeSelectionStore";
+import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
+import { useUser } from "./useUser";
+import { CreateEmployee, Employee, UpdateEmployee } from "../types/employee";
+import { useEmployeeRegister, useUpdateEmployee } from "./useEmployeesServices";
 
 type FieldError = {
   field?: string;

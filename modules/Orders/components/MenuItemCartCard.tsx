@@ -1,9 +1,10 @@
-import { OrderMenutItem, useOrderSelectionStore } from "@/modules/Orders";
 import { LiaTimesSolid } from "react-icons/lia";
 import { FaTrashAlt } from "react-icons/fa";
-import { getSelectedItem } from "@/modules/MenuItems";
 import { Minus, Plus } from "lucide-react";
-import { formatPrice } from "@/utils";
+import { OrderMenutItem } from "../types/orders";
+import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
+import { getSelectedItem } from "@/modules/MenuItems/utils/getSelectedItem";
+import { formatPrice } from "@/utils/formatPrice";
 
 export default function MenuItemCartCard(item: OrderMenutItem) {
   const {

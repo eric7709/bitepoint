@@ -2,7 +2,7 @@ import React from "react";
 import { MostMeasurementAnalytics } from "../types/analytics";
 import AnalyticsTitle from "./AnalyticsTitle";
 import { LucideIcon } from "lucide-react";
-import { formatPrice } from "@/utils";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   title: string;

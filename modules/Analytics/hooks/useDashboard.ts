@@ -1,7 +1,7 @@
 import { AnalyticsServices } from "@/modules/Analytics/services/AnalyticsServices";
 import { useEffect, useState } from "react";
-import { DAHSBOARD_INITIAL_STATES } from "@/modules/Analytics";
-import { useUIStore } from "@/store";
+import { DAHSBOARD_INITIAL_STATES } from "../constants/data";
+import { useUIStore } from "@/store/useUIStore";
 
 export const useDashboard = () => {
   const [dashboardData, setDashboardData] = useState(DAHSBOARD_INITIAL_STATES);

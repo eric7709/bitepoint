@@ -4,7 +4,7 @@ import { Search, X } from "lucide-react";
 import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import { useCategoryDataStore } from "../store/useCategoriesDataStore";
 import { Divide as Hamburger } from "hamburger-react";
-import { useUIStore } from "@/store";
+import { useUIStore } from "@/store/useUIStore";
 
 export default function CategoriesHeader() {
   const { searchTerm, setSearchTerm } = useCategoryDataStore();

@@ -1,12 +1,10 @@
 "use client";
-import { ModalOverlay } from "@/components";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import {
-  useDeallocateWaiter,
-  useTableSelectionStore,
-  useTableDataStore,
-} from "@/modules/Tables";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { useDeallocateWaiter } from "../hooks/useTableServices";
+import ModalOverlay from "@/components/ModalOverlay";
 
 export default function DeallocateModal() {
   const { activeModal, closeModal, activeTable, clearActiveTable } =

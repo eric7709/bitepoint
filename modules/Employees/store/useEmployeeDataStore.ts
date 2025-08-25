@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { EmployeeDataStore } from "@/modules/Employees";
+import { EmployeeDataStore } from "../types/employee";
 
 export const useEmployeeDataStore = create<EmployeeDataStore>((set, get) => ({
   employees: [],

@@ -1,17 +1,13 @@
 "use client";
+import { useEmployeeDataStore } from "@/modules/Employees/store/useEmployeeDataStore";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useEmployeeDataStore } from "@/modules/Employees";
-import {
-  TableService,
-  TABLE_FORM_VALUE_CREATE,
-  useTableDataStore,
-  TableFormError,
-  useTableSelectionStore,
-  useCreateTable,
-  useUpdateTable,
-  TableFormInput,
-} from "@/modules/Tables";
+import { useTableSelectionStore } from "../store/useTableSelectionStore";
+import { useTableDataStore } from "../store/useTableDataStore";
+import { useCreateTable, useUpdateTable } from "./useTableServices";
+import { TABLE_FORM_VALUE_CREATE } from "../constants/tables";
+import { TableFormError, TableFormInput } from "../types/table";
+import { TableService } from "../services/tableServices";
 
 export const useTableForm = () => {
   const { activeTable, activeModal, closeModal, clearActiveTable } =

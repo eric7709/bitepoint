@@ -1,8 +1,8 @@
 "use client";
-import { Employee } from "@/modules/Employees";
-import { OrderService, useOrderDataStore } from "@/modules/Orders";
-import { Loader } from "@/components";
+import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
+import { Employee } from "../types/employee";
 import WaiterOrderCard from "./WaiterOrderCard";
+import { OrderService } from "@/modules/Orders/services/orderServices";
 
 type Props = {
   loading: boolean;
