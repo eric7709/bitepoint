@@ -1,11 +1,13 @@
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import {
   CreateOrder,
   Order,
+  OrderStatus,
   PaymentMethod,
   UpdateOrder,
 } from "../types/orders";
 import { generateInvoiceId } from "../utils/generateInvoiceId";
+import { Employee } from "@/modules/Employees";
 
 type GetAllOrdersParams = {
   page: number;
@@ -70,6 +72,63 @@ function convertSortByToSnakeCase(sortBy: keyof Order): string {
   return sortByMap[sortBy] || (sortBy as string);
 }
 export class OrderService {
+  // Get waiters pending Orders
+  static getWaitersPendingOrders(
+    orders: Order[],
+    user: Employee | null
+  ): Order[] | [] {
+    const today = new Date().toISOString().split("T")[0];
+    const waiterOrders = orders.filter((order) => {
+      if (!order.createdAt) return false;
+      const orderDate = new Date(order.createdAt).toISOString().split("T")[0];
+      return (
+        order.waiterId === user?.id &&
+        orderDate === today &&
+        order.status === "pending"
+      );
+    });
+    return waiterOrders;
+  }
+
+  static getNextOrderStatus(order: Order): OrderStatus {
+    if (order.status === "cancelled") return "cancelled";
+    const sequence: OrderStatus[] = ["pending", "completed", "paid"];
+    const index = sequence.indexOf(order.status);
+    return index < sequence.length - 1 ? sequence[index + 1] : order.status;
+  }
+
+  static getOrderButtonText(order: Order): string {
+    switch (order.status) {
+      case "pending":
+        return "Start Preparing";
+      case "completed":
+        return "Complete";
+      case "paid":
+        return "Paid";
+      case "cancelled":
+        return "Cancelled";
+      default:
+        return "Mark Complete";
+    }
+  }
+
+  static getCurrentDateTime(): string {
+    return new Date().toLocaleString("en-US", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  }
+
+  static getOrderTotal(orders: Order[]) {
+    const total = orders.reduce((acc, order) => {
+      const orderTotal = order.items?.reduce((sum, item) => {
+        return sum + (item.price || 0) * (item.quantity || 0);
+      }, 0);
+      return acc + orderTotal;
+    }, 0);
+    return total;
+  }
+
   static async getAllOrders(params: GetAllOrdersParams) {
     const {
       page,
@@ -87,7 +146,6 @@ export class OrderService {
       let q = supabase
         .from("orders")
         .select("*", { count: "exact", head: false });
-
       if (search) {
         const searchTerm = `%${search}%`;
         q = q.or(
@@ -101,14 +159,11 @@ export class OrderService {
       }
       return q;
     };
-
     // Main paginated query
     let query = buildQuery().range((page - 1) * limit, page * limit - 1);
-
     if (status && status !== "all") {
       query = query.eq("status", status);
     }
-
     if (sortBy) {
       const column =
         sortBy === "paymentMethod"
@@ -116,10 +171,8 @@ export class OrderService {
           : convertSortByToSnakeCase(sortBy);
       query = query.order(column, { ascending: sortOrder === "asc" });
     }
-
     const { data, count, error } = await query;
     if (error) throw new Error(error.message);
-
     // Count helper
     const countOnly = async (status?: string, paymentMethodFilter?: string) => {
       let q = buildQuery();
@@ -139,7 +192,6 @@ export class OrderService {
     // Total price helper
     const totalOnly = async (status?: string, paymentMethodFilter?: string) => {
       let q = supabase.from("orders").select("total", { head: false });
-
       if (dateFrom) q = q.gte("created_at", dateFrom);
       if (dateTo) q = q.lte("created_at", dateTo);
       if (status) {
@@ -148,10 +200,8 @@ export class OrderService {
       if (paymentMethodFilter && paymentMethodFilter !== "all") {
         q = q.eq("payment_method", paymentMethodFilter);
       }
-
       const { data, error } = await q;
       if (error) return 0;
-
       return data?.reduce((sum, row) => sum + (row.total ?? 0), 0) ?? 0;
     };
 
@@ -179,10 +229,8 @@ export class OrderService {
       totalOnly("paid", paymentMethod),
       totalOnly(undefined, paymentMethod),
     ]);
-
     const total = count ?? 0;
     const totalPages = Math.ceil(total / limit);
-
     return {
       orders: convertOrdersArray(data ?? []),
       total,
@@ -210,9 +258,15 @@ export class OrderService {
       .select("*")
       .eq("id", id)
       .single();
-
     if (error) throw new Error(`Fetch failed: ${error.message}`);
     return data ? convertOrderFromSnakeCase(data) : null;
+  }
+
+  static generateInvoiceId() {
+    const date = new Date();
+    const yyyymmdd = date.toISOString().slice(0, 10).replace(/-/g, "");
+    const randomPart = Math.floor(100 + Math.random() * 900);
+    return `INV-${yyyymmdd}-${randomPart}`;
   }
 
   static async createOrder(payload: CreateOrder): Promise<Order> {
@@ -229,7 +283,7 @@ export class OrderService {
         customer_name: payload.customerName ?? null,
         customer_id: payload.customerId ?? null,
         customer_title: payload.customerTitle ?? null,
-        invoice_id: generateInvoiceId() ?? null,
+        invoice_id: this.generateInvoiceId() ?? null,
       })
       .select("*")
       .single();
@@ -264,10 +318,7 @@ export class OrderService {
         ([_, value]) => value !== undefined && value !== ""
       )
     );
-
-    // Manually convert camelCase to snake_case
     const updateData: any = {};
-
     if (filteredUpdates.items !== undefined)
       updateData.items = filteredUpdates.items;
     if (filteredUpdates.total !== undefined)
@@ -286,18 +337,12 @@ export class OrderService {
       updateData.updated_at = filteredUpdates.updatedAt;
     if (filteredUpdates.invoiceId !== undefined)
       updateData.invoice_id = filteredUpdates.invoiceId;
-
-    console.log("Update data being sent:", updateData);
-
     const { data, error } = await supabase
       .from("orders")
       .update(updateData)
       .eq("id", id)
       .select("*")
       .single();
-
-    console.log("Supabase response:", { data, error });
-
     if (error) throw new Error(`Update failed: ${error.message}`);
     return data ? convertOrderFromSnakeCase(data) : null;
   }
@@ -315,10 +360,8 @@ export class OrderService {
       .from("orders")
       .select("id", { count: "exact", head: true })
       .eq("status", "pending");
-
     if (dateFrom) query = query.gte("created_at", dateFrom);
     if (dateTo) query = query.lte("created_at", dateTo);
-
     const { count, error } = await query;
     if (error) throw new Error(error.message);
     return count ?? 0;
@@ -329,11 +372,9 @@ export class OrderService {
       .from("orders")
       .select("id", { count: "exact", head: true })
       .eq("status", "pending");
-
     if (error) throw new Error(error.message);
     return count ?? 0;
   }
-
   static async getActiveCountFiltered(
     dateFrom?: string,
     dateTo?: string

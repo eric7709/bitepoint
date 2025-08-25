@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import { Search, X } from "lucide-react";
-import AdminTitle from "@/shared/components/AdminTitle";
+import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import { useCategoryDataStore } from "../store/useCategoriesDataStore";
-import { useUIStore } from "@/store/useUIStore";
 import { Divide as Hamburger } from "hamburger-react";
+import { useUIStore } from "@/store";
 
 export default function CategoriesHeader() {
   const { searchTerm, setSearchTerm } = useCategoryDataStore();

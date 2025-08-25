@@ -1,21 +1,22 @@
-"use client"
+"use client";
+import { Employee } from "@/modules/Employees";
+import { OrderService, useOrderDataStore } from "@/modules/Orders";
+import { Loader } from "@/components";
 import WaiterOrderCard from "./WaiterOrderCard";
-import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
-import { useAuth } from "../hooks/useAuth";
-import Loader from "@/shared/components/Loader";
 
-export default function WaiterOrderList() {
+type Props = {
+  loading: boolean;
+  user: Employee | null;
+};
+
+export default function WaiterOrdersList({ loading, user }: Props) {
   const { orders } = useOrderDataStore();
-  const { user, loading } = useAuth();
-  if (loading) return <Loader />;
-  if (!user) return <p className="text-center text-gray-500 mt-4">No user found.</p>;
-  const myOrders = orders.filter((el) => el.waiterId === user.id);
-  if (myOrders.length === 0)
-    return <p className="text-center text-gray-500 mt-4">No orders assigned to you.</p>;
+
+  const waiterOrders = OrderService.getWaitersPendingOrders(orders, user);
   return (
-    <div>
-      {myOrders.map((order) => (
-        <WaiterOrderCard key={order.invoiceId} order={order} />
+    <div className="flex-1 overflow-y-auto space-y-4 mt-4">
+      {waiterOrders?.map((order) => (
+        <WaiterOrderCard {...order} key={order.id} />
       ))}
     </div>
   );

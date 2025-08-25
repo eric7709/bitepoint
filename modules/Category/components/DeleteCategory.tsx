@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import ConfirmDeleteModal from "@/shared/components/ConfirmDeleteModal";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 import { toast } from "react-toastify";
 import { useDeleteCategory } from "../hooks/useCategoryServices";
 import { useCategoryDataStore } from "../store/useCategoriesDataStore";

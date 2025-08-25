@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/shared/lib/supabaseAdmin";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { transformEmployees } from "@/modules/Employees/utils/transformEmployees";
 
 export async function GET() {

@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { MenuItem, UseMenuItemDataStore } from "../types/menuItems";
+import { MenuItem, MenuItemDataStore } from "../types/menuItems";
 
-export const useMenuItemDataStore = create<UseMenuItemDataStore>((set, get) => ({
+export const useMenuItemDataStore = create<MenuItemDataStore>((set, get) => ({
   menuItems: [],
   searchTerm: "",
   sortBy: "name",
@@ -11,17 +11,13 @@ export const useMenuItemDataStore = create<UseMenuItemDataStore>((set, get) => (
   selectedCategory: null,
   selectedAvailability: null, // 🆕 Added availability filter
   setMenuItems: (items) => set({ menuItems: items, error: null }),
-  
-
   addMenuItem: (item) =>
     set((state) => ({
       menuItems: [item, ...state.menuItems],
       error: null,
     })),
-
   updateMenuItem: (id, updates) =>
     set((state) => ({
-
       menuItems: state.menuItems.map((menuItem) =>
         menuItem.id === id ? { ...menuItem, ...updates } : menuItem
       ),

@@ -1,10 +1,6 @@
-import Layout from "@/shared/components/Layout";
-import { Children } from "@/shared/types/children";
+import Layout from "@/components/Layout";
+import { Children } from "@/types";
 
 export default function layout({ children }: Children) {
-  return (
-    <Layout>
-      {children}
-    </Layout>
-  );
+  return <Layout>{children}</Layout>;
 }

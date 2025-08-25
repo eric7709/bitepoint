@@ -1,8 +1,7 @@
 "use client";
-import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
-import { Employee } from "@/modules/Employees/types/employee";
-import Loader from "@/shared/components/Loader";
-import { TableColumnsSplit } from "lucide-react"; // Replaced Table with DiningTable for a more relevant icon
+import { useTableDataStore, TableService } from "@/modules/Tables";
+import { Employee } from "@/modules/Employees";
+import { TableColumnsSplit } from "lucide-react";
 
 type Props = {
   loading: boolean;
@@ -10,10 +9,9 @@ type Props = {
 };
 
 export default function WaiterTables(props: Props) {
-  const { loading, user } = props;
+  const { user } = props;
   const { tables } = useTableDataStore();
-  const myTables = tables.filter((el) => el.waiterId === user?.id);
-  if (loading) return <Loader />;
+  const myTables = TableService.getWaitersTables(tables, user);
   if (!user) {
     return (
       <div className="flex flex-1 justify-center items-center h-40 text-gray-500 text-sm">
@@ -29,7 +27,6 @@ export default function WaiterTables(props: Props) {
       </div>
     );
   }
-
   return (
     <div className="mt-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">

@@ -1,19 +1,35 @@
 "use client";
-import { useTableSelectionStore } from "../store/useTableSelectionStore";
-import { useTableDataStore } from "../store/useTableDataStore";
-import NoResultFound from "@/shared/components/NoResultFound";
-import Loader from "@/shared/components/Loader";
+import { useEffect, useState } from "react";
+import NoResultFound from "@/components/NoResultFound";
 import TableCard from "./TableCard";
 import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useTableDataStore, useTableSelectionStore } from "../store";
+import { PageLoader } from "@/components";
 
 export default function TableList() {
-  const { filteredTables } = useTableDataStore();
+  const { filteredTables, isLoading } = useTableDataStore();
   const { setModal } = useTableSelectionStore();
   const tables = filteredTables();
-  if (tables.length === 0) return <NoResultFound />;
+  const [localLoading, setLocalLoading] = useState(true);
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => setLocalLoading(false), 300);
+      return () => clearTimeout(timer);
+    } else {
+      setLocalLoading(true);
+    }
+  }, [isLoading]);
+
+  if (localLoading) {
+    return <PageLoader />;
+  }
+
+  if (tables.length === 0) {
+    return <NoResultFound />;
+  }
+
   return (
-    <div className="">
+    <div className="z-20 relative">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <div
           onClick={() => setModal("create")}
@@ -30,7 +46,7 @@ export default function TableList() {
           </span>
         </div>
         {tables.map((table) => (
-          <TableCard key={table.id} table={table} />
+          <TableCard key={table.id} {...table} />
         ))}
       </div>
     </div>

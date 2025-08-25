@@ -1,6 +1,32 @@
-export const menuItemsForm = [
-  { name: "name", label: "Name", type: "text" },
-  { name: "price", label: "Price", type: "number" },
-  { name: "description", label: "Description", type: "textarea" },
-  { name: "categoryId", label: "Category ID", type: "select" },
-];
+export const menuItemCreationInitialValues = {
+  name: "",
+  description: "",
+  price: "",
+  categoryId: "",
+  isAvailable: true,
+};
+
+export const menuItemUpdateInitialValues = {
+  name: "",
+  description: "",
+  price: "",
+  categoryId: "",
+  id: "",
+  isAvailable: true,
+  imageUrl: ""
+};
+ 
+export const menuItemCreationInitialErrors = {
+  name: "",
+  description: "",
+  price: "",
+  categoryId: "",
+};
+ 
+export const menuItemUpdateInitialErrors = {
+  name: "",
+  description: "",
+  price: "",
+  categoryId: "",
+  id: ""
+};

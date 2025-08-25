@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Search, X } from "lucide-react";
-import AdminTitle from "@/shared/components/AdminTitle";
+import { AdminTitle } from "@/components";
 import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
-import { useUIStore } from "@/store/useUIStore";
 import { Divide as Hamburger } from "hamburger-react";
+import { useUIStore } from "@/store";
 
 export default function EmployeeHeader() {
   const { filterEmployees } = useEmployeeDataStore();
   const [value, setValue] = useState("");
   const [overlayOpen, setOverlayOpen] = useState(false);
   const { toggleDrawer, drawerOpened } = useUIStore();
-
   useEffect(() => {
     filterEmployees(value);
   }, [value, filterEmployees]);

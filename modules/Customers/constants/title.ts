@@ -1,4 +1,4 @@
-export const titles = [
+export const TITLES = [
   "",
   "Mr",
   "Mrs",

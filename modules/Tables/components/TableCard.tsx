@@ -1,18 +1,10 @@
 "use client";
 import { FaUtensils } from "react-icons/fa";
-import TableOptions from "./TableOptions";
-import { useTableSelectionStore } from "../store/useTableSelectionStore";
-import { Table } from "../types/table";
+import { useTableSelectionStore, Table, TableOptions } from "@/modules/Tables";
 
-type Props = {
-  table?: Table | null; // safer typing
-};
-
-export default function TableCard({ table }: Props) {
+export default function TableCard(table: Table) {
   const { setActiveTable } = useTableSelectionStore();
-
   if (!table) return null;
-
   const hasWaiter = !!table.waiter;
   const allocatedColors = [
     "bg-blue-950",
@@ -26,7 +18,6 @@ export default function TableCard({ table }: Props) {
   const handleClick = () => {
     setActiveTable(table);
   };
-
   return (
     <div
       onClick={handleClick}

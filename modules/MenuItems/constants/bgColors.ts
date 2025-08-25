@@ -1,5 +1,4 @@
-// Dark Tailwind background colors (800–900, plus 950 where available)
-const baseBgColors = [
+export const baseBgColors = [
   // Reds
   "bg-red-800", "bg-red-900",
   // Greens

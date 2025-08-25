@@ -1,5 +1,4 @@
 "use client";
-import NoResultFound from "@/shared/components/NoResultFound";
 import { useCategoryDataStore } from "../store/useCategoriesDataStore";
 import CategoryItem from "./CategoryItem";
 import { useCategorySelectionStore } from "../store/useCategoriesSelectionStore";

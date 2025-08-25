@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { getStyle } from "../utils/getStyle";
-import { statuses } from "../constants/statuses";
-import { useClickOutside } from "@/shared/hooks/useOutsideClick";
+import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
+import { STATUSES } from "../constants";
 
 
 type Props = {
@@ -24,14 +24,14 @@ export default function StatusDropdown(props: Props) {
       >
         <div className="flex items-center gap-2">
           <div
-            className={`h-3 w-3 ${getStyle(statuses[active][1]).bg} ${getStyle(statuses[active][1]).border} border rounded-full`}
+            className={`h-3 w-3 ${getStyle(STATUSES[active][1]).bg} ${getStyle(STATUSES[active][1]).border} border rounded-full`}
           ></div>
           <p className="capitalize text-xs font-medium">
-            {statuses[active][1]}
+            {STATUSES[active][1]}
           </p>
         </div>
         <p className="font-semibold text-xs">
-          {counts[statuses[active][1]] || 0}
+          {counts[STATUSES[active][1]] || 0}
         </p>
       </div>
 
@@ -45,7 +45,7 @@ export default function StatusDropdown(props: Props) {
           Filter by status
         </p>
         <div className="space-y-1">
-          {statuses.map(([label, value], key) => (
+          {STATUSES.map(([label, value], key) => (
             <div
               onClick={(e) => {
                 setActive(key);

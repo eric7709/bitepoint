@@ -1,35 +1,24 @@
 "use client";
 import MenuItemHeader from "@/modules/MenuItems/components/MenuItemHeader";
-import CreateMenuItemForm from "@/modules/MenuItems/components/CreateUpdateMenuItemModal";
-import MenuItemList from "@/modules/MenuItems/components/MenuItemList";
+import AdminMenuItemList from "@/modules/MenuItems/components/AdminMenuItemList";
 import DeleteMenuItem from "@/modules/MenuItems/components/DeleteMenuItem";
-import { useSyncMenuItemsDataStore } from "@/modules/MenuItems/hook/useSyncMenuItemsDataStore";
+import { useSyncMenuItemsDataStore } from "@/modules/MenuItems/hooks/useSyncMenuItemsDataStore";
 import { useSyncCategoryDataStore } from "@/modules/Category/hooks/useSyncCategoryDataStore";
-import { useMenuItemDataStore } from "@/modules/MenuItems/store/useMenuItemsDataStore";
-import { useCategoryDataStore } from "@/modules/Category/store/useCategoriesDataStore";
-import { useUIStore } from "@/store/useUIStore";
-import { useEffect } from "react";
+import { useSyncEmployeesDataStore } from "@/modules/Employees/hooks/useSyncEmployeesDataStore";
+import CreateMenuItemModal from "@/modules/MenuItems/components/CreateMenuItemModal";
+import { UpdateMenuItemModal } from "@/modules/MenuItems";
 
 export default function Base() {
   useSyncMenuItemsDataStore();
   useSyncCategoryDataStore();
-  const [{ isLoading: loadingMenuItems }, { isLoading: loadingCategory }] = [
-    useMenuItemDataStore(),
-    useCategoryDataStore(),
-  ];
-  const { stopLoading } = useUIStore();
-  useEffect(() => {
-    if (!loadingCategory && !loadingMenuItems) {
-      stopLoading();
-    }
-  }, [loadingMenuItems, loadingCategory]);
-
+  useSyncEmployeesDataStore();
   return (
     <div className="h-screen flex flex-col">
       <MenuItemHeader />
       <div className="flex-1 scrollbar-hide overflow-y-auto">
-        <CreateMenuItemForm />
-        <MenuItemList />
+        <CreateMenuItemModal />
+        <UpdateMenuItemModal />
+        <AdminMenuItemList />
         <DeleteMenuItem />
       </div>
     </div>

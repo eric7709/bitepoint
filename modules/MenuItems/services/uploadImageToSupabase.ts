@@ -1,4 +1,4 @@
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 export const uploadImageToSupabase = async (file: File) => {
   const fileExt = file.name.split(".").pop();

@@ -1,5 +1,5 @@
-import { LoginForm } from "@/modules/Employees/components/Login";
-import RedirectIfAuthenticated from "@/shared/components/RedirectIfAuthenticated";
+import { LoginForm } from "@/modules/Employees";
+import RedirectIfAuthenticated from "@/components/RedirectIfAuthenticated";
 
 export default function page() {
   return (

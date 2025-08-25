@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { supabase } from "@/shared/lib/supabase";
-import { UseAuthStore, Employee } from "../types/employee";
+import { supabase } from "@/lib/supabase";
 import { transformEmployee } from "../utils/transformEmployees";
+import { AuthStore } from "../types";
 
-export const useAuthStore = create<UseAuthStore>((set) => ({
+export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   loading: false,
   login: (user) => set({ user }),
@@ -13,7 +13,6 @@ export const useAuthStore = create<UseAuthStore>((set) => ({
   },
   fetchUser: async () => {
     set({ loading: true });
-    // 1️⃣ Get current auth user
     const { data: authData, error: authError } = await supabase.auth.getUser();
     if (authError || !authData.user) {
       set({ user: null, loading: false });
@@ -24,8 +23,6 @@ export const useAuthStore = create<UseAuthStore>((set) => ({
       set({ user: null, loading: false });
       return;
     }
-
-    // 2️⃣ Fetch employee details
     const { data: employee, error: dbError } = await supabase
       .from("employees")
       .select("*")
@@ -37,11 +34,7 @@ export const useAuthStore = create<UseAuthStore>((set) => ({
       set({ user: null, loading: false });
       return;
     }
-
-    // 3️⃣ Transform to camelCase
     const transformed = transformEmployee(employee);
-
-    // 4️⃣ Store in state
     set({ user: transformed, loading: false });
   },
 }));

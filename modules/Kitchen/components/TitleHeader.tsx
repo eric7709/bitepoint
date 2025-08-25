@@ -1,9 +1,9 @@
 "use client";
-import BitePointLogo from "@/shared/components/Logo";
+import BitePointLogo from "@/components/Logo";
 import NotificationDropdown from "./NotificationDropdown";
 import ProfileDropdown from "./ProfileDropdown";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
-import { formatPrice } from "@/shared/utils/formatPrice";
+import { formatPrice } from "@/utils";
 
 type Props = {
   type: "kitchen" | "cahsier" | "admin"

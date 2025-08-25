@@ -8,8 +8,8 @@ import KitchenOrderList from "@/modules/Orders/components/KitchenOrderList";
 export default function Base() {
   usePendingOrderAlarm();
   useSyncTableDataStore();
-  useOrderDataSyncAndSubscribe()
-   return (
+  useOrderDataSyncAndSubscribe();
+  return (
     <div className="h-screen flex flex-col">
       <KitchenOrderHeader />
       <KitchenOrderList />

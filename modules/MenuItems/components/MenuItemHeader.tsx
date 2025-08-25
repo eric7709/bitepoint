@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { Divide as Hamburger } from "hamburger-react";
 import { Search, X } from "lucide-react";
-import AdminTitle from "@/shared/components/AdminTitle";
+import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import { useMenuItemDataStore } from "../store/useMenuItemsDataStore";
 import CategoryDropdown from "@/modules/Category/components/CategoriesDropdown";
 import AvailabilityDropdown from "@/modules/Category/components/AvailableDropdown";
-import { useUIStore } from "@/store/useUIStore";
+import { useUIStore } from "@/store";
 
 export default function MenuItemHeader() {
   const { searchTerm, setSearchTerm } = useMenuItemDataStore();
@@ -15,7 +15,6 @@ export default function MenuItemHeader() {
 
   return (
     <>
-      {/* Desktop header */}
       <div className="flex items-center justify-between lg:px-4 h-16 border-b border-gray-200 bg-white gap-3">
         <button className=" lg:hidden">
           <Hamburger size={18} toggled={drawerOpened} toggle={toggleDrawer} />
@@ -33,7 +32,7 @@ export default function MenuItemHeader() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 type="text"
                 placeholder="Search Menu items..."
-                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-400"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring focus:ring-blue-400"
               />
             </div>
             <CategoryDropdown />
@@ -49,7 +48,6 @@ export default function MenuItemHeader() {
         </button>
       </div>
 
-      {/* Overlay for mobile filters/search */}
       <div
         className={`fixed inset-0 z-50 bg-white p-4 flex flex-col gap-3 transition-opacity duration-300 ${
           overlayOpen ? "opacity-100 visible" : "opacity-0 invisible"

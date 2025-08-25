@@ -5,8 +5,6 @@ export type Customer = {
   phone: string | null;
   title: string;
   discount?: number
-  discount_type?: string | null
-  discount_expiry?: string | null
   createdAt?: string;
 }
 
@@ -47,7 +45,7 @@ export interface CustomerForm {
   name: string;
   title: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   discount?: number
 }
 

@@ -8,15 +8,24 @@ export const useOrderSelectionStore = create<UseOrderSelectionStore>(
   (set, get) => ({
     // SEARCH & FILTER
     searchTerm: "",
-    category: "all",
-    changeCategory: (category) => {
-      set({ category });
+    selectedCategory: "all",
+    cartModalOpened: false,
+    toggleCartModal: () =>
+      set((state) => ({
+        cartModalOpened: !state.cartModalOpened,
+      })),
+    closeCartModal: () =>
+      set({
+        cartModalOpened: false,
+      }),
+    changeSelectedCategory: (category) => {
+      set({ selectedCategory: category });
     },
     changeSearchTerm: (e) => set({ searchTerm: e.target.value }),
     clearSearchTerm: () => set({ searchTerm: "" }),
-    resetFields: () => set({ searchTerm: "", category: "all" }),
+    resetFields: () => set({ searchTerm: "", selectedCategory: "all" }),
     filterMenuItems: (menuItems: MenuItem[]) => {
-      const { searchTerm, category } = get();
+      const { searchTerm, selectedCategory } = get();
       return menuItems.filter((item) => {
         const matchesText =
           !searchTerm ||
@@ -24,10 +33,12 @@ export const useOrderSelectionStore = create<UseOrderSelectionStore>(
           item.description?.toLowerCase().includes(searchTerm.toLowerCase());
         const itemCategoryName = item.category?.name?.toLowerCase() || "";
         const matchesCategory =
-          category === "all" || itemCategoryName === category.toLowerCase();
+          selectedCategory === "all" ||
+          itemCategoryName === selectedCategory.toLowerCase();
         return matchesText && matchesCategory;
       });
     },
+
     // MODAL
     activeModal: null,
     setModal: (value) => set({ activeModal: value }),
@@ -48,15 +59,15 @@ export const useOrderSelectionStore = create<UseOrderSelectionStore>(
     itemDetails: null,
     setItemDetails: (itemDetails) => set({ itemDetails }),
     clearItemDetails: () => set({ itemDetails: null }),
-
     addMenuItem: (item) => {
       const exists = get().items.some((i) => i.id === item.id);
       if (!exists) {
         set((state) => ({
-          items: [...state.items, { ...item, quantity: 1 }],
+          items: [...state.items, { ...item, quantity: 1, takeHome: false }],
         }));
       }
     },
+
     removeMenuItem: (id) =>
       set((state) => ({
         items: state.items.filter((item) => item.id !== id),
@@ -69,6 +80,19 @@ export const useOrderSelectionStore = create<UseOrderSelectionStore>(
             : item
         ),
       })),
+    toggleTakeHome: (id: string) => {
+      const newItems = get().items.map((el) => {
+        if (el.id == id) {
+          return {
+            ...el,
+            takeHome: !el.takeHome,
+          };
+        }
+        return el;
+      });
+      set({ items: newItems });
+    },
+
     decreaseQuantity: (id) =>
       set((state) => ({
         items: state.items

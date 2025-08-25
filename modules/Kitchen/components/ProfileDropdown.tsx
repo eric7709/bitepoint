@@ -1,19 +1,19 @@
 "use client";
-import { useClickOutside } from "@/shared/hooks/useOutsideClick";
+import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { CiSettings } from "react-icons/ci";
 import { useLogout } from "@/modules/Employees/hooks/useEmployeesServices";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/modules/Employees/hooks/useAuth";
+import { useUser } from "@/modules/Employees/hooks/useUser";
 
 export default function ProfileDropdown() {
   const [opened, setOpen] = useState(false);
   const { mutate: logout } = useLogout();
   const router = useRouter();
   const ref = useClickOutside(() => setOpen(false));
-  const { loading, user } = useAuth();
+  const { loading, user } = useUser();
 
   const handleToggle = () => {
     if (!loading && user) {
@@ -59,10 +59,6 @@ export default function ProfileDropdown() {
 
         {!loading && (
           <div className="border-t border-gray-200 p-3 space-y-2">
-            <div className="flex cursor-pointer hover:text-blue-700 duration-300 hover:font-medium text-blue-500 items-center gap-2">
-              <CiSettings size={18} />
-              <p>Settings</p>
-            </div>
             <div
               onClick={() => {
                 logout();

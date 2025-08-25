@@ -1,14 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Input } from "@/shared/components/Input";
-import ModalOverlay from "@/shared/components/ModalOverlay";
+import { Input } from "@/components/Input";
+import ModalOverlay from "@/components/ModalOverlay";
 import { useCategorySelectionStore } from "../store/useCategoriesSelectionStore";
 import { useCategoryDataStore } from "../store/useCategoriesDataStore";
 import {
   useCreateCategory,
   useUpdateCategory,
 } from "../hooks/useCategoryServices";
+import { useMenuItemDataStore } from "@/modules/MenuItems/store/useMenuItemsDataStore";
+import { useGetAllMenuItems } from "@/modules/MenuItems/hooks/useMenuItemsServices";
 
 export default function CreateUpdateCategoryModal() {
   const { activeModal, closeModal, selectedCategory } =
@@ -16,6 +18,9 @@ export default function CreateUpdateCategoryModal() {
 
   const { addCategory, updateCategory: updateCategoryRedux } =
     useCategoryDataStore();
+
+  const { setMenuItems } = useMenuItemDataStore();
+  const { data: menuItems, refetch } = useGetAllMenuItems();
 
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -29,7 +34,12 @@ export default function CreateUpdateCategoryModal() {
   const isCreateMode = activeModal === "create";
   const isUpdateMode = activeModal === "update";
 
-  // Fill input on modal open
+  useEffect(() => {
+    if (menuItems) {
+      setMenuItems(menuItems);
+    }
+  }, [menuItems, setMenuItems]);
+
   useEffect(() => {
     if (isUpdateMode && selectedCategory) {
       setValue(selectedCategory.name);
@@ -48,9 +58,10 @@ export default function CreateUpdateCategoryModal() {
 
     if (isCreateMode) {
       createCategory(value, {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           addCategory(data);
           toast.success("Category created successfully");
+          await refetch();
           handleClose();
         },
         onError: (err) => toast.error(err.message),
@@ -61,9 +72,10 @@ export default function CreateUpdateCategoryModal() {
       updateCategory(
         { id: selectedCategory.id, name: value },
         {
-          onSuccess: (data) => {
+          onSuccess: async (data) => {
             updateCategoryRedux(selectedCategory.id, data);
             toast.success("Category updated successfully");
+            await refetch(); // refresh menuItems after updating
             handleClose();
           },
           onError: (err) => toast.error(err.message),

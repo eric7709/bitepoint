@@ -1,28 +1,55 @@
 "use client";
-import { useEmployeeDataStore } from "@/modules/Employees/store/useEmployeeDataStore";
-import { useTableSelectionStore } from "@/modules/Tables/store/useTableSelectionStore";
-import ModalOverlay from "@/shared/components/ModalOverlay";
+import {
+  useTableSelectionStore,
+  useAllocateWaiter,
+  useTableDataStore,
+} from "@/modules/Tables";
+import { ModalOverlay } from "@/components";
 import { useEffect, useState } from "react";
-import { useAllocateWaiter } from "../hooks/useTableServices";
 import { toast } from "react-toastify";
-import { useTableDataStore } from "../store/useTableDataStore";
+import { useGetEmployees, useEmployeeDataStore } from "@/modules/Employees";
 
 export default function AllocateModal() {
   const [waiterId, setWaiterId] = useState("");
-  const { employees } = useEmployeeDataStore();
+  const { employees, setEmployees } = useEmployeeDataStore();
   const { updateTable } = useTableDataStore();
   const { activeModal, closeModal, activeTable, clearActiveTable } =
     useTableSelectionStore();
   const { mutate, isPending } = useAllocateWaiter();
-  const handleSubmit = () => {
-    if (!activeTable) {
-      toast.error("No table selected");
-      return;
+  const { refetch } = useGetEmployees();
+
+  useEffect(() => {
+    if (activeModal === "allocate") {
+      const fetchEmployees = async () => {
+        try {
+          const { data: freshData, error } = await refetch();
+          if (error) {
+            toast.error("Failed to fetch employees");
+            console.error("Fetch employees error:", error);
+            return;
+          }
+          if (freshData) {
+            setEmployees(freshData);
+          } else {
+            toast.error("No employee data available");
+          }
+        } catch (err) {
+          toast.error("Error fetching employees");
+          console.error("Fetch employees error:", err);
+        }
+      };
+      fetchEmployees();
     }
-    if (!waiterId.trim()) {
-      toast.error("Please select a waiter");
-      return;
-    }
+  }, [activeModal, refetch, setEmployees]);
+
+  useEffect(() => {
+    if (activeTable?.waiterId) setWaiterId(activeTable.waiterId);
+  }, [activeTable]);
+
+  const handleSubmit = async () => {
+    if (!activeTable) return toast.error("No table selected");
+    if (!waiterId.trim()) return toast.error("Please select a waiter");
+
     mutate(
       {
         tableId: activeTable.id,
@@ -43,47 +70,43 @@ export default function AllocateModal() {
     );
   };
 
-
-  useEffect(() => {
-    if(activeTable && activeTable.waiterId){
-      setWaiterId(activeTable.waiterId)
-    }
-  }, [])
-
-  const waiters = employees.filter(el => el.role?.toLocaleLowerCase() == "waiter")
-  
+  const waiters = employees.filter((el) => el.role && /waiter/i.test(el.role));
 
   return (
-    <ModalOverlay  isOpen={activeModal == "allocate"} onClose={closeModal}>
-      <div className="w-[320px] p-6 rounded-2xl shadow-2xl border bg-white text-center space-y-5">
-        <div className="text-left">
-          <h2 className="text-lg font-semibold text-center">Allocate Waiter</h2>
-          <div className="text-sm space-y-3 text-gray-700 mt-3">
-            <p>
-              <strong>Table:</strong> {activeTable?.name}
-            </p>
-            <p>
-              <strong>Number:</strong> #{activeTable?.tableNumber}
-            </p>
-          </div>
+    <ModalOverlay isOpen={activeModal === "allocate"} onClose={closeModal}>
+      <div className="w-[340px] p-6 rounded-2xl shadow-xl border bg-gradient-to-br from-white to-blue-50">
+        <h2 className="text-xl font-bold text-center text-blue-700">
+          Allocate Waiter
+        </h2>
+
+        <div className="mt-4 space-y-1 text-sm text-gray-600 text-center">
+          <p>
+            <span className="font-medium text-gray-800">Table:</span>{" "}
+            {activeTable?.name}
+          </p>
+          <p>
+            <span className="font-medium text-gray-800">Number:</span> #
+            {activeTable?.tableNumber}
+          </p>
         </div>
 
-        <div className="text-left">
-          <label className="block text-sm font-medium mb-1" htmlFor="waiterId">
+        <div className="mt-6 text-left">
+          <label
+            className="block text-sm font-medium mb-1 text-gray-700"
+            htmlFor="waiterId"
+          >
             Select Waiter
           </label>
           <select
-            name="waiterId"
             id="waiterId"
-            onChange={(e) => setWaiterId(e.target.value)}
             value={waiterId}
-            className="w-full px-3 py-2 border rounded-md text-sm"
-            disabled={false}
-            required
+            onChange={(e) => setWaiterId(e.target.value)}
+            disabled={isPending}
+            className="w-full px-3 py-2 border rounded-lg text-sm capitalize 
+              focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none
+              transition hover:border-blue-300 disabled:bg-gray-100"
           >
-            <option value={activeTable?.waiterId ?? ""}>
-              -- Choose Waiter --
-            </option>
+            <option value="">-- Choose Waiter --</option>
             {waiters.map((waiter) => (
               <option key={waiter.id} value={waiter.id}>
                 {waiter.firstName} {waiter.lastName}
@@ -91,13 +114,23 @@ export default function AllocateModal() {
             ))}
           </select>
         </div>
+
         <button
           type="submit"
           onClick={handleSubmit}
           disabled={isPending}
-          className="w-full py-3 cursor-pointer bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full mt-6 py-3 rounded-lg bg-blue-600 text-white text-sm font-semibold 
+            shadow-md hover:bg-blue-700 active:scale-95 transition 
+            disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isPending ? "Allocating..." : "Allocate Waiter"}
+          {isPending ? (
+            <span className="flex items-center justify-center space-x-2">
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Allocating...</span>
+            </span>
+          ) : (
+            "Allocate Waiter"
+          )}
         </button>
       </div>
     </ModalOverlay>

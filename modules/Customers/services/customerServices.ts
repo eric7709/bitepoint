@@ -1,6 +1,5 @@
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { Customer, CustomerForm, CustomerResult } from "../types/customer";
-import { transformCustomer } from "../utils/transformCustomer";
 import { formatDistanceToNow } from "date-fns";
 
 export interface CustomerMore {
@@ -14,10 +13,11 @@ export interface CustomerMore {
 }
 
 export class CustomerService {
-    static async fetchCustomers(dateFrom?: string, dateTo?: string): Promise<CustomerMore[]> {
-    let query = supabase
-      .from("customers")
-      .select(`
+  static async fetchCustomers(
+    dateFrom?: string,
+    dateTo?: string
+  ): Promise<CustomerMore[]> {
+    let query = supabase.from("customers").select(`
         id,
         name,
         title,
@@ -39,9 +39,12 @@ export class CustomerService {
 
     return data.map((customer) => {
       const orders = customer.orders || [];
-      const lastVisit = orders.length > 0
-        ? formatDistanceToNow(new Date(orders[0].created_at), { addSuffix: true })
-        : null;
+      const lastVisit =
+        orders.length > 0
+          ? formatDistanceToNow(new Date(orders[0].created_at), {
+              addSuffix: true,
+            })
+          : null;
       const totalSpent = orders.reduce(
         (sum: number, order: { total: number }) => sum + (order.total || 0),
         0
@@ -90,7 +93,7 @@ export class CustomerService {
         .eq("email", customer.email)
         .single();
       if (fetchError && fetchError.code !== "PGRST116") throw fetchError;
-      if (existing) return transformCustomer(existing);
+      if (existing) return this.transformCustomer(existing);
       // 2️⃣ Insert new
       const { data, error } = await supabase
         .from("customers")
@@ -98,12 +101,12 @@ export class CustomerService {
           name: customer.name,
           title: customer.title,
           email: customer.email,
-          phone_number: customer.phoneNumber,
+          phone_number: customer.phoneNumber ?? "",
         })
         .select("*")
         .single();
       if (error) throw error;
-      return transformCustomer(data);
+      return this.transformCustomer(data);
     } catch (error) {
       console.error("Error getting or creating customer:", error);
       throw error;
@@ -128,7 +131,7 @@ export class CustomerService {
         .select("*")
         .single();
       if (error) throw error;
-      return transformCustomer(data);
+      return this.transformCustomer(data);
     } catch (error) {
       console.error("Error updating customer:", error);
       throw error;
@@ -144,5 +147,16 @@ export class CustomerService {
       console.error("Error deleting customer:", error);
       throw error;
     }
+  }
+
+  static async transformCustomer(customer: Customer) {
+    return {
+      id: customer.id,
+      name: customer.name,
+      email: customer.email,
+      title: customer.title,
+      phone: customer?.phone ?? "",
+      createdAt: customer.createdAt,
+    };
   }
 }

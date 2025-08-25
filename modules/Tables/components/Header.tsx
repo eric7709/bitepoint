@@ -2,8 +2,7 @@
  import { LogOut } from "lucide-react";
 import { useLogout } from "@/modules/Employees/hooks/useEmployeesServices";
 import { useRouter } from "next/navigation";
-import Loader from "@/shared/components/Loader";
-import { Active } from "@/allPages/waiter/table/Base";
+import { Active } from "@/allPages/waiter/Base";
 import { Employee } from "@/modules/Employees/types/employee";
 
 type Props = {
@@ -17,7 +16,6 @@ export default function Header(props: Props) {
   const { mutate: logout } = useLogout();
   const { active, setActive, loading, user } = props;
   const router = useRouter();
-  if (loading) <Loader />;
 
   return (
     <div className="">

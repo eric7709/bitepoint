@@ -1,20 +1,15 @@
 "use client"
-
 import NotificationDropdown from "@/modules/Kitchen/components/NotificationDropdown";
 import ActiveRevenue from "./ActiveRevenue";
 import ProfileDropdown from "@/modules/Kitchen/components/ProfileDropdown";
 import SearchText from "@/modules/Kitchen/components/SearchText";
 import StatusDropdown from "@/modules/Kitchen/components/StatusDropdown";
 import ScalingCircle from "@/modules/Kitchen/components/ScalingCircle";
-import AdminTitle from "@/shared/components/AdminTitle";
-import { Divide as Hamburger } from "hamburger-react";
-import { useUIStore } from "@/store/useUIStore";
+import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import { Filter } from "lucide-react";
 import { useState } from "react";
-import BitePointLogo from "@/shared/components/Logo";
 
 export default function CashierOrderHeader() {
-  const { toggleDrawer, drawerOpened } = useUIStore();
   const [isOpened, setOpen] = useState(false);
   return (
     <div className=" z-30 relative ">

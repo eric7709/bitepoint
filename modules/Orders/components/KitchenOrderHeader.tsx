@@ -1,5 +1,5 @@
 "use client";
-import BitePointLogo from "@/shared/components/Logo";
+import BitePointLogo from "@/components/Logo";
 import ProfileDropdown from "@/modules/Kitchen/components/ProfileDropdown";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 export default function KitchenOrderHeader() {

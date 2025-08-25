@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Search, X } from "lucide-react";
-import AdminTitle from "@/shared/components/AdminTitle";
+import AdminTitle from "@/modules/Orders/components/AdminTitle";
 import AllocationFilterDropdown from "./AllocationFilterDropdown";
 import { useTableDataStore } from "../store/useTableDataStore";
-import { useUIStore } from "@/store/useUIStore";
 import { Divide as Hamburger } from "hamburger-react";
+import { useUIStore } from "@/store";
 
 export default function TableHeader() {
   const { searchTerm, setSearchTerm } = useTableDataStore();
@@ -25,7 +25,7 @@ export default function TableHeader() {
           <AdminTitle title="Tables & Allocation" />
           <div className="lg:flex hidden items-center gap-4">
             <AllocationFilterDropdown />
-            <div className="relative w-[300px]">
+            <div className="relative w-[350px]">
               <Search
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 size={18}
@@ -34,7 +34,7 @@ export default function TableHeader() {
                 type="text"
                 value={searchTerm}
                 onChange={handleChange}
-                placeholder="Search tables or waiters..."
+                placeholder="Tables or Waiters"
                 className="w-full pl-10 h-10 pr-3 py-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
               />
             </div>

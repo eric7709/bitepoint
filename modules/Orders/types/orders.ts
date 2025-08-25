@@ -1,6 +1,4 @@
-import { Customer } from "@/modules/Customers/types/customer";
 import { MenuItem } from "@/modules/MenuItems/types/menuItems";
-import { Table } from "@/modules/Tables/types/table";
 import { ChangeEvent } from "react";
 
 export type ModalStates = "summary" | "success" | "create" | "details" | null;
@@ -13,17 +11,11 @@ export type OrderStatus =
 
 export type OrderMenutItem = {
   id: string;
+  takeHome: boolean
   name: string;
   price: number;
   quantity: number;
 };
-
-export enum EnumOrderStatus {
-  PENDING = "pending",
-  PREPARING = "preparing",
-  COMPLETED = "completed",
-  CANCELLED = "cancelled",
-}
 
 
 export type CreateOrder = Omit<
@@ -75,15 +67,14 @@ export type OrderResult = {
   waiter_name: string | null;
 };
 
- export type PaymentMethod = "all" | "cash" | "transfer" | "card"
+ export type PaymentMethod = "all" | "cash" | "transfer" | "card" | "online"
 
 
-
-export interface OrderDataStore {
+export interface OrderDataStoreState {
   orders: Order[];
   total: number;
   totalPages: number;
-  paymentMethod:PaymentMethod | null
+  paymentMethod: PaymentMethod | null;
   page: number;
   limit: number;
   search: string;
@@ -107,19 +98,27 @@ export interface OrderDataStore {
   };
   dateFrom?: string; // ISO start date
   dateTo?: string;   // ISO end date
+}
 
+// Define actions separately
+export interface OrderDataStoreActions {
   setPage: (page: number) => void;
   setSearch: (search: string) => void;
   setSort: (sortBy: keyof Order, sortOrder: "asc" | "desc") => void;
   setStatus: (status: string) => void;
   setDateRange: (from?: string, to?: string) => void;
   fetchOrders: () => Promise<void>;
+  refetchOrders: () => Promise<void>;
   addOrder: (order: Order) => void;
   updateOrder: (id: string, updates: Partial<Order>) => void;
-  setPaymentMethod: (value: PaymentMethod) => void
-  clearPaymentMethod: () => void
+  setPaymentMethod: (value: PaymentMethod) => void;
+  clearPaymentMethod: () => void;
+  
   removeOrder: (id: string) => void;
 }
+
+// Combine state and actions into the full store type
+export type OrderDataStore = OrderDataStoreState & OrderDataStoreActions;
 
 
 
@@ -127,8 +126,11 @@ export interface OrderDataStore {
 export interface UseOrderSelectionStore {
   // Search & filtering
   searchTerm: string;
-  category: string;
-  changeCategory: (category: string) => void;
+  cartModalOpened: boolean
+  toggleCartModal: () => void
+  closeCartModal: () => void
+  selectedCategory: string;
+  changeSelectedCategory: (category: string) => void;
   changeSearchTerm: (e: ChangeEvent<HTMLInputElement>) => void;
   clearSearchTerm: () => void;
   resetFields: () => void;
@@ -160,6 +162,7 @@ export interface UseOrderSelectionStore {
   decreaseQuantity: (id: string) => void;
   resetItems: () => void;
   isSelected: (id: string) => boolean;
+  toggleTakeHome: (id: string) => void
   getTotal: () => number;
 
   // Allocated table

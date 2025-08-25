@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getCustomerFromCookie } from "@/shared/utils/getCustomerFromCookie";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
 import { useCreateOrder } from "../hooks/useOrderServices";
 import { Customer } from "@/modules/Customers/types/customer";
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { useMenuItemDataStore } from "@/modules/MenuItems/store/useMenuItemsDataStore";
 import {
   useGetCustomerById,
@@ -14,6 +13,7 @@ import {
 } from "@/modules/Customers/hooks/useCustomerSerivces";
 import { orderPayloadCreator } from "../utils/payloadCreator";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
+import { getCustomerFromCookie } from "@/utils";
 
 export function useOrderSummary() {
   const {
@@ -31,26 +31,28 @@ export function useOrderSummary() {
   } = useOrderSelectionStore();
 
   const { menuItems } = useMenuItemDataStore();
-  const { mutate: createOrder, isPending: isCreatingOrder } = useCreateOrder();
-
-  const fetchedCustomer = getCustomerFromCookie();
-  const {
-    data: ensuredCustomer,
-    error: customerError,
-    isLoading: isLoadingCustomer,
-  } = useGetCustomerById(fetchedCustomer?.id ?? "");
-
-  const {
-    mutateAsync: createCustomer,
-    error: creationError,
-    isPending: isCreatingCustomer,
-  } = useGetOrCreateCustomer();
   const { fetchTables, tables } = useTableDataStore();
+  const fetchedCustomer = getCustomerFromCookie();
+  const { mutate: createOrder, isPending: isCreatingOrder } = useCreateOrder();
+  const { data: ensuredCustomer, error: customerError, isLoading: isLoadingCustomer } =
+    useGetCustomerById(fetchedCustomer?.id ?? "");
+  const { mutateAsync: createCustomer, error: creationError, isPending: isCreatingCustomer } =
+    useGetOrCreateCustomer();
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [unavailableIds, setUnavailableIds] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  /** Close modal & reset state after success */
+  useEffect(() => {
+    if (activeModal === "summary") return;
+    const unavailableOrderedItems = items.filter((orderItem) => {
+      const menuItem = menuItems.find((m) => m.id === orderItem.id);
+      return menuItem && !menuItem.isAvailable;
+    });
+    unavailableOrderedItems.forEach((item) => removeMenuItem(item.id));
+  }, [menuItems, items, removeMenuItem, activeModal]);
+  useEffect(() => {
+    if (activeModal === "summary") setUnavailableIds([]);
+  }, [activeModal]);
+  const handleRemoveItem = (id: string) => removeMenuItem(id);
   const handleClick = () => {
     closeModal();
     if (success) {
@@ -59,24 +61,62 @@ export function useOrderSummary() {
     }
   };
 
-  /** Remove items that are no longer available */
-  useEffect(() => {
-    if (activeModal === "summary") return;
+  /** Ensure we have a valid customer */
+  const ensureCustomer = async (): Promise<Customer | null> => {
+    if (isLoadingCustomer || isCreatingCustomer) {
+      toast.info("Please wait, verifying customer information...");
+      return null;
+    }
 
-    const unavailableOrderedItems = items.filter((orderItem) => {
-      const menuItem = menuItems.find((m) => m.id === orderItem.id);
-      return menuItem && !menuItem.isAvailable;
+    if (!fetchedCustomer) {
+      setModal("create");
+      return null;
+    }
+
+    if (ensuredCustomer && !customerError) return ensuredCustomer;
+
+    const created = await createCustomer({
+      email: fetchedCustomer.email,
+      name: String(fetchedCustomer.name),
+      phoneNumber: String(fetchedCustomer.phone),
+      title: fetchedCustomer.title ?? "",
     });
 
-    unavailableOrderedItems.forEach((item) => removeMenuItem(item.id));
-  }, [menuItems, items, removeMenuItem, activeModal]);
+    if (creationError || !created) {
+      toast.error("Failed to create customer.");
+      return null;
+    }
 
-  /** Reset unavailable items when reopening summary modal */
-  useEffect(() => {
-    if (activeModal === "summary") setUnavailableIds([]);
-  }, [activeModal]);
+    return created;
+  };
 
-  const handleRemoveItem = (id: string) => removeMenuItem(id);
+  /** Verify stock availability */
+  const checkAvailability = async () => {
+    const { data: latestItems, error: stockError } = await supabase
+      .from("menu_items")
+      .select("id, name, is_available")
+      .in(
+        "id",
+        items.map((i) => i.id)
+      );
+
+    if (stockError) {
+      console.error(stockError);
+      toast.error("Could not verify item availability. Please try again.");
+      return false;
+    }
+
+    const unavailable = latestItems?.filter((i) => !i.is_available) ?? [];
+    if (unavailable.length > 0) {
+      setUnavailableIds(unavailable.map((i) => i.id));
+      toast.error(
+        `Unavailable: ${unavailable.map((i) => i.name).join(", ")}`
+      );
+      return false;
+    }
+
+    return true;
+  };
 
   /** Confirm and place the order */
   const handleConfirm = async () => {
@@ -84,17 +124,7 @@ export function useOrderSummary() {
     setIsSubmitting(true);
 
     try {
-      await fetchTables();
-
-      if (isLoadingCustomer || isCreatingCustomer) {
-        toast.info("Please wait, verifying customer information...");
-        return;
-      }
-
-      if (!fetchedCustomer) {
-        setModal("create");
-        return;
-      }
+      fetchTables();
 
       if (!items.length) {
         toast.error("You must add at least one item.");
@@ -112,59 +142,29 @@ export function useOrderSummary() {
         return;
       }
 
-      // Ensure we have a valid customer
-      let finalCustomer = ensuredCustomer ?? null;
-      if (!finalCustomer || customerError) {
-        finalCustomer = await createCustomer({
-          email: fetchedCustomer.email,
-          name: String(fetchedCustomer.name),
-          phoneNumber: String(fetchedCustomer.phone),
-          title: fetchedCustomer.title ?? "",
-        });
-
-        if (creationError || !finalCustomer) {
-          toast.error("Failed to create customer.");
-          return;
-        }
-      }
+      const finalCustomer = await ensureCustomer();
+      if (!finalCustomer) return;
       setCustomer(finalCustomer);
 
-      // Verify item availability
-      const { data: latestItems, error: stockError } = await supabase
-        .from("menu_items")
-        .select("id, name, is_available")
-        .in(
-          "id",
-          items.map((i) => i.id)
-        );
+      const available = await checkAvailability();
+      if (!available) return;
 
-      if (stockError) {
-        console.error(stockError);
-        toast.error("Could not verify item availability. Please try again.");
-        return;
-      }
+      const activeWaiters = tables
+        .filter((el) => el.waiter)
+        .map((el) => el.waiter);
 
-      const unavailable = latestItems?.filter((i) => !i.is_available) ?? [];
-      if (unavailable.length > 0) {
-        setUnavailableIds(unavailable.map((i) => i.id));
-        toast.error(
-          `These items are no longer available: ${unavailable.map((i) => i.name).join(", ")}`
-        );
-        return;
-      }
-
-      if (!finalCustomer) {
-        toast.error("Customer details are required.");
-        return;
-      }
-
-      // Submit the order
       const payload = orderPayloadCreator({
         customer: finalCustomer,
+        activeWaiters,
         table,
         items,
         total: getTotal(),
       });
+
+      if (!payload) {
+        toast.error("Sorry, no waiter available at the moment.");
+        return;
+      }
 
       createOrder(payload, {
         onSettled: () => setIsSubmitting(false),
@@ -184,8 +184,8 @@ export function useOrderSummary() {
     customer,
     unavailableIds,
     success,
-    isSubmitting: isSubmitting || isCreatingOrder || isCreatingCustomer,
     total: getTotal(),
+    isSubmitting: isSubmitting || isCreatingOrder || isCreatingCustomer,
     activeModal,
     handleClick,
     handleConfirm,

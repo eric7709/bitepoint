@@ -1,11 +1,14 @@
 "use client";
 import { MdOutlineEdit } from "react-icons/md";
-import { FaRegTrashAlt, FaRegUserCircle, FaTimes } from "react-icons/fa";
+import { FaRegTrashAlt, FaTimes } from "react-icons/fa";
 import { BsQrCode } from "react-icons/bs";
-import { useTableSelectionStore } from "../store/useTableSelectionStore";
-import { Table } from "../types/table";
-import { ACTIONS } from "../constants/others";
-import { containerClass } from "../utils/containerClass";
+import {
+  useTableSelectionStore,
+  Table,
+  TableModalType,
+  ACTIONS,
+  TableService,
+} from "@/modules/Tables";
 import { BsPersonCheck } from "react-icons/bs";
 import { BsPersonDash } from "react-icons/bs";
 
@@ -22,17 +25,15 @@ const actionIcons = [
   <FaRegTrashAlt />,
 ];
 
-export default function TableOptions({ table, bgColor }: Props) {
-  const { activeTable, clearActiveTable, setModal, activeModal } =
-    useTableSelectionStore();
+export default function TableOptions({ table }: Props) {
+  const { activeTable, clearActiveTable, setModal } = useTableSelectionStore();
   const isActive = table.id === activeTable?.id;
-  const handleClick = (backdropKey: string) => {
-    setModal(backdropKey as any);
+  const handleClick = (backdropKey: TableModalType) => {
+    setModal(backdropKey);
   };
-
   return (
     <div
-      className={`w-full text-white absolute inset-0 z-40 duration-300 rounded-xl h-full overflow-hidden gap-1 bg-cyan-800 ${containerClass(
+      className={`w-full text-white absolute inset-0 z-40 duration-300 rounded-xl h-full overflow-hidden gap-1 bg-cyan-800 ${TableService.containerClass(
         isActive
       )}`}
     >
@@ -52,24 +53,18 @@ export default function TableOptions({ table, bgColor }: Props) {
           const isQRCodeHidden = !activeTable?.waiter && key === 2;
           const isWaiterHidden = activeTable?.waiter && key === 1;
           const isHidden = isQRCodeHidden || isWaiterHidden;
-
-          // Skip rendering hidden ones completely
           if (isHidden) return null;
-
-          // Compute visibleIndex based on how many items before this one are visible
           const visibleIndex = ACTIONS.slice(0, key).filter((_, i) => {
             const hideQRCode = !activeTable?.waiter && i === 2;
             const hideWaiter = activeTable?.waiter && i === 1;
             return !(hideQRCode || hideWaiter);
           }).length;
-
           const isDiagonal1 = visibleIndex === 0 || visibleIndex === 3;
           const isDiagonal2 = visibleIndex === 1 || visibleIndex === 2;
-
           return (
             <div
               key={label}
-              onClick={() => handleClick(backdropKey)}
+              onClick={() => handleClick(backdropKey as TableModalType)}
               className={`
         flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 active:scale-90
         ${isDiagonal1 ? "bg-blue-800" : ""}

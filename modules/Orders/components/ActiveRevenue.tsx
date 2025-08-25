@@ -1,17 +1,23 @@
-import { formatPrice } from "@/shared/utils/formatPrice";
+"use client";
+
+import { useEffect } from "react";
+import { formatPrice } from "@/utils";
 import { useOrderDataStore } from "../store/useOrderDataStore";
 
 export default function ActiveRevenue() {
-  const {counts, totals, orders} = useOrderDataStore()
-  console.log(orders)
+  const { totals, refetchOrders } = useOrderDataStore();
+
+  useEffect(() => {
+    refetchOrders();
+    const intervalId = setInterval(() => {
+      refetchOrders();
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, [refetchOrders]);
+
   return (
-    <div className="flex items-center gap-3 text-sm font-medium">
-      <p>
-        Active Orders: <span className="text-amber-600">{counts.completed + counts.pending}</span>
-      </p>
-      <p>
-        Revenue: <span className="text-green-500">{formatPrice(totals.paid)}</span>
-      </p>
-    </div>
+    <p className="text-xl font-bold">
+      <span className="text-green-600">{formatPrice(totals.paid)}</span>
+    </p>
   );
 }

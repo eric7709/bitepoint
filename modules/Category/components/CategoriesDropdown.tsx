@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useClickOutside } from "@/shared/hooks/useOutsideClick";
+import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useCategoryDataStore } from "@/modules/Category/store/useCategoriesDataStore";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useMenuItemDataStore } from "@/modules/MenuItems/store/useMenuItemsDataStore";

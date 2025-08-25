@@ -22,7 +22,7 @@ export default function SearchText(props: Props) {
     <div className={`h-10 ${props.zIndex} relative w-full border rounded-md border-gray-200`}>
       <input
         type="text"
-        placeholder="Customer, Waiter and Table"
+        placeholder="Customer, Waiter, Table and Invoice No."
         className="outline-none placeholder:text-black h-full w-full pl-2 text-xs"
         value={localSearch}
         onChange={(e) => setLocalSearch(e.target.value)}

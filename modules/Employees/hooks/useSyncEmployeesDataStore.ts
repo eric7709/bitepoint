@@ -1,7 +1,6 @@
-"use client"
+"use client";
 import { useEffect } from "react";
-import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
-import { useGetEmployees } from "./useEmployeesServices";
+import { useEmployeeDataStore, useGetEmployees } from "@/modules/Employees";
 
 export const useSyncEmployeesDataStore = () => {
   const { setEmployees, setLoading } = useEmployeeDataStore();

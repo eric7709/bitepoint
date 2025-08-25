@@ -1,7 +1,7 @@
 "use client";
-import ModalOverlay from "@/shared/components/ModalOverlay";
-import { Input } from "@/shared/components/Input";
-import { Select } from "@/shared/components/Select";
+import ModalOverlay from "@/components/ModalOverlay";
+import { Input } from "@/components/Input";
+import { Select } from "@/components/Select";
 import { useTableForm } from "../hooks/useTableForm";
 
 export default function TableModal() {
@@ -16,8 +16,6 @@ export default function TableModal() {
     employees,
     closeModal,
   } = useTableForm();
-
-
   return (
     <ModalOverlay isOpen={isCreateMode || isUpdateMode} onClose={closeModal}>
       <form
@@ -25,7 +23,7 @@ export default function TableModal() {
           e.preventDefault();
           handleSubmit();
         }}
-        className="bg-white mx-4 p-6 rounded-xl flex flex-col gap-5 shadow-md w-[400px]"
+        className="bg-white mx-4 p-6 rounded-xl flex flex-col gap-5 shadow-md w-[350px]"
       >
         {/* Dynamic title */}
         <p className="text-xl font-semibold">
@@ -75,7 +73,6 @@ export default function TableModal() {
             </option>
           ))}
         </Select>
-
         {/* Submit */}
         <button
           type="submit"

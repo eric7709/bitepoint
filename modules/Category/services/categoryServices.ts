@@ -1,4 +1,4 @@
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { Category } from "../types/category";
 
 export class CategoryService {

@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { Table } from "@/modules/Tables/types/table";
 import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
 import { Order } from "../types/orders";
-import { formatPrice } from "@/shared/utils/formatPrice";
+import { formatPrice } from "@/utils";
 
 type Props = {
   order: Order;
@@ -11,6 +11,8 @@ type Props = {
   currentDateTime: string;
 };
 const Invoice = forwardRef<HTMLDivElement, Props>(({ order, waiterName, currentDateTime }, ref) => {
+  
+  
   const [table, setTable] = useState<Table | null>(null);
   const { tables } = useTableDataStore();
   useEffect(() => {

@@ -1,10 +1,8 @@
-import { createRealtimeSubscription } from "@/shared/utils/createRealTimeSubscription";
 import { normalizeOrder } from "../utils/normalizeOrder";
 import { useOrderDataStore } from "../store/useOrderDataStore";
+import { createRealtimeSubscription } from "@/utils";
+import { Order } from "@/modules/Orders";
 
-type Order = {
-  id: string;
-};
 export const subscribeToOrders = () => {
   const { addOrder, updateOrder, removeOrder } = useOrderDataStore.getState();
   return createRealtimeSubscription<Order>("orders", {

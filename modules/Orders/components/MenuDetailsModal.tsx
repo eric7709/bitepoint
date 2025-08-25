@@ -1,9 +1,8 @@
 "use client";
-import { FaTimes } from "react-icons/fa";
 import { useOrderSelectionStore } from "../store/useOrderSelectionStore";
-import ModalOverlay from "@/shared/components/ModalOverlay";
+import { ModalOverlay } from "@/components";
 import Image from "next/image";
-import { formatPrice } from "@/shared/utils/formatPrice";
+import { formatPrice } from "@/utils";
 
 export default function MenuDetailsModal() {
   const {

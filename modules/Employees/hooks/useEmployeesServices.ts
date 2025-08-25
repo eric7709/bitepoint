@@ -1,5 +1,4 @@
-"use client"
-import { useRouter } from "next/navigation";
+"use client";
 import {
   MutationOptions,
   useMutation,
@@ -12,15 +11,15 @@ import {
   UpdateEmployee,
   Employee,
   CreateEmployee,
-} from "../types/employee";
-import { getAllEmployees, updateEmployee } from "../services/employeeServices";
-import { supabase } from "@/shared/lib/supabase";
-type Variables = { id: string; updates: UpdateEmployee };
+  EmployeeService,
+} from "@/modules/Employees";
+import { supabase } from "@/lib/supabase";
 
+type Variables = { id: string; updates: UpdateEmployee };
 export const useGetEmployees = () => {
   return useQuery({
     queryKey: ["employees"],
-    queryFn: getAllEmployees,
+    queryFn: EmployeeService.getAllEmployees,
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -30,7 +29,8 @@ export const useUpdateEmployee = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, updates }: Variables) => updateEmployee(id, updates),
+    mutationFn: ({ id, updates }: Variables) =>
+      EmployeeService.updateEmployee(id, updates),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: ["employees"] });
       options?.onSuccess?.(data, variables, context);
@@ -90,7 +90,6 @@ export function useEmployeeRegister(
 }
 
 export function useLogin() {
-  const router = useRouter();
   return useMutation({
     mutationFn: async ({ email, password }: Login) => {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -105,11 +104,6 @@ export function useLogin() {
         .maybeSingle();
       if (empError || !employee) throw new Error("Could not fetch user role");
       return { session: data.session, role: employee.role };
-    },
-    onSuccess: ({ role }) => {
-      if (role === "admin") router.push("/admin/dashboard");
-      else if (role === "cashier") router.push("/kitchen/orders");
-      else router.push("/unauthorized");
     },
   });
 }

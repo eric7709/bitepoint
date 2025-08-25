@@ -1,12 +1,17 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { useEmployeeRegister, useUpdateEmployee } from "./useEmployeesServices";
-import { CreateEmployee, Employee, UpdateEmployee } from "../types/employee";
-import { useEmployeeSelectionStore } from "../store/useEmployeeSelectionStore";
+import {
+  useEmployeeRegister,
+  useUpdateEmployee,
+  CreateEmployee,
+  Employee,
+  UpdateEmployee,
+  useEmployeeSelectionStore,
+  useEmployeeDataStore,
+  useUser,
+} from "@/modules/Employees";
 import { toast } from "react-toastify";
-import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
-import { useAuth } from "./useAuth";
+import { useGetAllTables } from "@/modules/Tables/hooks/useTableServices";
 
 type FieldError = {
   field?: string;
@@ -14,11 +19,12 @@ type FieldError = {
 };
 
 export function useCreateUpdateStaff() {
-  const { selectedEmployee, activeModal, closeModal } = useEmployeeSelectionStore();
+  const { selectedEmployee, activeModal, closeModal } =
+    useEmployeeSelectionStore();
   const { addStoreEmployee, updateStoreEmployee } = useEmployeeDataStore();
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useUser();
   const isEditing = activeModal === "update" && !!selectedEmployee;
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(false);
 
   const [form, setForm] = useState<CreateEmployee>({
     firstName: "",
@@ -30,32 +36,36 @@ export function useCreateUpdateStaff() {
     registeredBy: user?.id ?? "",
   });
 
+  const { refetch } = useGetAllTables();
+
   const [error, setError] = useState<FieldError | null>(null);
   const [successMsg, setSuccessMsg] = useState("");
 
-  const { mutate: registerEmployeeRequest, isPending: loadingCreateEmployee } = useEmployeeRegister({
-    onSuccess: (data: Employee) => {
-      addStoreEmployee(data);
-      resetForm();
-      closeModal();
-      toast.success("Employee Created Successfully");
-    },
-    onError: (error: Error) => {
-      setError({ message: error.message || "Failed to create employee" });
-    },
-  });
+  const { mutate: registerEmployeeRequest, isPending: loadingCreateEmployee } =
+    useEmployeeRegister({
+      onSuccess: (data: Employee) => {
+        addStoreEmployee(data);
+        resetForm();
+        closeModal();
+        toast.success("Employee Created Successfully");
+      },
+      onError: (error: Error) => {
+        setError({ message: error.message || "Failed to create employee" });
+      },
+    });
 
-  const { mutate: updateEmployeeRequest, isPending: loadingUpdateEmployee } = useUpdateEmployee({
-    onSuccess: (data: Partial<Employee>) => {
-      updateStoreEmployee(String(data.id), data);
-      resetForm();
-      closeModal();
-      toast.success("Employee Updated Successfully");
-    },
-    onError: (error: Error) => {
-      setError({ message: error.message || "Failed to update employee" });
-    },
-  });
+  const { mutate: updateEmployeeRequest, isPending: loadingUpdateEmployee } =
+    useUpdateEmployee({
+      onSuccess: (data: Partial<Employee>) => {
+        updateStoreEmployee(String(data.id), data);
+        resetForm();
+        closeModal();
+        toast.success("Employee Updated Successfully");
+      },
+      onError: (error: Error) => {
+        setError({ message: error.message || "Failed to update employee" });
+      },
+    });
 
   useEffect(() => {
     if (isEditing && selectedEmployee) {
@@ -71,7 +81,7 @@ export function useCreateUpdateStaff() {
     } else {
       resetForm();
     }
-    setIsActive(selectedEmployee?.isActive || false)
+    setIsActive(selectedEmployee?.isActive || false);
   }, [isEditing, selectedEmployee, user?.id]);
 
   const handleChange = (field: keyof Employee, value: string) => {
@@ -98,17 +108,22 @@ export function useCreateUpdateStaff() {
   };
 
   function validateForm(): FieldError | null {
-  if (!form.firstName.trim()) return { field: "firstName", message: "First name is required" };
-  if (!form.lastName.trim()) return { field: "lastName", message: "Last name is required" };
-  if (!form.email.trim()) return { field: "email", message: "Email is required" };
-  if (!/\S+@\S+\.\S+/.test(form.email)) return { field: "email", message: "Invalid email address" };
-  if (!form.gender) return { field: "gender", message: "Gender is required" };
-  if (!form.role) return { field: "role", message: "Role is required" };
-  if (!form.registeredBy) return { field: "registeredBy", message: "Registered by is required" };
-  return null;
-}
+    if (!form.firstName.trim())
+      return { field: "firstName", message: "First name is required" };
+    if (!form.lastName.trim())
+      return { field: "lastName", message: "Last name is required" };
+    if (!form.email.trim())
+      return { field: "email", message: "Email is required" };
+    if (!/\S+@\S+\.\S+/.test(form.email))
+      return { field: "email", message: "Invalid email address" };
+    if (!form.gender) return { field: "gender", message: "Gender is required" };
+    if (!form.role) return { field: "role", message: "Role is required" };
+    if (!form.registeredBy)
+      return { field: "registeredBy", message: "Registered by is required" };
+    return null;
+  }
 
-  const submitForm = () => {
+  const submitForm = async () => {
     if (authLoading || !user) {
       toast.info("Please wait until user data is loaded.");
       return;
@@ -117,7 +132,7 @@ export function useCreateUpdateStaff() {
     const validationError = validateForm();
     if (validationError) {
       setError(validationError);
-      toast.error(validationError.message)
+      toast.error(validationError.message);
       return;
     }
 
@@ -130,11 +145,15 @@ export function useCreateUpdateStaff() {
         email: form.email,
         phoneNumber: form.phoneNumber || null,
         gender: form.gender || null,
-        role: form.role || null,
+        role: selectedEmployee.role || null,
         isActive,
-        id: selectedEmployee.id
+        id: selectedEmployee.id,
       };
-      updateEmployeeRequest({ id: selectedEmployee.id, updates: updatePayload });
+      updateEmployeeRequest({
+        id: selectedEmployee.id,
+        updates: updatePayload,
+      });
+      await refetch();
     } else {
       const createPayload: CreateEmployee = {
         firstName: form.firstName,
@@ -146,6 +165,7 @@ export function useCreateUpdateStaff() {
         role: form.role,
       };
       registerEmployeeRequest(createPayload);
+      await refetch();
     }
   };
 

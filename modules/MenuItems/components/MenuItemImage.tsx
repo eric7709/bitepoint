@@ -1,10 +1,15 @@
 "use client";
 import { FaTimes } from "react-icons/fa";
-import { useMenuItemFormStore } from "../store/useMenuItemFormStore";
+import { ChangeEvent } from "react";
+import { Image } from "../types/menuItems";
 
-export default function MenuItemImage() {
-  const { image, handleFileChange, clearImage } = useMenuItemFormStore();
-
+type Props = {
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  clearImage: () => void;
+  image: Image;
+};
+export default function MenuItemImage(props: Props) {
+  const { image, handleFileChange, clearImage } = props;
   return (
     <div className="grid place-content-center">
       <div className="space-y-4">

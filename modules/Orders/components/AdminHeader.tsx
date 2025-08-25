@@ -1,27 +1,27 @@
 "use client";
-import { useSyncTableDataStore } from "@/modules/Tables/hooks/useSyncTableDataStore";
-import { useOrderDataSyncAndSubscribe } from "@/modules/Orders/hooks/useOrderDataSyncAndSubscribe";
-import { usePendingOrderAlarm } from "@/modules/Orders/hooks/usePendingOrderAlarm";
-import DateDropdown from "@/modules/Kitchen/components/DateDropdown";
-import StatusDropdown from "@/modules/Kitchen/components/StatusDropdown";
-import OrderPagination from "@/modules/Orders/components/OrderPagination";
-import SortDropdown from "@/modules/Kitchen/components/SortDropdown";
-import ScalingCircle from "@/modules/Kitchen/components/ScalingCircle";
-import BitePointLogo from "@/shared/components/Logo";
-import NotificationDropdown from "@/modules/Kitchen/components/NotificationDropdown";
-import ProfileDropdown from "@/modules/Kitchen/components/ProfileDropdown";
-import { useOrderDataStore } from "../store/useOrderDataStore";
-import SearchText from "@/modules/Kitchen/components/SearchText";
-import { formatPrice } from "@/shared/utils/formatPrice";
+import { useSyncTableDataStore } from "@/modules/Tables";
+import {
+  DateDropdown,
+  SearchText,
+  StatusDropdown,
+  SortDropdown,
+  ScalingCircle,
+  NotificationDropdown,
+  ProfileDropdown,
+} from "@/modules/Kitchen";
+import {
+  OrderPagination,
+  OrderService,
+  useOrderDataStore,
+  usePendingOrderAlarm,
+  useOrderDataSyncAndSubscribe,
+} from "@/modules/Orders";
+import { Logo } from "@/components";
+import { formatPrice } from "@/utils";
 
 export default function AdminHeader() {
   const { orders } = useOrderDataStore();
-  const total = orders.reduce((acc, order) => {
-    const orderTotal = order.items?.reduce((sum, item) => {
-      return sum + (item.price || 0) * (item.quantity || 0);
-    }, 0);
-    return acc + orderTotal;
-  }, 0);
+  const total = OrderService.getOrderTotal(orders);
   usePendingOrderAlarm();
   useSyncTableDataStore();
   useOrderDataSyncAndSubscribe();
@@ -29,7 +29,7 @@ export default function AdminHeader() {
     <div className="h-screen flex flex-col">
       <div className="relative z-30">
         <div className="flex px-7 z-30 relative items-center py-2 border-b border-gray-200 justify-between">
-          <BitePointLogo />
+          <Logo />
           <div className="flex gap-8 items-center">
             <p className="text-[13px] font-medium">
               Active Orders:{" "}

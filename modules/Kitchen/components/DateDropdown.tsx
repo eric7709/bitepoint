@@ -2,26 +2,28 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Calendar } from "lucide-react";
-import { FaTimes, FaArrowsAltH } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useOutsideClickToggle } from "@/shared/hooks/useOutsideClickToggle";
+import { useOutsideClickToggle } from "@/hooks/useOutsideClickToggle";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";
 
 type QuickSelectType = "today" | "week" | "month";
 
-
 type Props = {
-  zIndex?: string
-}
-
+  zIndex?: string;
+};
 
 export default function DateDropdown(props: Props) {
   const { dateFrom, dateTo, setDateRange } = useOrderDataStore();
 
-  const { ref: dropdownRef, isOpen, toggle, close } =
-    useOutsideClickToggle<HTMLDivElement>();
+  const {
+    ref: dropdownRef,
+    isOpen,
+    toggle,
+    close,
+  } = useOutsideClickToggle<HTMLDivElement>();
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -36,7 +38,10 @@ export default function DateDropdown(props: Props) {
   const setRange = (start: Date | null, end: Date | null) => {
     setStartDate(start);
     setEndDate(end);
-    setDateRange(start?.toISOString() || undefined, end?.toISOString() || undefined);
+    setDateRange(
+      start?.toISOString() || undefined,
+      end?.toISOString() || undefined
+    );
   };
 
   const getQuickSelectRange = (type: QuickSelectType) => {
@@ -105,13 +110,22 @@ export default function DateDropdown(props: Props) {
     const weekRange = getQuickSelectRange("week");
     const monthRange = getQuickSelectRange("month");
 
-    if (startDate?.toDateString() === todayRange.start.toDateString() && endDate?.toDateString() === todayRange.end.toDateString()) {
+    if (
+      startDate?.toDateString() === todayRange.start.toDateString() &&
+      endDate?.toDateString() === todayRange.end.toDateString()
+    ) {
       return "Today";
     }
-    if (startDate?.toDateString() === weekRange.start.toDateString() && endDate?.toDateString() === weekRange.end.toDateString()) {
+    if (
+      startDate?.toDateString() === weekRange.start.toDateString() &&
+      endDate?.toDateString() === weekRange.end.toDateString()
+    ) {
       return "This Week";
     }
-    if (startDate?.toDateString() === monthRange.start.toDateString() && endDate?.toDateString() === monthRange.end.toDateString()) {
+    if (
+      startDate?.toDateString() === monthRange.start.toDateString() &&
+      endDate?.toDateString() === monthRange.end.toDateString()
+    ) {
       return "This Month";
     }
     return `${formatShortDate(startDate)} - ${formatShortDate(endDate)}`;
@@ -162,23 +176,27 @@ export default function DateDropdown(props: Props) {
         </div>
 
         {/* Date Pickers */}
-        <div>
+        <div className="">
           <label className="block text-xs font-medium mb-1">Start Date</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="yyyy-MM-dd"
-            className="w-full border rounded px-2 py-2 text-xs"
-          />
+          <div className="w-full grid grid-cols-1">
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="yyyy-MM-dd"
+              className="w-full border rounded px-2 py-2 text-xs"
+            />
+          </div>
         </div>
         <div>
           <label className="block text-xs font-medium mb-1">End Date</label>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            dateFormat="yyyy-MM-dd"
-            className="w-full border rounded px-2 py-2 text-xs"
-          />
+          <div className="w-full grid grid-cols-1">
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              dateFormat="yyyy-MM-dd"
+              className="w-full border rounded px-2 py-2 text-xs"
+            />
+          </div>
         </div>
 
         {/* Actions */}

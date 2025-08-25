@@ -1,25 +1,47 @@
 import { Category } from "@/modules/Category/types/category";
-import { Dispatch, SetStateAction } from "react";
 
-export type UpdateMenuItem = Partial<
-  Omit<MenuItem, "id" | "createdAt" | "categoryName">
->;
-export type CreateMenuItem = Omit<
-  MenuItem,
-  "id" | "createdAt" | "categoryName"
->;
+export type MenuItemCreationFormField = keyof CreateMenuItem;
+export type MenuItemCreationFormSubmission =
+  | React.FormEvent<HTMLFormElement>
+  | React.MouseEvent<HTMLButtonElement>;
 
-export type ActiveModal =
-  | "create"
-  | "update"
-  | "delete"
-  | null;
+export type MenuItemUpdateFormField = keyof UpdateMenuItem;
+export type MenuItemUpdateFormSubmission =
+  | React.FormEvent<HTMLFormElement>
+  | React.MouseEvent<HTMLButtonElement>;
 
-
+export type CreateMenuItem = {
+  name: string;
+  description: string;
+  price: string;
+  isAvailable: boolean;
+  categoryId: string;
+  imageUrl?: string;
+};
+export type CreateMenuItemErrors = {
+  name: string;
+  description: string;
+  price: string;
+  categoryId: string;
+};
+export type UpdateMenuItemErrors = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  categoryId: string;
+};
+export type UpdateMenuItem = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  isAvailable: boolean;
+  categoryId: string;
+  imageUrl?: string;
+};
+export type ActiveModal = "create" | "update" | "delete" | null;
 export type MenuFormError = "name" | "price" | "description" | "categoryId";
-
-
-
 export type MenuItemResult = {
   id: string;
   name: string;
@@ -32,7 +54,6 @@ export type MenuItemResult = {
   category: Category;
   ingredients: string[];
 };
-
 export type MenuItem = {
   id: string;
   name: string;
@@ -42,7 +63,6 @@ export type MenuItem = {
   categoryId: string;
   imageUrl?: string | null;
   ingredients?: string[];
-  quantity?: number;
   createdAt?: string;
   category?: Category;
 };
@@ -68,9 +88,6 @@ export type Image = {
   url: string;
 };
 
-
-
-
 export type MenuItemFormStore = {
   // State
   form: Form;
@@ -79,12 +96,14 @@ export type MenuItemFormStore = {
   errors: Errors;
   ingredients: string[];
   isSubmitting: boolean;
-  setSubmitting: (isSubmitting: boolean) => void
+  setSubmitting: (isSubmitting: boolean) => void;
 
   // Actions - state setters
   setForm: (updates: Partial<Form>) => void;
   handleFormChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => void;
   setImage: (image: Image) => void;
   clearImage: () => void;
@@ -114,9 +133,7 @@ export type MenuItemFormStore = {
   resetForm: () => void;
 };
 
- 
-
-export type UseMenuItemDataStore = {
+export type MenuItemDataStore = {
   menuItems: MenuItem[];
   searchTerm: string;
   sortBy: string;
@@ -128,7 +145,7 @@ export type UseMenuItemDataStore = {
   setMenuItems: (items: MenuItem[]) => void;
   addMenuItem: (item: MenuItem) => void;
   updateMenuItem: (id: string, updates: Partial<MenuItem>) => void;
-  setLoading: (loading: boolean) => void
+  setLoading: (loading: boolean) => void;
   removeMenuItem: (id: string) => void;
   setSearchTerm: (term: string) => void;
   setSortBy: (field: string) => void;
@@ -139,22 +156,9 @@ export type UseMenuItemDataStore = {
   filteredMenuItems: () => MenuItem[];
 };
 
-
-
-
-export type UseMenuItemSelectionStore = {
-  activeModal:
-    | "create"
-    | "update"
-    | "delete"
-    | null;
-  setModal: (
-    modal:
-     | "create"
-    | "update"
-    | "delete"
-    | null
-  ) => void;
+export type MenuItemSelectionStore = {
+  activeModal: "create" | "update" | "delete" | null;
+  setModal: (modal: "create" | "update" | "delete" | null) => void;
   closeModal: () => void;
   selectedMenuItem: MenuItem | null;
   selectMenuItem: (menuItem: MenuItem) => void;

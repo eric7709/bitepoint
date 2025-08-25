@@ -1,13 +1,10 @@
-import { supabaseAdmin } from "@/shared/lib/supabaseAdmin";
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { generateRandomPassword, sendEmail } from "@/utils";
 import { NextResponse } from "next/server";
-import { generateRandomPassword } from "@/shared/utils/getRandomPassword";
-import { sendEmail } from "@/shared/utils/sendMail";
-
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log(body)
     const firstname = body.firstName
     const lastname = body.lastName
     const email = body.email
@@ -25,6 +22,7 @@ export async function POST(req: Request) {
       password,
       email_confirm: true,
     });
+
     if (authError || !userData?.user?.id) {
       console.error("❌ Auth Error:", authError);
       return NextResponse.json({ error: authError?.message || "Failed to create auth user" }, { status: 400 });
@@ -33,6 +31,7 @@ export async function POST(req: Request) {
     const { data: employeeData, error: dbError } = await supabaseAdmin
       .from("employees")
       .insert({
+        id: authUserId,
         firstname: firstname,
         lastname: lastname,
         email,
@@ -49,7 +48,7 @@ export async function POST(req: Request) {
       await supabaseAdmin.auth.admin.deleteUser(authUserId);
       return NextResponse.json({ error: dbError?.message || "Failed to insert employee" }, { status: 400 });
     }
-    const emailResult = await sendEmail(email,firstname, password, authUserId);
+    const emailResult = await sendEmail(email, firstname, password, authUserId);
     if (!emailResult.success) {
       console.warn("⚠️ Employee created but email failed to send");
     }

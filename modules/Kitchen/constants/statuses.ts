@@ -1,6 +1,6 @@
 import { OrderStatus } from "@/modules/Orders/types/orders";
 
-export const statuses: [string, OrderStatus][] = [
+export const STATUSES: [string, OrderStatus][] = [
     ["all", "all"],
     ["pending", "pending"],
     ["completed", "completed"],

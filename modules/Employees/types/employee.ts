@@ -12,6 +12,7 @@ export type CreateEmployee = {
 
 export type UpdateEmployee = Partial<Omit<Employee, "createdAt">>;
 
+
 export type Employee = {
   id: string;
   firstName: string | null;
@@ -19,7 +20,7 @@ export type Employee = {
   email: string;
   phoneNumber: string | null;
   gender: string | null;
-  role: string | null;
+  role: Role | null;
   isActive: boolean;
   registeredBy: string;
   createdAt: string;
@@ -27,18 +28,20 @@ export type Employee = {
 
 // <--------------------------------- EMPLOYEE ---------------------------------> //
 
-
-
 export type Role =
   | "waiter"
   | "staff"
   | "kitchen"
+  | "guest"
+  | "cook"
+  | "chef"
   | "manager"
   | "admin"
   | "cashier";
 
-export type UseAuthStore = {
+export type AuthStore = {
   user: Employee | null;
+  
   loading: boolean;
   login: (user: Employee) => void;
   logout: () => void;
@@ -54,7 +57,7 @@ export type Login = {
 
 // <--------------------------------- STORE ---------------------------------> //
 
-export type UseEmployeeSelectionStore = {
+export type EmployeeSelectionStore = {
   activeModal: "update" | "delete" | "create" | null;
   setModal: (modal: "update" | "delete" | "create") => void;
   closeModal: () => void;
@@ -65,7 +68,7 @@ export type UseEmployeeSelectionStore = {
 
 
 
-export type UseEmployeeDataStore = {
+export type EmployeeDataStore = {
   employees: Employee[];
   filteredEmployees: Employee[];
   isLoading: boolean;

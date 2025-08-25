@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { UseCategorySelectionStore } from "../types/category";
+import { CategorySelectionStore } from "@/modules/Category";
 
-export const useCategorySelectionStore = create<UseCategorySelectionStore>(
+export const useCategorySelectionStore = create<CategorySelectionStore>(
   (set) => ({
     activeModal: null,
     selectedCategory: null,

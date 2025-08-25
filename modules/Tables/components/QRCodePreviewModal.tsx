@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import Link from "next/link";
 import { useTableSelectionStore } from "../store/useTableSelectionStore";
-import ModalOverlay from "@/shared/components/ModalOverlay";
+import ModalOverlay from "@/components/ModalOverlay";
 
 export default function QRCodePreviewModal() {
   const { closeModal, activeTable, activeModal, clearActiveTable } = useTableSelectionStore();

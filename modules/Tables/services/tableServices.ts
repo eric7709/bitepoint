@@ -1,9 +1,87 @@
-import { supabase } from "@/shared/lib/supabase";
-import { Table, TableFormData } from "../types/table";
-import { transformTable, transformTables } from "../utils/transformTables";
+import { supabase } from "@/lib/supabase";
+import {
+  Table,
+  TableFormData,
+  TableFormError,
+  TableFormInput,
+  TableResult,
+} from "@/modules/Tables";
+import { Employee, EmployeeService } from "@/modules/Employees";
 
 export class TableService {
-  // 🔹 Get all tables
+  static containerClass(isActive: boolean) {
+    return isActive
+      ? "opacity-100 pointer-events-auto scale-100"
+      : "opacity-0 pointer-events-none scale-95";
+  }
+
+  static transformTables(tables: TableResult[]): Table[] {
+    return tables.map(this.transformTable);
+  }
+
+  static getTable(tables: Table[], tableId: string): Table | null {
+    return tables.find((el) => el.id === tableId) || null;
+  }
+
+  static getWaitersTables(tables: Table[], user: Employee | null) {
+    const myTables = tables.filter((el) => el.waiterId === user?.id);
+    return myTables;
+  }
+
+  static createPayload(form: TableFormInput) {
+    return {
+      name: form.name.trim(),
+      capacity: Number(form.capacity),
+      tableNumber: Number(form.tableNumber),
+      waiterId: form.waiterId || null,
+      url: Math.random().toString(36).substring(2, 10),
+    };
+  }
+  static setUpFormForUpdate(activeTable: Table) {
+    return {
+      name: activeTable?.name || "",
+      tableNumber: activeTable?.tableNumber?.toString() || "",
+      capacity: activeTable?.capacity?.toString() || "",
+      waiterId: activeTable?.waiterId || "",
+    };
+  }
+
+  static validate(form: TableFormInput) {
+    const errors: Partial<TableFormError> = {};
+    if (!form.name.trim()) {
+      errors.name = "Table name is required";
+    }
+    if (!form.tableNumber.trim()) {
+      errors.tableNumber = "Table number is required";
+    } else if (isNaN(Number(form.tableNumber))) {
+      errors.tableNumber = "Table number must be a number";
+    }
+    if (!form.capacity.trim()) {
+      errors.capacity = "Capacity is required";
+    } else if (isNaN(Number(form.capacity))) {
+      errors.capacity = "Capacity must be a number";
+    }
+    return {
+      isValid: Object.keys(errors).length === 0,
+      errors,
+    };
+  }
+
+  static transformTable(table: TableResult): Table {
+    return {
+      id: table.id,
+      name: table.name,
+      tableNumber: table.table_number,
+      capacity: table.capacity,
+      isAvailable: table.is_available,
+      waiterId: table.waiter_id,
+      waiter: table.waiter
+        ? EmployeeService.transformEmployee(table.waiter)
+        : undefined,
+      url: table.url,
+    };
+  }
+
   static async getAllTables(): Promise<Table[]> {
     const { data, error } = await supabase
       .from("tables")
@@ -15,7 +93,7 @@ export class TableService {
       )
       .order("table_number");
     if (error) throw error;
-    return transformTables(data as any);
+    return this.transformTables(data as any);
   }
 
   // 🔹 Get single table
@@ -32,7 +110,7 @@ export class TableService {
       .single();
 
     if (error) throw error;
-    return data ? transformTable(data as any) : null;
+    return data ? this.transformTable(data as any) : null;
   }
   static async getTableByUrl(url: string): Promise<Table | null> {
     const { data, error } = await supabase
@@ -44,10 +122,9 @@ export class TableService {
       `
       )
       .eq("url", url)
-      .single();
-
-    if (error) throw error;
-    return data ? transformTable(data as any) : null;
+      .maybeSingle();
+    if (error) return null;
+    return data ? this.transformTable(data as any) : null;
   }
 
   // 🔹 Create
@@ -61,7 +138,7 @@ export class TableService {
         capacity: payload.capacity,
         is_available: payload.isAvailable ?? true,
         waiter_id: payload.waiterId ?? null,
-        url: payload.url
+        url: payload.url,
       })
       .select(
         `
@@ -89,7 +166,7 @@ export class TableService {
     }
 
     // ✅ Transform before returning
-    return transformTable(data as any);
+    return this.transformTable(data as any);
   }
 
   // 🔹 Update
@@ -115,7 +192,7 @@ export class TableService {
       .single();
 
     if (error) throw error;
-    return transformTable(data as any);
+    return this.transformTable(data as any);
   }
 
   // 🔹 Delete
@@ -169,7 +246,7 @@ export class TableService {
       .eq("id", tableId)
       .single();
     if (error) throw error;
-    return updatedTable ? transformTable(updatedTable as any) : null;
+    return updatedTable ? this.transformTable(updatedTable as any) : null;
   }
 
   // 🔹 Deallocate current waiter
@@ -191,6 +268,6 @@ export class TableService {
       .eq("id", tableId)
       .single();
     if (error) throw error;
-    return updatedTable ? transformTable(updatedTable as any) : null;
+    return updatedTable ? this.transformTable(updatedTable as any) : null;
   }
 }

@@ -3,14 +3,14 @@ import { Category } from "../types/category";
 import { useCategorySelectionStore } from "../store/useCategoriesSelectionStore";
 import { FaTrashAlt } from "react-icons/fa";
 import { bgColors } from "@/modules/MenuItems/constants/bgColors";
-import { useToggleMenuItemAvailability } from "@/modules/MenuItems/hook/useMenuItemsServices";
+import { useToggleMenuItemAvailability } from "@/modules/MenuItems/hooks/useMenuItemsServices";
 
 type Props = {
   category: Category;
 };
 
 export default function CategoryItem({ category }: Props) {
-  const { setModal, selectCategory } = useCategorySelectionStore();
+  const { setModal, selectCategory, selectedCategory } = useCategorySelectionStore();
 
   return (
     <div
@@ -23,9 +23,10 @@ export default function CategoryItem({ category }: Props) {
       {/* Delete Button */}
       <div
         onClick={(e) => {
-          e.stopPropagation();
           selectCategory(category);
+          console.log(selectedCategory, "selectedCategory")
           setModal("delete");
+          e.stopPropagation();
         }}
         className="h-7 w-7 bg-white rounded-full cursor-pointer absolute top-3 right-3 text-red-500 border-2 grid place-content-center transition-all duration-300 hover:bg-red-500 hover:text-white hover:scale-110 active:scale-95"
       >

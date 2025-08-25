@@ -1,5 +1,5 @@
 import { MenuItem } from "@/modules/MenuItems/types/menuItems";
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { toast } from "react-toastify";
 
 export const checkAvailabilityOfItem = async (items: MenuItem[]) => {

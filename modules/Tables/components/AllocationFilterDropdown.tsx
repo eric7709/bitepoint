@@ -1,22 +1,14 @@
 "use client";
-import { useClickOutside } from "@/shared/hooks/useOutsideClick";
+import { useClickOutside } from "@/hooks";
 import { useState } from "react";
-import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore"; // update this path if needed
+import { useTableDataStore, FILTER_TABLE_DATA } from "@/modules/Tables"; // update this path if needed
 import { TiArrowSortedDown } from "react-icons/ti";
 
 export default function AllocationFilterDropdown() {
   const { setAllocationFilter } = useTableDataStore();
   const [opened, setOpen] = useState(false);
   const ref = useClickOutside(() => setOpen(false));
-
-  const filterItems = [
-    { label: "All Tables", value: "all" },
-    { label: "Allocated Tables", value: "allocated" },
-    { label: "Unallocated Tables", value: "unallocated" },
-  ] as const;
-
   const [active, setActive] = useState(0);
-
   return (
     <div className="relative z-20 w-full">
       <TiArrowSortedDown
@@ -28,7 +20,7 @@ export default function AllocationFilterDropdown() {
         onClick={() => setOpen(true)}
         className="flex select-none h-10 px-2 border-gray-200 border rounded-md relative text-sm items-center justify-between cursor-pointer"
       >
-        <p className="capitalize text-xs font-medium">{filterItems[active].label}</p>
+        <p className="capitalize text-xs font-medium">{FILTER_TABLE_DATA[active].label}</p>
       </div>
       <div
         ref={ref}
@@ -40,7 +32,7 @@ export default function AllocationFilterDropdown() {
           Filter Allocation
         </p>
         <div className="space-y-1">
-          {filterItems.map(({ label, value }, key) => (
+          {FILTER_TABLE_DATA.map(({ label, value }, key) => (
             <div
               key={value}
               onClick={(e) => {

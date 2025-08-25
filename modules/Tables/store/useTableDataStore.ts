@@ -4,25 +4,21 @@ import { TableService } from "../services/tableServices";
 
 export const useTableDataStore = create<UseTableDataStore>((set, get) => ({
   tables: [],
-  isLoading: false,
+  isLoading: true,
   isUpdating: false,
   error: null,
   searchTerm: "",
-  allocationFilter: "all", // all | allocated | unallocated
-  sortBy: "tableNumber" as keyof Table, // Changed default to tableNumber
+  allocationFilter: "all", 
+  sortBy: "tableNumber" as keyof Table,
   sortOrder: "asc",
-
-  // Remove automatic sorting - let filteredTables handle it
   setTables: (tables) => {
     set({ tables: [...tables], error: null });
   },
-
   setLoading: (isLoading) => set({ isLoading }),
   setUpdating: (isUpdating) => set({ isUpdating }),
   setError: (error) => set({ error, isLoading: false, isUpdating: false }),
   clearError: () => set({ error: null }),
   setAllocationFilter: (filter) => set({ allocationFilter: filter }),
-
   // Fetch tables without automatic sorting
   fetchTables: async () => {
     set({ isLoading: true, error: null });
@@ -37,8 +33,6 @@ export const useTableDataStore = create<UseTableDataStore>((set, get) => ({
       });
     }
   },
-
-  // Remove automatic sorting from updateTable
   updateTable: (id, updates) =>
     set((state) => {
       const updatedTables = state.tables.map((table) =>

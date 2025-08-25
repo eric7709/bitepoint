@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { UseEmployeeSelectionStore } from "../types/employee";
+import { EmployeeSelectionStore } from "../types/employee";
 
-export const useEmployeeSelectionStore = create<UseEmployeeSelectionStore>(
+export const useEmployeeSelectionStore = create<EmployeeSelectionStore>(
   (set) => ({
     selectedEmployee: null,
     selectEmployee: (employee) =>

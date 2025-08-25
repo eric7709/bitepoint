@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { UseMenuItemSelectionStore } from "../types/menuItems";
+import { MenuItemSelectionStore } from "../types/menuItems";
 
-export const useMenuItemSelectionStore = create<UseMenuItemSelectionStore>(
+export const useMenuItemSelectionStore = create<MenuItemSelectionStore>(
   (set) => ({
     activeModal: null,
     closeModal: () => set({ activeModal: null }),

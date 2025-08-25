@@ -5,31 +5,24 @@ import TableList from "@/modules/Tables/components/TableList";
 import TableHeader from "@/modules/Tables/components/TableHeader";
 import DeallocateModal from "@/modules/Tables/components/DeallocateWaiter";
 import AllocateModal from "@/modules/Tables/components/AllocateModal";
-import DeleteTable from "@/modules/Tables/components/DeletTable";
+import DeleteTable from "@/modules/Tables/components/DeleteTable";
 import { useSyncTableDataStore } from "@/modules/Tables/hooks/useSyncTableDataStore";
 import { useSyncEmployeesDataStore } from "@/modules/Employees/hooks/useSyncEmployeesDataStore";
-import { useUIStore } from "@/store/useUIStore";
-import { useEmployeeDataStore } from "@/modules/Employees/store/useEmployeeDataStore";
-import { useTableDataStore } from "@/modules/Tables/store/useTableDataStore";
-import { useEffect } from "react";
+import { NoResultFound, PageLoader } from "@/components";
+import { useEffect, useState } from "react";
+import { useTableDataStore } from "@/modules/Tables";
 
 export default function Base() {
   useSyncEmployeesDataStore();
   useSyncTableDataStore();
-  const { stopLoading } = useUIStore();
-  const [{ isLoading: loadingEmployee }, { isLoading: loadingTable }] = [
-    useEmployeeDataStore(),
-    useTableDataStore(),
-  ];
-
-  useEffect(() => {
-    if (!loadingTable && !loadingEmployee) {
-      stopLoading();
-    }
-  }, [loadingEmployee, loadingTable, stopLoading]);
-
-  if (loadingTable || loadingEmployee) return null;
-
+  const { filteredTables, isLoading } = useTableDataStore();
+  const tables = filteredTables();
+  if (isLoading) {
+    return <PageLoader />;
+  }
+  if (tables.length === 0) {
+    return <NoResultFound />;
+  }
   return (
     <div className="flex h-screen gap-2 flex-col">
       <TableHeader />

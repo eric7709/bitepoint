@@ -1,8 +1,10 @@
 "use client";
 import { Plus } from "lucide-react";
-import { useEmployeeDataStore } from "../store/useEmployeeDataStore";
-import EmployeeCard from "./EmployeeCard";
-import { useEmployeeSelectionStore } from "../store/useEmployeeSelectionStore";
+import {
+  useEmployeeDataStore,
+  EmployeeCard,
+  useEmployeeSelectionStore,
+} from "@/modules/Employees";
 
 export default function EmployeeList() {
   const { filteredEmployees: employees, isLoading } = useEmployeeDataStore();
@@ -21,7 +23,7 @@ export default function EmployeeList() {
             </span>
           </div>
           {employees.map((employee) => (
-            <EmployeeCard key={employee.id} employee={employee} />
+            <EmployeeCard key={employee.id} {...employee} />
           ))}
         </div>
       )}

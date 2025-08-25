@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { UseCategoryDataStore } from "../types/category";
-import { CategoryService } from "../services/categoryServices";
+import { CategoryDataStore } from "@/modules/Category";
 
-export const useCategoryDataStore = create<UseCategoryDataStore>(
+export const useCategoryDataStore = create<CategoryDataStore>(
   (set, get) => ({
     categories: [],
     isLoading: false,

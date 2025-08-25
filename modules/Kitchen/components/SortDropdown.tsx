@@ -1,6 +1,6 @@
 "use client";
 
-import { useClickOutside } from "@/shared/hooks/useOutsideClick";
+import { useClickOutside } from "@/hooks/useOutsideClick";
 import { useState } from "react";
 import { Order } from "@/modules/Orders/types/orders";
 import { useOrderDataStore } from "@/modules/Orders/store/useOrderDataStore";

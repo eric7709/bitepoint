@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { supabase } from "@/shared/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import { TableAllocationHistory, UseTableAllocationDataStore } from "../types/table";
 
 

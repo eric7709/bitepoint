@@ -34,13 +34,13 @@ export const getStyle = (status: OrderStatus) => {
       };
     case "cancelled":
       return {
-        bg: "bg-red-500 text-white", // Brightened red for cancelled
+        bg: "bg-red-300 text-white", // Brightened red for cancelled
         border: "border-red-200",
-        hover: "hover:bg-red-600", // Darker red on hover
+        hover: "hover:bg-red-400", // Darker red on hover
       };
     case "paid":
       return {
-        bg: "bg-green-500 text-white", // Brightened teal for paid
+        bg: "bg-green-500 text-black", // Brightened teal for paid
         border: "border-teal-400",
         hover: "hover:bg-teal-600", // Darker teal on hover
       };

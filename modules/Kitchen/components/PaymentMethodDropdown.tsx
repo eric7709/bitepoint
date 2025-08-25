@@ -1,6 +1,6 @@
 'use client';
 
-import { useClickOutside } from '@/shared/hooks/useOutsideClick';
+import { useClickOutside } from '@/hooks/useOutsideClick';
 import { useState } from 'react';
 import { useOrderDataStore } from '@/modules/Orders/store/useOrderDataStore';
 import { TiArrowSortedDown } from 'react-icons/ti';

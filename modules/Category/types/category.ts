@@ -4,7 +4,7 @@ export interface Category {
   createdAt?: string
 }
 
-export type UseCategorySelectionStore = {
+export type CategorySelectionStore = {
   selectedCategory: Category | null;
   selectCategory: (category: Category) => void
   clearCategory: () => void
@@ -12,7 +12,7 @@ export type UseCategorySelectionStore = {
   setModal: (modal: "update" | "create" | "delete" | null) => void;
   closeModal: () => void;
 };
-export interface UseCategoryDataStore {
+export interface CategoryDataStore {
   categories: Category[];
   isLoading: boolean;
   isUpdating: boolean;

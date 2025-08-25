@@ -5,6 +5,7 @@ import { Order } from "../types/orders";
 import { useUpdateOrderStatus } from "./useOrderServices";
 import { Employee } from "@/modules/Employees/types/employee";
 import { useEmployeeDataStore } from "@/modules/Employees/store/useEmployeeDataStore";
+import { useOrderDataStore } from "../store/useOrderDataStore";
 
 const nextStatusMap: Record<Order["status"], Order["status"]> = {
   pending: "completed",
@@ -30,6 +31,7 @@ export function useKitchenOrderStatus(order: Order) {
   const [waiter, setWaiter] = useState<Employee | undefined>();
   const { employees } = useEmployeeDataStore();
   const { mutate, isPending, isSuccess } = useUpdateOrderStatus();
+  const {fetchOrders, refetchOrders} = useOrderDataStore()
 
   useEffect(() => {
     if (employees.length > 0) {
@@ -45,6 +47,7 @@ export function useKitchenOrderStatus(order: Order) {
     if (newStatus === status || status === "all") return;
     setStatus(newStatus);
     mutate({ id: order.id, status: newStatus });
+    refetchOrders()
   };
 
   const readyForPrinting =

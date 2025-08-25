@@ -7,7 +7,6 @@ type TParams = {
     url: string;
   };
 };
-
 export default async function Page({
   params,
 }: {

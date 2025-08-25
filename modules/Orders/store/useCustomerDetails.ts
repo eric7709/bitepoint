@@ -1,9 +1,9 @@
 import { CustomerForm } from "@/modules/Customers/types/customer";
-import { saveCustomerToCookie } from "@/shared/utils/saveCustomerToCookie";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useOrderSelectionStore } from "./useOrderSelectionStore";
 import { useGetOrCreateCustomer } from "@/modules/Customers/hooks/useCustomerSerivces";
+import { saveCustomerToCookie } from "@/utils";
 
 export type CustomerErrors = Partial<Record<keyof CustomerForm, string>>;
 
@@ -17,8 +17,7 @@ export function useCustomerDetails() {
     phoneNumber: "",
   });
   const [errors, setErrors] = useState<CustomerErrors>({});
-  const { data, mutate: createCustomer, isPending } = useGetOrCreateCustomer();
-
+  const { mutate: createCustomer, isPending } = useGetOrCreateCustomer();
   const resetForm = () => {
     setCustomer({ title: "", name: "", email: "", phoneNumber: "" });
     setErrors({});
@@ -27,12 +26,10 @@ export function useCustomerDetails() {
     resetForm();
     closeModal();
   };
-
   const setField = (field: keyof CustomerForm, value: string) => {
     setCustomer((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
-
   const validate = () => {
     const newErrors: CustomerErrors = {};
     if (!customer.title) newErrors.title = "Please select a title";
@@ -42,17 +39,14 @@ export function useCustomerDetails() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
       newErrors.email = "Invalid email format";
     }
-
-    if (!customer.phoneNumber.trim()) {
-      newErrors.phoneNumber = "Phone number is required";
-    } else if (!/^\+?[0-9]{7,15}$/.test(customer.phoneNumber)) {
-      newErrors.phoneNumber = "Invalid phone number";
+    if (customer.phoneNumber) {
+      if (!/^\+?[0-9]{7,15}$/.test(customer.phoneNumber)) {
+        newErrors.phoneNumber = "Invalid phone number";
+      }
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
@@ -69,7 +63,6 @@ export function useCustomerDetails() {
     });
   };
 
-
   return {
     isOpen,
     customer,
@@ -77,8 +70,8 @@ export function useCustomerDetails() {
     isPending,
     setField,
     activeModal,
-    closeModal: closeAndReset, // default close action resets and closes
-    resetForm, // exposed if you only want to reset
+    closeModal: closeAndReset,
+    resetForm,
     validate,
     handleSubmit,
   };
